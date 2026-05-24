@@ -1,0 +1,3153 @@
+==============================================================================
+= 14.7.2008 11:34:28                                                         =
+==============================================================================
+Access violation at address 00406951 in module 'ScriptEd.exe'. Read of address 00727764.
+
+Exception class: EAccessViolation
+Exception message: Access violation at address 00406951 in module 'ScriptEd.exe'. Read of address 00727764.
+Exception address: 00406951
+------------------------------------------------------------------------------
+Stack list, generated 14.7.2008 11:34:19
+(00005951){ScriptEd.exe} [00406951] System.DynArraySetLength (Line 16038, "system.pas" + 17) + $3
+(0000594C){ScriptEd.exe} [0040694C] System.DynArraySetLength (Line 16037, "system.pas" + 16) + $2
+(000048B2){ScriptEd.exe} [004058B2] System.@LStrCatN (Line 12490, "system.pas" + 70) + $0
+(00005AB5){ScriptEd.exe} [00406AB5] System.@DynArraySetLength (Line 16108, "system.pas" + 2) + $0
+(000C21B9){ScriptEd.exe} [004C31B9] ArcanumSCRLib.ParseTextScript (Line 1493, "ArcanumSCRLib.pas" + 68) + $18
+(0018DF60){ScriptEd.exe} [0058EF60] ScriptEdWindow.TMainForm.Compile1Click (Line 546, "ScriptEdWindow.pas" + 59) + $8
+(00092A9C){ScriptEd.exe} [00493A9C] Menus.TMenuItem.GetItem (Line 1697, "Menus.pas" + 2) + $9
+(00092F61){ScriptEd.exe} [00493F61] Menus.TMenuItem.Click (Line 1826, "Menus.pas" + 14) + $C
+(000947BD){ScriptEd.exe} [004957BD] Menus.TMenu.DispatchCommand (Line 2546, "Menus.pas" + 5) + $5
+(0009E53D){ScriptEd.exe} [0049F53D] Forms.TCustomForm.WMCommand (Line 4115, "Forms.pas" + 2) + $25
+(0007DB5B){ScriptEd.exe} [0047EB5B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(000832AF){ScriptEd.exe} [004842AF] Controls.TWinControl.WMKeyUp (Line 7090, "Controls.pas" + 1) + $17
+(0007DB5B){ScriptEd.exe} [0047EB5B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(0008186A){ScriptEd.exe} [0048286A] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(0009BD58){ScriptEd.exe} [0049CD58] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(0008143C){ScriptEd.exe} [0048243C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002D3C4){ScriptEd.exe} [0042E3C4] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000A3950){ScriptEd.exe} [004A4950] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000A3997){ScriptEd.exe} [004A4997] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000A3C32){ScriptEd.exe} [004A4C32] Forms.TApplication.Run (Line 6976, "Forms.pas" + 16) + $3
+(0019FAAD){ScriptEd.exe} [005A0AAD] ScriptEd.ScriptEd (Line 64, "" + 32) + $2
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1041
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[00DD0000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[00EA0000] C:\Program Files\Logitech\iTouch\kbdhook.dll
+<10000000> 2.22.289.0 - 2.22.289
+           Keyboard Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TButton "Button1"
+TForm1 "Form1"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 14.7.2008 12:42:10                                                         =
+==============================================================================
+File not found.
+
+Exception class: EInOutError
+Exception message: File not found.
+Exception address: 004BB151
+------------------------------------------------------------------------------
+Stack list, generated 14.7.2008 12:42:04
+(000BA14C){ScriptEd.exe} [004BB14C] arcdatlib.opendatfile (Line 1002, "arcdatlib.pas" + 5) + $C
+(00002C34){ScriptEd.exe} [00403C34] System.OpenFile (Line 5903, "system.pas" + 95) + $0
+(00001CB6){ScriptEd.exe} [00402CB6] System.ErrorAt (Line 3016, "system.pas" + 3) + $4
+(000BA14C){ScriptEd.exe} [004BB14C] arcdatlib.opendatfile (Line 1002, "arcdatlib.pas" + 5) + $C
+(000C0467){ScriptEd.exe} [004C1467] ArcanumSCRLib.ConsoleDebug (Line 869, "ArcanumSCRLib.pas" + 10) + $35
+(000BF834){ScriptEd.exe} [004C0834] MESFileIO.ParseMESFromDAT (Line 153, "MESFileIO.pas" + 3) + $8
+(0018DD8F){ScriptEd.exe} [0058ED8F] ScriptEdWindow.TMainForm.FormCreate (Line 388, "ScriptEdWindow.pas" + 33) + $2D
+(0009AB71){ScriptEd.exe} [0049BB71] Forms.TCustomForm.DoCreate (Line 2648, "Forms.pas" + 3) + $C
+(0009A7E1){ScriptEd.exe} [0049B7E1] Forms.TCustomForm.AfterConstruction (Line 2575, "Forms.pas" + 1) + $11
+(00003A03){ScriptEd.exe} [00404A03] System.@AfterConstruction (Line 9066, "system.pas" + 1) + $4
+(0009A7AE){ScriptEd.exe} [0049B7AE] Forms.TCustomForm.Create (Line 2569, "Forms.pas" + 16) + $3D
+(000A2FFB){ScriptEd.exe} [004A3FFB] Forms.TApplication.WndProc (Line 6604, "Forms.pas" + 77) + $16
+(000AF287){ScriptEd.exe} [004B0287] JclSysUtils.WriteProtectedMemory (Line 677, "JclSysUtils.pas" + 13) + $10
+(00003EC8){ScriptEd.exe} [00404EC8] System.@TryFinallyExit (Line 10497, "system.pas" + 5) + $0
+(00001682){ScriptEd.exe} [00402682] System.SysGetMem (Line 1032, "GETMEM.INC" + 53) + $0
+(000A3B34){ScriptEd.exe} [004A4B34] Forms.TApplication.CreateForm (Line 6947, "Forms.pas" + 4) + $B
+(001A004A){ScriptEd.exe} [005A104A] ScriptEd.ScriptEd (Line 35, "" + 3) + $E
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1096
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[00EA0000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+
+==============================================================================
+= 14.7.2008 12:42:47                                                         =
+==============================================================================
+File not found.
+
+Exception class: EInOutError
+Exception message: File not found.
+Exception address: 004BB151
+------------------------------------------------------------------------------
+Stack list, generated 14.7.2008 12:42:35
+(000BA14C){ScriptEd.exe} [004BB14C] arcdatlib.opendatfile (Line 1002, "arcdatlib.pas" + 5) + $C
+(00002C34){ScriptEd.exe} [00403C34] System.OpenFile (Line 5903, "system.pas" + 95) + $0
+(00001CB6){ScriptEd.exe} [00402CB6] System.ErrorAt (Line 3016, "system.pas" + 3) + $4
+(000BA14C){ScriptEd.exe} [004BB14C] arcdatlib.opendatfile (Line 1002, "arcdatlib.pas" + 5) + $C
+(000047AF){ScriptEd.exe} [004057AF] System.@LStrCat (Line 12320, "system.pas" + 26) + $0
+(000C06D2){ScriptEd.exe} [004C16D2] ArcanumSCRLib.InitOpcodes (Line 957, "ArcanumSCRLib.pas" + 45) + $22
+(0018C73B){ScriptEd.exe} [0058D73B] ScriptEdWindow.TMainForm.FormCreate (Line 365, "ScriptEdWindow.pas" + 10) + $0
+(0009AB71){ScriptEd.exe} [0049BB71] Forms.TCustomForm.DoCreate (Line 2648, "Forms.pas" + 3) + $C
+(0009A7E1){ScriptEd.exe} [0049B7E1] Forms.TCustomForm.AfterConstruction (Line 2575, "Forms.pas" + 1) + $11
+(00003A03){ScriptEd.exe} [00404A03] System.@AfterConstruction (Line 9066, "system.pas" + 1) + $4
+(0009A7AE){ScriptEd.exe} [0049B7AE] Forms.TCustomForm.Create (Line 2569, "Forms.pas" + 16) + $3D
+(000A2FFB){ScriptEd.exe} [004A3FFB] Forms.TApplication.WndProc (Line 6604, "Forms.pas" + 77) + $16
+(000AF287){ScriptEd.exe} [004B0287] JclSysUtils.WriteProtectedMemory (Line 677, "JclSysUtils.pas" + 13) + $10
+(00003EC8){ScriptEd.exe} [00404EC8] System.@TryFinallyExit (Line 10497, "system.pas" + 5) + $0
+(00001682){ScriptEd.exe} [00402682] System.SysGetMem (Line 1032, "GETMEM.INC" + 53) + $0
+(000A3B34){ScriptEd.exe} [004A4B34] Forms.TApplication.CreateForm (Line 6947, "Forms.pas" + 4) + $B
+(001A004A){ScriptEd.exe} [005A104A] ScriptEd.ScriptEd (Line 35, "" + 3) + $E
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1097
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[00DA0000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+
+==============================================================================
+= 14.7.2008 12:46:07                                                         =
+==============================================================================
+File not found.
+
+Exception class: EInOutError
+Exception message: File not found.
+Exception address: 004BB151
+------------------------------------------------------------------------------
+Stack list, generated 14.7.2008 12:45:52
+(000BA14C){ScriptEd.exe} [004BB14C] arcdatlib.opendatfile (Line 1002, "arcdatlib.pas" + 5) + $C
+(00002C34){ScriptEd.exe} [00403C34] System.OpenFile (Line 5903, "system.pas" + 95) + $0
+(00001CB6){ScriptEd.exe} [00402CB6] System.ErrorAt (Line 3016, "system.pas" + 3) + $4
+(000BA14C){ScriptEd.exe} [004BB14C] arcdatlib.opendatfile (Line 1002, "arcdatlib.pas" + 5) + $C
+(000047AF){ScriptEd.exe} [004057AF] System.@LStrCat (Line 12320, "system.pas" + 26) + $0
+(000BE23A){ScriptEd.exe} [004BF23A] ArcanumSCRLib.InitOpcodes (Line 957, "ArcanumSCRLib.pas" + 45) + $22
+(0018DC63){ScriptEd.exe} [0058EC63] ScriptEdWindow.TMainForm.FormCreate (Line 365, "ScriptEdWindow.pas" + 10) + $0
+(0009AB71){ScriptEd.exe} [0049BB71] Forms.TCustomForm.DoCreate (Line 2648, "Forms.pas" + 3) + $C
+(0009A7E1){ScriptEd.exe} [0049B7E1] Forms.TCustomForm.AfterConstruction (Line 2575, "Forms.pas" + 1) + $11
+(00003A03){ScriptEd.exe} [00404A03] System.@AfterConstruction (Line 9066, "system.pas" + 1) + $4
+(0009A7AE){ScriptEd.exe} [0049B7AE] Forms.TCustomForm.Create (Line 2569, "Forms.pas" + 16) + $3D
+(000A2FFB){ScriptEd.exe} [004A3FFB] Forms.TApplication.WndProc (Line 6604, "Forms.pas" + 77) + $16
+(000AF287){ScriptEd.exe} [004B0287] JclSysUtils.WriteProtectedMemory (Line 677, "JclSysUtils.pas" + 13) + $10
+(00003EC8){ScriptEd.exe} [00404EC8] System.@TryFinallyExit (Line 10497, "system.pas" + 5) + $0
+(00001682){ScriptEd.exe} [00402682] System.SysGetMem (Line 1032, "GETMEM.INC" + 53) + $0
+(000A3B34){ScriptEd.exe} [004A4B34] Forms.TApplication.CreateForm (Line 6947, "Forms.pas" + 4) + $B
+(001A004A){ScriptEd.exe} [005A104A] ScriptEd.ScriptEd (Line 35, "" + 3) + $E
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1093
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[00DA0000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+
+==============================================================================
+= 14.7.2008 22:14:05                                                         =
+==============================================================================
+File not found.
+
+Exception class: EInOutError
+Exception message: File not found.
+Exception address: 004C6BAD
+------------------------------------------------------------------------------
+Stack list, generated 14.7.2008 22:14:02
+(000C5BA8){ScriptEd.exe} [004C6BA8]
+(00002C34){ScriptEd.exe} [00403C34]
+(00001CB6){ScriptEd.exe} [00402CB6]
+(000C5BA8){ScriptEd.exe} [004C6BA8]
+(000CBF5B){ScriptEd.exe} [004CCF5B]
+(000CB2A6){ScriptEd.exe} [004CC2A6]
+(000C9E43){ScriptEd.exe} [004CAE43]
+(001B3647){ScriptEd.exe} [005B4647] DebugMessage + $1073
+(0009D9E5){ScriptEd.exe} [0049E9E5]
+(0009F241){ScriptEd.exe} [004A0241]
+(000A9075){ScriptEd.exe} [004AA075]
+(000885DF){ScriptEd.exe} [004895DF]
+(0008C2EE){ScriptEd.exe} [0048D2EE]
+(000A6890){ScriptEd.exe} [004A7890]
+(0008BEC0){ScriptEd.exe} [0048CEC0]
+(0002DDC0){ScriptEd.exe} [0042EDC0]
+(000AE528){ScriptEd.exe} [004AF528]
+(000AE56F){ScriptEd.exe} [004AF56F]
+(000AE80A){ScriptEd.exe} [004AF80A]
+(001C5B28){ScriptEd.exe} [005C6B28] DebugMessage + $13554
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 985
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[00EC0000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[59A60000] C:\WINDOWS\system32\DBGHELP.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows Image Helper
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76C90000] C:\WINDOWS\system32\imagehlp.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows NT Image Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TSynEdit "ScriptEditor"
+TMainForm "MainForm"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 14.7.2008 22:48:20                                                         =
+==============================================================================
+'Global' is not a valid integer value.
+
+Exception class: EConvertError
+Exception message: 'Global' is not a valid integer value.
+Exception address: 00409EE7
+------------------------------------------------------------------------------
+Stack list, generated 14.7.2008 22:48:18
+(00008EE2){ScriptEd.exe} [00409EE2]
+(00009A45){ScriptEd.exe} [0040AA45]
+(001B40F8){ScriptEd.exe} [005B50F8] DebugMessage + $1950
+(00088878){ScriptEd.exe} [00489878]
+(000E27F9){ScriptEd.exe} [004E37F9]
+(00088919){ScriptEd.exe} [00489919]
+(00088B01){ScriptEd.exe} [00489B01]
+(000885DF){ScriptEd.exe} [004895DF]
+(0008C2EE){ScriptEd.exe} [0048D2EE]
+(0008C0FF){ScriptEd.exe} [0048D0FF]
+(0008C2EE){ScriptEd.exe} [0048D2EE]
+(000EA17D){ScriptEd.exe} [004EB17D]
+(0008BEC0){ScriptEd.exe} [0048CEC0]
+(0002DDC0){ScriptEd.exe} [0042EDC0]
+(000AE528){ScriptEd.exe} [004AF528]
+(000AE56F){ScriptEd.exe} [004AF56F]
+(000AE80A){ScriptEd.exe} [004AF80A]
+(001C5E47){ScriptEd.exe} [005C6E47] DebugMessage + $1369F
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 968
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[00EC0000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[00F00000] C:\Program Files\Logitech\iTouch\kbdhook.dll
+<10000000> 2.22.289.0 - 2.22.289
+           Keyboard Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[59A60000] C:\WINDOWS\system32\DBGHELP.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows Image Helper
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76C90000] C:\WINDOWS\system32\imagehlp.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows NT Image Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TSynEdit "ScriptEditor"
+TMainForm "MainForm"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 15.7.2008 0:23:29                                                          =
+==============================================================================
+'Global' is not a valid integer value.
+
+Exception class: EConvertError
+Exception message: 'Global' is not a valid integer value.
+Exception address: 00409EE7
+------------------------------------------------------------------------------
+Stack list, generated 15.7.2008 0:23:25
+(00008EE2){ScriptEd.exe} [00409EE2]
+(00009A45){ScriptEd.exe} [0040AA45]
+(001B5728){ScriptEd.exe} [005B6728] DebugMessage + $18CC
+(00088878){ScriptEd.exe} [00489878]
+(000E27F9){ScriptEd.exe} [004E37F9]
+(00088919){ScriptEd.exe} [00489919]
+(00088B01){ScriptEd.exe} [00489B01]
+(000885DF){ScriptEd.exe} [004895DF]
+(0008C2EE){ScriptEd.exe} [0048D2EE]
+(0008C0FF){ScriptEd.exe} [0048D0FF]
+(0008C2EE){ScriptEd.exe} [0048D2EE]
+(000EA17D){ScriptEd.exe} [004EB17D]
+(0008BEC0){ScriptEd.exe} [0048CEC0]
+(0002DDC0){ScriptEd.exe} [0042EDC0]
+(000AE528){ScriptEd.exe} [004AF528]
+(000AE56F){ScriptEd.exe} [004AF56F]
+(000AE80A){ScriptEd.exe} [004AF80A]
+(001C669F){ScriptEd.exe} [005C769F] DebugMessage + $12843
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1058
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[00EC0000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[00F00000] C:\Program Files\Logitech\iTouch\kbdhook.dll
+<10000000> 2.22.289.0 - 2.22.289
+           Keyboard Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[59A60000] C:\WINDOWS\system32\DBGHELP.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows Image Helper
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76C90000] C:\WINDOWS\system32\imagehlp.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows NT Image Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TSynEdit "ScriptEditor"
+TMainForm "MainForm"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 15.7.2008 4:59:30                                                          =
+==============================================================================
+'Global' is not a valid integer value.
+
+Exception class: EConvertError
+Exception message: 'Global' is not a valid integer value.
+Exception address: 00409EE7
+------------------------------------------------------------------------------
+Stack list, generated 15.7.2008 4:59:28
+(00008EE2){ScriptEd.exe} [00409EE2]
+(00009A45){ScriptEd.exe} [0040AA45]
+(001B4443){ScriptEd.exe} [005B5443] DebugMessage + $19EB
+(00088878){ScriptEd.exe} [00489878]
+(000E27F9){ScriptEd.exe} [004E37F9]
+(00088919){ScriptEd.exe} [00489919]
+(00088B01){ScriptEd.exe} [00489B01]
+(000885DF){ScriptEd.exe} [004895DF]
+(0008C2EE){ScriptEd.exe} [0048D2EE]
+(0008C0FF){ScriptEd.exe} [0048D0FF]
+(0008C2EE){ScriptEd.exe} [0048D2EE]
+(000EA17D){ScriptEd.exe} [004EB17D]
+(0008BEC0){ScriptEd.exe} [0048CEC0]
+(0002DDC0){ScriptEd.exe} [0042EDC0]
+(000AE528){ScriptEd.exe} [004AF528]
+(000AE56F){ScriptEd.exe} [004AF56F]
+(000AE80A){ScriptEd.exe} [004AF80A]
+(001C68BB){ScriptEd.exe} [005C78BB] DebugMessage + $13E63
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1025
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[00EC0000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[00F90000] c:\codeprojects\scripted_v1_50\plugins\PLG_CheckRefs.dll
+<00400000> (no version info)
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[59A60000] C:\WINDOWS\system32\DBGHELP.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows Image Helper
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76C90000] C:\WINDOWS\system32\imagehlp.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows NT Image Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TSynEdit "ScriptEditor"
+TMainForm "MainForm"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 15.7.2008 5:32:20                                                          =
+==============================================================================
+Access violation at address 004C897D in module 'ScriptEd.exe'. Read of address 00000000.
+
+Exception class: EAccessViolation
+Exception message: Access violation at address 004C897D in module 'ScriptEd.exe'. Read of address 00000000.
+Exception address: 004C897D
+------------------------------------------------------------------------------
+Stack list, generated 15.7.2008 5:32:14
+(000C797D){ScriptEd.exe} [004C897D]
+(000C9313){ScriptEd.exe} [004CA313]
+(000C9184){ScriptEd.exe} [004CA184]
+(000C94F3){ScriptEd.exe} [004CA4F3]
+(000C9018){ScriptEd.exe} [004CA018]
+(000CB8D8){ScriptEd.exe} [004CC8D8]
+(000CA037){ScriptEd.exe} [004CB037]
+(001B2601){ScriptEd.exe} [005B3601] ScriptLineAdd + $B19
+(000A56A9){ScriptEd.exe} [004A66A9]
+(000A5319){ScriptEd.exe} [004A6319]
+(00003A6B){ScriptEd.exe} [00404A6B]
+(000A52E6){ScriptEd.exe} [004A62E6]
+(000BA90F){ScriptEd.exe} [004BB90F]
+(00003F30){ScriptEd.exe} [00404F30]
+(00001682){ScriptEd.exe} [00402682]
+(000AE70C){ScriptEd.exe} [004AF70C]
+(001C67EE){ScriptEd.exe} [005C77EE] DebugMessage + $1285E
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 989
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[00EA0000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[59A60000] C:\WINDOWS\system32\DBGHELP.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows Image Helper
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76C90000] C:\WINDOWS\system32\imagehlp.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows NT Image Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+
+==============================================================================
+= 15.7.2008 5:33:51                                                          =
+==============================================================================
+'' is not a valid integer value.
+
+Exception class: EConvertError
+Exception message: '' is not a valid integer value.
+Exception address: 00409EE7
+------------------------------------------------------------------------------
+Stack list, generated 15.7.2008 5:33:48
+(00008EE2){ScriptEd.exe} [00409EE2]
+(00009A45){ScriptEd.exe} [0040AA45]
+(000CBA27){ScriptEd.exe} [004CCA27]
+(000CB890){ScriptEd.exe} [004CC890]
+(000CBBFF){ScriptEd.exe} [004CCBFF]
+(000CB724){ScriptEd.exe} [004CC724]
+(000C9914){ScriptEd.exe} [004CA914]
+(000C8073){ScriptEd.exe} [004C9073]
+(001B2675){ScriptEd.exe} [005B3675] ScriptLineAdd + $B19
+(000A56A9){ScriptEd.exe} [004A66A9]
+(000A5319){ScriptEd.exe} [004A6319]
+(00003A6B){ScriptEd.exe} [00404A6B]
+(000A52E6){ScriptEd.exe} [004A62E6]
+(000BA90F){ScriptEd.exe} [004BB90F]
+(00003F30){ScriptEd.exe} [00404F30]
+(00001682){ScriptEd.exe} [00402682]
+(000AE70C){ScriptEd.exe} [004AF70C]
+(001C6862){ScriptEd.exe} [005C7862] DebugMessage + $1285E
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 989
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[00EA0000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[59A60000] C:\WINDOWS\system32\DBGHELP.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows Image Helper
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76C90000] C:\WINDOWS\system32\imagehlp.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows NT Image Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+
+==============================================================================
+= 16.7.2008 14:04:46                                                         =
+==============================================================================
+Cannot open file "C:\DOCUME~1\Timo\LOCALS~1\Temp\gamereplog.mes". The system cannot find the file specified.
+
+Exception class: EFOpenError
+Exception message: Cannot open file "C:\DOCUME~1\Timo\LOCALS~1\Temp\gamereplog.mes". The system cannot find the file specified.
+Exception address: 00426B19
+------------------------------------------------------------------------------
+Stack list, generated 16.7.2008 14:04:35
+(00025B14){ScriptEd.exe} [00426B14] Classes.TFileStream.Create (Line 5120, "classes.pas" + 11) + $44
+(000259DA){ScriptEd.exe} [004269DA] Classes.TFileStream.Create (Line 5102, "classes.pas" + 2) + $F
+(00025DE8){ScriptEd.exe} [00426DE8] Classes.TMemoryStream.LoadFromFile (Line 5214, "classes.pas" + 1) + $C
+(000CBAB2){ScriptEd.exe} [004CCAB2] MESParser.TMESParser.Execute (Line 951, "mesparser.pas" + 9) + $10
+(000C98F0){ScriptEd.exe} [004CA8F0] MESFileIO.ParseMESFromModuleDAT (Line 179, "MESFileIO.pas" + 6) + $2
+(000C7DB2){ScriptEd.exe} [004C8DB2] ModuleLoader.LoadModuleData (Line 78, "ModuleLoader.pas" + 26) + $1F
+(001B73B7){ScriptEd.exe} [005B83B7] ScriptEdWindow.TMainForm.Selectmodule1Click (Line 1345, "ScriptEdWindow.pas" + 7) + $23
+(0009DA21){ScriptEd.exe} [0049EA21] Menus.TMenuItem.Click (Line 1826, "Menus.pas" + 14) + $C
+(0009F27D){ScriptEd.exe} [004A027D] Menus.TMenu.DispatchCommand (Line 2546, "Menus.pas" + 5) + $5
+(000A90B1){ScriptEd.exe} [004AA0B1] Forms.TCustomForm.WMCommand (Line 4115, "Forms.pas" + 2) + $25
+(0008861B){ScriptEd.exe} [0048961B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(00088CB7){ScriptEd.exe} [00489CB7] Controls.TControl.WMMouseMove (Line 4819, "Controls.pas" + 8) + $24
+(0008861B){ScriptEd.exe} [0048961B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(0008C32A){ScriptEd.exe} [0048D32A] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000A68CC){ScriptEd.exe} [004A78CC] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(0008C236){ScriptEd.exe} [0048D236] Controls.TWinControl.WndProc (Line 6320, "Controls.pas" + 11) + $6
+(0008C32A){ScriptEd.exe} [0048D32A] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000A68CC){ScriptEd.exe} [004A78CC] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(000359E8){ScriptEd.exe} [004369E8] Graphics.FreeMemoryContexts (Line 4670, "Graphics.pas" + 12) + $5
+(00021EFE){ScriptEd.exe} [00422EFE] Classes.TThreadList.UnlockList (Line 3151, "classes.pas" + 1) + $7
+(000359E8){ScriptEd.exe} [004369E8] Graphics.FreeMemoryContexts (Line 4670, "Graphics.pas" + 12) + $5
+(0008BEFC){ScriptEd.exe} [0048CEFC] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0008C32A){ScriptEd.exe} [0048D32A] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000A68CC){ScriptEd.exe} [004A78CC] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(0008BEFC){ScriptEd.exe} [0048CEFC] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002DDC0){ScriptEd.exe} [0042EDC0] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000AE564){ScriptEd.exe} [004AF564] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000AE5AB){ScriptEd.exe} [004AF5AB] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000AE846){ScriptEd.exe} [004AF846] Forms.TApplication.Run (Line 6976, "Forms.pas" + 16) + $3
+(001C9966){ScriptEd.exe} [005CA966] ScriptEd.ScriptEd (Line 70, "" + 35) + $2
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 951
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[00FC0000] c:\codeprojects\scripted_v1_50\plugins\PLG_CheckRefs.dll
+<00400000> (no version info)
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TSynEdit "ScriptEditor"
+TMainForm "MainForm"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 16.7.2008 18:34:59                                                         =
+==============================================================================
+Access violation at address 005C0833 in module 'ScriptEd.exe'. Read of address 00000024.
+
+Exception class: EAccessViolation
+Exception message: Access violation at address 005C0833 in module 'ScriptEd.exe'. Read of address 00000024.
+Exception address: 005C0833
+------------------------------------------------------------------------------
+Stack list, generated 16.7.2008 18:34:50
+(001BF833){ScriptEd.exe} [005C0833] ScriptEdWindow.TMainForm.Selectmodule1Click (Line 1347, "ScriptEdWindow.pas" + 6) + $12
+(00091408){ScriptEd.exe} [00492408] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(001BF82E){ScriptEd.exe} [005C082E] ScriptEdWindow.TMainForm.Selectmodule1Click (Line 1347, "ScriptEdWindow.pas" + 6) + $D
+(000A29B9){ScriptEd.exe} [004A39B9] Menus.TMenuItem.Click (Line 1826, "Menus.pas" + 14) + $C
+(000A4215){ScriptEd.exe} [004A5215] Menus.TMenu.DispatchCommand (Line 2546, "Menus.pas" + 5) + $5
+(000AE049){ScriptEd.exe} [004AF049] Forms.TCustomForm.WMCommand (Line 4115, "Forms.pas" + 2) + $25
+(0008D5B3){ScriptEd.exe} [0048E5B3] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(0008DC4F){ScriptEd.exe} [0048EC4F] Controls.TControl.WMMouseMove (Line 4819, "Controls.pas" + 8) + $24
+(0008D5B3){ScriptEd.exe} [0048E5B3] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(000912C2){ScriptEd.exe} [004922C2] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000AB864){ScriptEd.exe} [004AC864] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(000911CE){ScriptEd.exe} [004921CE] Controls.TWinControl.WndProc (Line 6320, "Controls.pas" + 11) + $6
+(000912C2){ScriptEd.exe} [004922C2] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000AB864){ScriptEd.exe} [004AC864] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(00035FEC){ScriptEd.exe} [00436FEC] Graphics.FreeMemoryContexts (Line 4670, "Graphics.pas" + 12) + $5
+(0002209E){ScriptEd.exe} [0042309E] Classes.TThreadList.UnlockList (Line 3151, "classes.pas" + 1) + $7
+(00035FEC){ScriptEd.exe} [00436FEC] Graphics.FreeMemoryContexts (Line 4670, "Graphics.pas" + 12) + $5
+(00090E94){ScriptEd.exe} [00491E94] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(000912C2){ScriptEd.exe} [004922C2] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000AB864){ScriptEd.exe} [004AC864] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(00090E94){ScriptEd.exe} [00491E94] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002DF60){ScriptEd.exe} [0042EF60] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000B34FC){ScriptEd.exe} [004B44FC] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000B3543){ScriptEd.exe} [004B4543] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000B37DE){ScriptEd.exe} [004B47DE] Forms.TApplication.Run (Line 6976, "Forms.pas" + 16) + $3
+(001D2870){ScriptEd.exe} [005D3870] ScriptEd.ScriptEd (Line 74, "" + 37) + $2
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 977
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TSynEdit "ScriptEditor"
+TMainForm "MainForm"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 16.7.2008 19:07:15                                                         =
+==============================================================================
+Access violation at address 004D0C4A in module 'ScriptEd.exe'. Write of address 00000036.
+
+Exception class: EAccessViolation
+Exception message: Access violation at address 004D0C4A in module 'ScriptEd.exe'. Write of address 00000036.
+Exception address: 004D0C4A
+------------------------------------------------------------------------------
+Stack list, generated 16.7.2008 19:06:59
+(000CFC4A){ScriptEd.exe} [004D0C4A] MESParser.TMESParserScanner.Get (Line 342, "MESParser.pas" + 11) + $9
+(000D115F){ScriptEd.exe} [004D215F] MESParser.TMESParser.Get (Line 991, "MESParser.pas" + 10) + $F
+(000D13CF){ScriptEd.exe} [004D23CF] MESParser.TMESParser._MESEntry (Line 1063, "MESParser.pas" + 38) + $4
+(000D11A5){ScriptEd.exe} [004D21A5] MESParser.TMESParser._MESParser (Line 1017, "MESParser.pas" + 5) + $2
+(000D15BB){ScriptEd.exe} [004D25BB] MESParser.TMESParser.Parse (Line 1134, "MESParser.pas" + 4) + $2
+(000D1030){ScriptEd.exe} [004D2030] MESParser.TMESParser.Execute (Line 964, "MESParser.pas" + 21) + $2
+(000CEBBF){ScriptEd.exe} [004CFBBF] MESFileIO.ParseMESFromDAT (Line 159, "MESFileIO.pas" + 7) + $2
+(001BCEC0){ScriptEd.exe} [005BDEC0] ScriptEdWindow.TMainForm.FormCreate (Line 433, "ScriptEdWindow.pas" + 38) + $2D
+(000AA67D){ScriptEd.exe} [004AB67D] Forms.TCustomForm.DoCreate (Line 2648, "Forms.pas" + 3) + $C
+(000AA2ED){ScriptEd.exe} [004AB2ED] Forms.TCustomForm.AfterConstruction (Line 2575, "Forms.pas" + 1) + $11
+(00003A6B){ScriptEd.exe} [00404A6B] System.@AfterConstruction (Line 9066, "system.pas" + 1) + $4
+(000AA2BA){ScriptEd.exe} [004AB2BA] Forms.TCustomForm.Create (Line 2569, "Forms.pas" + 16) + $3D
+(000BFA7B){ScriptEd.exe} [004C0A7B] JclSysUtils.WriteProtectedMemory (Line 677, "JclSysUtils.pas" + 13) + $10
+(00003F30){ScriptEd.exe} [00404F30] System.@TryFinallyExit (Line 10497, "system.pas" + 5) + $0
+(00001682){ScriptEd.exe} [00402682] System.SysGetMem (Line 1032, "GETMEM.INC" + 53) + $0
+(000B36E0){ScriptEd.exe} [004B46E0] Forms.TApplication.CreateForm (Line 6947, "Forms.pas" + 4) + $B
+(001D2956){ScriptEd.exe} [005D3956] ScriptEd.ScriptEd (Line 40, "" + 3) + $E
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 983
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+
+==============================================================================
+= 16.7.2008 19:08:55                                                         =
+==============================================================================
+Access violation at address 004D0C5B in module 'ScriptEd.exe'. Write of address 00000036.
+
+Exception class: EAccessViolation
+Exception message: Access violation at address 004D0C5B in module 'ScriptEd.exe'. Write of address 00000036.
+Exception address: 004D0C5B
+------------------------------------------------------------------------------
+Stack list, generated 16.7.2008 19:08:48
+(000CFC5B){ScriptEd.exe} [004D0C5B] MESParser.TMESParserScanner.Get (Line 344, "MESParser.pas" + 13) + $E
+(000D1173){ScriptEd.exe} [004D2173] MESParser.TMESParser.Get (Line 995, "MESParser.pas" + 10) + $F
+(000D13E3){ScriptEd.exe} [004D23E3] MESParser.TMESParser._MESEntry (Line 1067, "MESParser.pas" + 38) + $4
+(000D11B9){ScriptEd.exe} [004D21B9] MESParser.TMESParser._MESParser (Line 1021, "MESParser.pas" + 5) + $2
+(000D15CF){ScriptEd.exe} [004D25CF] MESParser.TMESParser.Parse (Line 1138, "MESParser.pas" + 4) + $2
+(000D1044){ScriptEd.exe} [004D2044] MESParser.TMESParser.Execute (Line 968, "MESParser.pas" + 21) + $2
+(000CEBBF){ScriptEd.exe} [004CFBBF] MESFileIO.ParseMESFromDAT (Line 159, "MESFileIO.pas" + 7) + $2
+(001BCED4){ScriptEd.exe} [005BDED4] ScriptEdWindow.TMainForm.FormCreate (Line 433, "ScriptEdWindow.pas" + 38) + $2D
+(000AA67D){ScriptEd.exe} [004AB67D] Forms.TCustomForm.DoCreate (Line 2648, "Forms.pas" + 3) + $C
+(000AA2ED){ScriptEd.exe} [004AB2ED] Forms.TCustomForm.AfterConstruction (Line 2575, "Forms.pas" + 1) + $11
+(00003A6B){ScriptEd.exe} [00404A6B] System.@AfterConstruction (Line 9066, "system.pas" + 1) + $4
+(000AA2BA){ScriptEd.exe} [004AB2BA] Forms.TCustomForm.Create (Line 2569, "Forms.pas" + 16) + $3D
+(000BFA7B){ScriptEd.exe} [004C0A7B] JclSysUtils.WriteProtectedMemory (Line 677, "JclSysUtils.pas" + 13) + $10
+(00003F30){ScriptEd.exe} [00404F30] System.@TryFinallyExit (Line 10497, "system.pas" + 5) + $0
+(00001682){ScriptEd.exe} [00402682] System.SysGetMem (Line 1032, "GETMEM.INC" + 53) + $0
+(000B36E0){ScriptEd.exe} [004B46E0] Forms.TApplication.CreateForm (Line 6947, "Forms.pas" + 4) + $B
+(001D296A){ScriptEd.exe} [005D396A] ScriptEd.ScriptEd (Line 40, "" + 3) + $E
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 989
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+
+==============================================================================
+= 17.7.2008 14:50:43                                                         =
+==============================================================================
+Access violation at address 012D20E8 in module 'PLG_CheckRefs.dll'. Read of address 00000000.
+
+Exception class: EAccessViolation
+Exception message: Access violation at address 012D20E8 in module 'PLG_CheckRefs.dll'. Read of address 00000000.
+Exception address: 012D20E8
+------------------------------------------------------------------------------
+Stack list, generated 17.7.2008 14:50:34
+(000810E8){PLG_CheckRefs.dll} [012D20E8] RefCheckerForm.DisAssembleScript (Line 59, "RefCheckerForm.pas" + 5) + $8
+(000915C6){ScriptEd.exe} [004925C6] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(001CD700){ScriptEd.exe} [005CE700] pluginapi.ExecutePlugin (Line 243, "pluginapi.pas" + 35) + $1D
+(000A43D2){ScriptEd.exe} [004A53D2] Menus.Find (Line 2504, "Menus.pas" + 11) + $3
+(000A27F8){ScriptEd.exe} [004A37F8] Menus.TMenuItem.GetItem (Line 1697, "Menus.pas" + 2) + $9
+(000A43D2){ScriptEd.exe} [004A53D2] Menus.Find (Line 2504, "Menus.pas" + 11) + $3
+(000A27F8){ScriptEd.exe} [004A37F8] Menus.TMenuItem.GetItem (Line 1697, "Menus.pas" + 2) + $9
+(000A43F6){ScriptEd.exe} [004A53F6] Menus.Find (Line 2505, "Menus.pas" + 12) + $F
+(000A27F8){ScriptEd.exe} [004A37F8] Menus.TMenuItem.GetItem (Line 1697, "Menus.pas" + 2) + $9
+(0009FE25){ScriptEd.exe} [004A0E25] Menus.IterateMenus (Line 642, "Menus.pas" + 21) + $11
+(001C4B72){ScriptEd.exe} [005C5B72] ScriptEdWindow.TMainForm.pluginexec (Line 391, "ScriptEdWindow.pas" + 0) + $E
+(000A2CBD){ScriptEd.exe} [004A3CBD] Menus.TMenuItem.Click (Line 1826, "Menus.pas" + 14) + $C
+(000A4519){ScriptEd.exe} [004A5519] Menus.TMenu.DispatchCommand (Line 2546, "Menus.pas" + 5) + $5
+(000AE34D){ScriptEd.exe} [004AF34D] Forms.TCustomForm.WMCommand (Line 4115, "Forms.pas" + 2) + $25
+(0008D8B7){ScriptEd.exe} [0048E8B7] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(0008DF53){ScriptEd.exe} [0048EF53] Controls.TControl.WMMouseMove (Line 4819, "Controls.pas" + 8) + $24
+(0008D8B7){ScriptEd.exe} [0048E8B7] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(000915C6){ScriptEd.exe} [004925C6] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000ABB68){ScriptEd.exe} [004ACB68] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(000914D2){ScriptEd.exe} [004924D2] Controls.TWinControl.WndProc (Line 6320, "Controls.pas" + 11) + $6
+(000915C6){ScriptEd.exe} [004925C6] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000ABB68){ScriptEd.exe} [004ACB68] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(000362F0){ScriptEd.exe} [004372F0] Graphics.FreeMemoryContexts (Line 4670, "Graphics.pas" + 12) + $5
+(000223A2){ScriptEd.exe} [004233A2] Classes.TThreadList.UnlockList (Line 3151, "classes.pas" + 1) + $7
+(000362F0){ScriptEd.exe} [004372F0] Graphics.FreeMemoryContexts (Line 4670, "Graphics.pas" + 12) + $5
+(00091198){ScriptEd.exe} [00492198] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(000915C6){ScriptEd.exe} [004925C6] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000ABB68){ScriptEd.exe} [004ACB68] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(00091198){ScriptEd.exe} [00492198] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002E264){ScriptEd.exe} [0042F264] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000B3800){ScriptEd.exe} [004B4800] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000B3847){ScriptEd.exe} [004B4847] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000B3AE2){ScriptEd.exe} [004B4AE2] Forms.TApplication.Run (Line 6976, "Forms.pas" + 16) + $3
+(001DC764){ScriptEd.exe} [005DD764] ScriptEd.ScriptEd (Line 74, "" + 37) + $2
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1186
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[01250000] c:\codeprojects\scripted_v1_50\plugins\PLG_CheckRefs.dll
+<00400000> (no version info)
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TSynEdit "ScriptEditor"
+TMainForm "MainForm"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 18.7.2008 1:48:27                                                          =
+==============================================================================
+Access violation at address 00466E08 in module 'ScriptEd.exe'. Read of address 00000004.
+
+Exception class: EAccessViolation
+Exception message: Access violation at address 00466E08 in module 'ScriptEd.exe'. Read of address 00000004.
+Exception address: 00466E08
+------------------------------------------------------------------------------
+Stack list, generated 18.7.2008 1:48:27
+(00065E08){ScriptEd.exe} [00466E08] ComCtrls.TListItem.GetIndex (Line 13030, "ComCtrls.pas" + 1) + $3
+(0009170C){ScriptEd.exe} [0049270C] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(000FF062){ScriptEd.exe} [00500062] SynEdit.TCustomSynEdit.GetHighlighterAttriAtRowColEx (Line 9761, "SynEdit.pas" + 18) + $8
+(001BB7C7){ScriptEd.exe} [005BC7C7] DialogueEditor.TForm3.mvupbtnClick (Line 840, "DialogueEditor.pas" + 8) + $B
+(0008DAE2){ScriptEd.exe} [0048EAE2] Controls.TControl.Click (Line 4705, "Controls.pas" + 9) + $C
+(00080C13){ScriptEd.exe} [00481C13] StdCtrls.TButton.Click (Line 3472, "StdCtrls.pas" + 3) + $3
+(00080D7A){ScriptEd.exe} [00481D7A] StdCtrls.TButton.CNCommand (Line 3524, "StdCtrls.pas" + 1) + $11
+(0008D8B7){ScriptEd.exe} [0048E8B7] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(000915C6){ScriptEd.exe} [004925C6] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(00080A62){ScriptEd.exe} [00481A62] StdCtrls.TButtonControl.WndProc (Line 3414, "StdCtrls.pas" + 13) + $6
+(0008D5C2){ScriptEd.exe} [0048E5C2] Controls.TControl.Perform (Line 4552, "Controls.pas" + 5) + $F
+(00091788){ScriptEd.exe} [00492788] Controls.DoControlMsg (Line 6388, "Controls.pas" + 6) + $1B
+(00091F65){ScriptEd.exe} [00492F65] Controls.TWinControl.WMCommand (Line 6574, "Controls.pas" + 1) + $9
+(0008D8B7){ScriptEd.exe} [0048E8B7] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(0009170C){ScriptEd.exe} [0049270C] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(0008D8B7){ScriptEd.exe} [0048E8B7] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(0002E264){ScriptEd.exe} [0042F264] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000915C6){ScriptEd.exe} [004925C6] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000223A2){ScriptEd.exe} [004233A2] Classes.TThreadList.UnlockList (Line 3151, "classes.pas" + 1) + $7
+(0010554F){ScriptEd.exe} [0050654F] JvExControls.TJvExCustomControl.WndProc + $4FF
+(00091198){ScriptEd.exe} [00492198] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002E264){ScriptEd.exe} [0042F264] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(0009170C){ScriptEd.exe} [0049270C] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(0008E009){ScriptEd.exe} [0048F009] Controls.TControl.WMLButtonUp (Line 4836, "Controls.pas" + 1) + $8
+(0008DCE5){ScriptEd.exe} [0048ECE5] Controls.TControl.WMLButtonDblClk (Line 4752, "Controls.pas" + 5) + $E
+(0008D8B7){ScriptEd.exe} [0048E8B7] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(000915C6){ScriptEd.exe} [004925C6] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000911AD){ScriptEd.exe} [004921AD] Controls.TWinControl.MainWndProc (Line 6240, "Controls.pas" + 6) + $0
+(00094724){ScriptEd.exe} [00495724] Controls.TWinControl.GetHandle (Line 7802, "Controls.pas" + 1) + $3
+(0009138F){ScriptEd.exe} [0049238F] Controls.TWinControl.IsControlMouseMsg (Line 6287, "Controls.pas" + 1) + $A
+(000915C6){ScriptEd.exe} [004925C6] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(00080A62){ScriptEd.exe} [00481A62] StdCtrls.TButtonControl.WndProc (Line 3414, "StdCtrls.pas" + 13) + $6
+(00091198){ScriptEd.exe} [00492198] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002E264){ScriptEd.exe} [0042F264] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000B3800){ScriptEd.exe} [004B4800] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000B3847){ScriptEd.exe} [004B4847] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000AF978){ScriptEd.exe} [004B0978] Forms.TCustomForm.ShowModal (Line 4823, "Forms.pas" + 24) + $5
+(001C9A2D){ScriptEd.exe} [005CAA2D] ScriptEdWindow.TMainForm.DialogueEditor1Click (Line 1351, "ScriptEdWindow.pas" + 14) + $9
+(000A2CBD){ScriptEd.exe} [004A3CBD] Menus.TMenuItem.Click (Line 1826, "Menus.pas" + 14) + $C
+(000A4519){ScriptEd.exe} [004A5519] Menus.TMenu.DispatchCommand (Line 2546, "Menus.pas" + 5) + $5
+(000AE34D){ScriptEd.exe} [004AF34D] Forms.TCustomForm.WMCommand (Line 4115, "Forms.pas" + 2) + $25
+(0008D8B7){ScriptEd.exe} [0048E8B7] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(0008DF53){ScriptEd.exe} [0048EF53] Controls.TControl.WMMouseMove (Line 4819, "Controls.pas" + 8) + $24
+(0008D8B7){ScriptEd.exe} [0048E8B7] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(000915C6){ScriptEd.exe} [004925C6] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000ABB68){ScriptEd.exe} [004ACB68] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(00091198){ScriptEd.exe} [00492198] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002E264){ScriptEd.exe} [0042F264] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000B3800){ScriptEd.exe} [004B4800] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000B3847){ScriptEd.exe} [004B4847] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000B3AE2){ScriptEd.exe} [004B4AE2] Forms.TApplication.Run (Line 6976, "Forms.pas" + 16) + $3
+(001DD528){ScriptEd.exe} [005DE528] ScriptEd.ScriptEd (Line 74, "" + 37) + $2
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1224
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] C:\CodeProjects\ScriptEd_v1_50\ScriptEd.exe
+           (no version info)
+[01020000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[01070000] C:\Program Files\Logitech\iTouch\kbdhook.dll
+<10000000> 2.22.289.0 - 2.22.289
+           Keyboard Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TButton "mvupbtn"
+TJvStandardPage "DialogueEditorPage"
+TJvPageList "JvPageList1"
+TForm3 "Form3"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 21.7.2008 23:11:42                                                         =
+==============================================================================
+List index out of bounds (18).
+
+Exception class: EListError
+Exception message: List index out of bounds (18).
+Exception address: 005938B3
+------------------------------------------------------------------------------
+Stack list, generated 21.7.2008 23:11:39
+(001928AE){ScriptEd.exe} [005938AE]
+(00192962){ScriptEd.exe} [00593962]
+(0019256E){ScriptEd.exe} [0059356E]
+(001C497A){ScriptEd.exe} [005C597A]
+(0008DC5A){ScriptEd.exe} [0048EC5A]
+(00080D8B){ScriptEd.exe} [00481D8B]
+(00080EF2){ScriptEd.exe} [00481EF2]
+(0008DA2F){ScriptEd.exe} [0048EA2F]
+(0009173E){ScriptEd.exe} [0049273E]
+(00080BDA){ScriptEd.exe} [00481BDA]
+(0008D73A){ScriptEd.exe} [0048E73A]
+(00091900){ScriptEd.exe} [00492900]
+(000920DD){ScriptEd.exe} [004930DD]
+(000AE4D4){ScriptEd.exe} [004AF4D4]
+(0008DA2F){ScriptEd.exe} [0048EA2F]
+(00091884){ScriptEd.exe} [00492884]
+(0008DA2F){ScriptEd.exe} [0048EA2F]
+(00091310){ScriptEd.exe} [00492310]
+(0009173E){ScriptEd.exe} [0049273E]
+(000ABCE0){ScriptEd.exe} [004ACCE0]
+(00091310){ScriptEd.exe} [00492310]
+(00091325){ScriptEd.exe} [00492325]
+(00091310){ScriptEd.exe} [00492310]
+(0002E264){ScriptEd.exe} [0042F264]
+(00091884){ScriptEd.exe} [00492884]
+(0008E181){ScriptEd.exe} [0048F181]
+(0008DA2F){ScriptEd.exe} [0048EA2F]
+(00091325){ScriptEd.exe} [00492325]
+(0009489C){ScriptEd.exe} [0049589C]
+(00091507){ScriptEd.exe} [00492507]
+(0009173E){ScriptEd.exe} [0049273E]
+(00080BDA){ScriptEd.exe} [00481BDA]
+(00091310){ScriptEd.exe} [00492310]
+(0002E264){ScriptEd.exe} [0042F264]
+(000B3978){ScriptEd.exe} [004B4978]
+(000B39BF){ScriptEd.exe} [004B49BF]
+(000AFAF0){ScriptEd.exe} [004B0AF0]
+(001C5CEE){ScriptEd.exe} [005C6CEE]
+(000A2E35){ScriptEd.exe} [004A3E35]
+(000A4691){ScriptEd.exe} [004A5691]
+(000A57E0){ScriptEd.exe} [004A67E0]
+(000A571D){ScriptEd.exe} [004A671D]
+(0002E264){ScriptEd.exe} [0042F264]
+(000B3978){ScriptEd.exe} [004B4978]
+(000B39BF){ScriptEd.exe} [004B49BF]
+(000AFAF0){ScriptEd.exe} [004B0AF0]
+(001D1F63){ScriptEd.exe} [005D2F63] EditorFindLine + $1103
+(000A2E35){ScriptEd.exe} [004A3E35]
+(000A4691){ScriptEd.exe} [004A5691]
+(000AE4C5){ScriptEd.exe} [004AF4C5]
+(0008DA2F){ScriptEd.exe} [0048EA2F]
+(0009173E){ScriptEd.exe} [0049273E]
+(000ABCE0){ScriptEd.exe} [004ACCE0]
+(00091310){ScriptEd.exe} [00492310]
+(0002E264){ScriptEd.exe} [0042F264]
+(000B3978){ScriptEd.exe} [004B4978]
+(000B39BF){ScriptEd.exe} [004B49BF]
+(000B3C5A){ScriptEd.exe} [004B4C5A]
+(001E6272){ScriptEd.exe} [005E7272] EditorFindLine + $15412
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1277
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[00EF0000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[00F30000] C:\Program Files\Logitech\iTouch\kbdhook.dll
+<10000000> 2.22.289.0 - 2.22.289
+           Keyboard Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[59A60000] C:\WINDOWS\system32\DBGHELP.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows Image Helper
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76C90000] C:\WINDOWS\system32\imagehlp.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows NT Image Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TButton "Button3"
+TForm22 "Form22"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 23.7.2008 1:50:26                                                          =
+==============================================================================
+Access violation at address 00402F45 in module 'ScriptEd.exe'. Read of address 00000016.
+
+Exception class: EAccessViolation
+Exception message: Access violation at address 00402F45 in module 'ScriptEd.exe'. Read of address 00000016.
+Exception address: 00402F45
+------------------------------------------------------------------------------
+Stack list, generated 23.7.2008 1:50:20
+(00001F45){ScriptEd.exe} [00402F45] System.Move (Line 3373, "system.pas" + 29) + $0
+(000055AF){ScriptEd.exe} [004065AF] System.@CopyRecord (Line 14713, "system.pas" + 23) + $0
+(001D951A){ScriptEd.exe} [005DA51A] AdvancedDATOptions.DeleteSplitGroup (Line 150, "AdvancedDATOptions.pas" + 8) + $11
+(001D9835){ScriptEd.exe} [005DA835] AdvancedDATOptions.TForm22.Button4Click (Line 207, "AdvancedDATOptions.pas" + 4) + $E
+(0008E4C6){ScriptEd.exe} [0048F4C6] Controls.TControl.Click (Line 4705, "Controls.pas" + 9) + $C
+(000815F7){ScriptEd.exe} [004825F7] StdCtrls.TButton.Click (Line 3472, "StdCtrls.pas" + 3) + $3
+(0008175E){ScriptEd.exe} [0048275E] StdCtrls.TButton.CNCommand (Line 3524, "StdCtrls.pas" + 1) + $11
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(00091FAA){ScriptEd.exe} [00492FAA] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(00081446){ScriptEd.exe} [00482446] StdCtrls.TButtonControl.WndProc (Line 3414, "StdCtrls.pas" + 13) + $6
+(0008DFA6){ScriptEd.exe} [0048EFA6] Controls.TControl.Perform (Line 4552, "Controls.pas" + 5) + $F
+(0009216C){ScriptEd.exe} [0049316C] Controls.DoControlMsg (Line 6388, "Controls.pas" + 6) + $1B
+(00092949){ScriptEd.exe} [00493949] Controls.TWinControl.WMCommand (Line 6574, "Controls.pas" + 1) + $9
+(000AED40){ScriptEd.exe} [004AFD40] Forms.TCustomForm.WMCommand (Line 4116, "Forms.pas" + 3) + $6
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(000920F0){ScriptEd.exe} [004930F0] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(000920F0){ScriptEd.exe} [004930F0] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(00091FAA){ScriptEd.exe} [00492FAA] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000AC54C){ScriptEd.exe} [004AD54C] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(00091B7C){ScriptEd.exe} [00492B7C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(00091B91){ScriptEd.exe} [00492B91] Controls.TWinControl.MainWndProc (Line 6240, "Controls.pas" + 6) + $0
+(00091B7C){ScriptEd.exe} [00492B7C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002EAD0){ScriptEd.exe} [0042FAD0] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000920F0){ScriptEd.exe} [004930F0] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(0008E9ED){ScriptEd.exe} [0048F9ED] Controls.TControl.WMLButtonUp (Line 4836, "Controls.pas" + 1) + $8
+(0008E937){ScriptEd.exe} [0048F937] Controls.TControl.WMMouseMove (Line 4819, "Controls.pas" + 8) + $24
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(00091B91){ScriptEd.exe} [00492B91] Controls.TWinControl.MainWndProc (Line 6240, "Controls.pas" + 6) + $0
+(00095108){ScriptEd.exe} [00496108] Controls.TWinControl.GetHandle (Line 7802, "Controls.pas" + 1) + $3
+(00091D73){ScriptEd.exe} [00492D73] Controls.TWinControl.IsControlMouseMsg (Line 6287, "Controls.pas" + 1) + $A
+(00091FAA){ScriptEd.exe} [00492FAA] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(00081446){ScriptEd.exe} [00482446] StdCtrls.TButtonControl.WndProc (Line 3414, "StdCtrls.pas" + 13) + $6
+(00091B7C){ScriptEd.exe} [00492B7C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002EAD0){ScriptEd.exe} [0042FAD0] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000B41E4){ScriptEd.exe} [004B51E4] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000B422B){ScriptEd.exe} [004B522B] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000B035C){ScriptEd.exe} [004B135C] Forms.TCustomForm.ShowModal (Line 4823, "Forms.pas" + 24) + $5
+(001DB01D){ScriptEd.exe} [005DC01D] LoadModule.TForm6.Advancedmodesplitintopatchn1Click (Line 309, "LoadModule.pas" + 2) + $9
+(000A36A1){ScriptEd.exe} [004A46A1] Menus.TMenuItem.Click (Line 1826, "Menus.pas" + 14) + $C
+(000A4EFD){ScriptEd.exe} [004A5EFD] Menus.TMenu.DispatchCommand (Line 2546, "Menus.pas" + 5) + $5
+(000A604C){ScriptEd.exe} [004A704C] Menus.TPopupList.WndProc (Line 3260, "Menus.pas" + 4) + $12
+(000A5F89){ScriptEd.exe} [004A6F89] Menus.TPopupList.MainWndProc (Line 3241, "Menus.pas" + 2) + $8
+(0002EAD0){ScriptEd.exe} [0042FAD0] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000B41E4){ScriptEd.exe} [004B51E4] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000B422B){ScriptEd.exe} [004B522B] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000B035C){ScriptEd.exe} [004B135C] Forms.TCustomForm.ShowModal (Line 4823, "Forms.pas" + 24) + $5
+(001E771B){ScriptEd.exe} [005E871B] ScriptEdWindow.TMainForm.Selectmodule1Click (Line 1388, "ScriptEdWindow.pas" + 2) + $9
+(000A36A1){ScriptEd.exe} [004A46A1] Menus.TMenuItem.Click (Line 1826, "Menus.pas" + 14) + $C
+(000A4EFD){ScriptEd.exe} [004A5EFD] Menus.TMenu.DispatchCommand (Line 2546, "Menus.pas" + 5) + $5
+(000AED31){ScriptEd.exe} [004AFD31] Forms.TCustomForm.WMCommand (Line 4115, "Forms.pas" + 2) + $25
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(0008E937){ScriptEd.exe} [0048F937] Controls.TControl.WMMouseMove (Line 4819, "Controls.pas" + 8) + $24
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(00091FAA){ScriptEd.exe} [00492FAA] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000AC54C){ScriptEd.exe} [004AD54C] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(00091B7C){ScriptEd.exe} [00492B7C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002EAD0){ScriptEd.exe} [0042FAD0] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000B41E4){ScriptEd.exe} [004B51E4] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000B422B){ScriptEd.exe} [004B522B] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000B44C6){ScriptEd.exe} [004B54C6] Forms.TApplication.Run (Line 6976, "Forms.pas" + 16) + $3
+(001FBA72){ScriptEd.exe} [005FCA72] ScriptEd.ScriptEd (Line 79, "" + 39) + $2
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1074
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[01830000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[69B10000] c:\WINDOWS\system32\msxml4.dll
+           4.20.9848.0 - 4.20.9848.0
+           MSXML 4.0 SP 2
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76FD0000] C:\WINDOWS\system32\CLBCATQ.DLL
+           2001.12.4414.700 - 2001.12.4414.700
+[77050000] C:\WINDOWS\system32\COMRes.dll
+           2001.12.4414.700 - 2001.12.4414.700
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TButton "Button4"
+TForm22 "Form22"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 24.7.2008 17:52:22                                                         =
+==============================================================================
+Access violation at address 00467674 in module 'ScriptEd.exe'. Read of address 00000004.
+
+Exception class: EAccessViolation
+Exception message: Access violation at address 00467674 in module 'ScriptEd.exe'. Read of address 00000004.
+Exception address: 00467674
+------------------------------------------------------------------------------
+Stack list, generated 24.7.2008 17:52:12
+(00066674){ScriptEd.exe} [00467674] ComCtrls.TListItem.GetIndex (Line 13030, "ComCtrls.pas" + 1) + $3
+(00066306){ScriptEd.exe} [00467306] ComCtrls.TListItem.SetState (Line 12929, "ComCtrls.pas" + 12) + $7
+(00068848){ScriptEd.exe} [00469848] ComCtrls.TCustomListView.SetItemIndex (Line 13980, "ComCtrls.pas" + 7) + $18
+(001DBC72){ScriptEd.exe} [005DCC72] MESFileShow.TForm7.deletebuttonClick (Line 125, "MESFileShow.pas" + 8) + $A
+(0008E4C6){ScriptEd.exe} [0048F4C6] Controls.TControl.Click (Line 4705, "Controls.pas" + 9) + $C
+(000815F7){ScriptEd.exe} [004825F7] StdCtrls.TButton.Click (Line 3472, "StdCtrls.pas" + 3) + $3
+(0008175E){ScriptEd.exe} [0048275E] StdCtrls.TButton.CNCommand (Line 3524, "StdCtrls.pas" + 1) + $11
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(00091FAA){ScriptEd.exe} [00492FAA] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(00081446){ScriptEd.exe} [00482446] StdCtrls.TButtonControl.WndProc (Line 3414, "StdCtrls.pas" + 13) + $6
+(0008DFA6){ScriptEd.exe} [0048EFA6] Controls.TControl.Perform (Line 4552, "Controls.pas" + 5) + $F
+(0009216C){ScriptEd.exe} [0049316C] Controls.DoControlMsg (Line 6388, "Controls.pas" + 6) + $1B
+(00092949){ScriptEd.exe} [00493949] Controls.TWinControl.WMCommand (Line 6574, "Controls.pas" + 1) + $9
+(000AED40){ScriptEd.exe} [004AFD40] Forms.TCustomForm.WMCommand (Line 4116, "Forms.pas" + 3) + $6
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(000920F0){ScriptEd.exe} [004930F0] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(000920F0){ScriptEd.exe} [004930F0] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(00091FAA){ScriptEd.exe} [00492FAA] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000AC54C){ScriptEd.exe} [004AD54C] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(00091B7C){ScriptEd.exe} [00492B7C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(00091B91){ScriptEd.exe} [00492B91] Controls.TWinControl.MainWndProc (Line 6240, "Controls.pas" + 6) + $0
+(00091B7C){ScriptEd.exe} [00492B7C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002EAD0){ScriptEd.exe} [0042FAD0] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000920F0){ScriptEd.exe} [004930F0] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(0008E9ED){ScriptEd.exe} [0048F9ED] Controls.TControl.WMLButtonUp (Line 4836, "Controls.pas" + 1) + $8
+(0008E937){ScriptEd.exe} [0048F937] Controls.TControl.WMMouseMove (Line 4819, "Controls.pas" + 8) + $24
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(00091B91){ScriptEd.exe} [00492B91] Controls.TWinControl.MainWndProc (Line 6240, "Controls.pas" + 6) + $0
+(00095108){ScriptEd.exe} [00496108] Controls.TWinControl.GetHandle (Line 7802, "Controls.pas" + 1) + $3
+(00091D73){ScriptEd.exe} [00492D73] Controls.TWinControl.IsControlMouseMsg (Line 6287, "Controls.pas" + 1) + $A
+(00091FAA){ScriptEd.exe} [00492FAA] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(00081446){ScriptEd.exe} [00482446] StdCtrls.TButtonControl.WndProc (Line 3414, "StdCtrls.pas" + 13) + $6
+(00091B7C){ScriptEd.exe} [00492B7C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002EAD0){ScriptEd.exe} [0042FAD0] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000B41E4){ScriptEd.exe} [004B51E4] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000B422B){ScriptEd.exe} [004B522B] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000B035C){ScriptEd.exe} [004B135C] Forms.TCustomForm.ShowModal (Line 4823, "Forms.pas" + 24) + $5
+(001ED363){ScriptEd.exe} [005EE363] ScriptEdWindow.TMainForm.EditAttachmentPointdescriptions1Click (Line 2887, "ScriptEdWindow.pas" + 1) + $9
+(000A36A1){ScriptEd.exe} [004A46A1] Menus.TMenuItem.Click (Line 1826, "Menus.pas" + 14) + $C
+(000A4EFD){ScriptEd.exe} [004A5EFD] Menus.TMenu.DispatchCommand (Line 2546, "Menus.pas" + 5) + $5
+(000AED31){ScriptEd.exe} [004AFD31] Forms.TCustomForm.WMCommand (Line 4115, "Forms.pas" + 2) + $25
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(000920F0){ScriptEd.exe} [004930F0] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(00007837){ScriptEd.exe} [00408837] Windows.DefMDIChildProc (Line 29999, "Windows.pas" + 0) + $3
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(00091FAA){ScriptEd.exe} [00492FAA] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000AC54C){ScriptEd.exe} [004AD54C] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(00091B7C){ScriptEd.exe} [00492B7C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002EAD0){ScriptEd.exe} [0042FAD0] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000B41E4){ScriptEd.exe} [004B51E4] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000B422B){ScriptEd.exe} [004B522B] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000B44C6){ScriptEd.exe} [004B54C6] Forms.TApplication.Run (Line 6976, "Forms.pas" + 16) + $3
+(001FBF22){ScriptEd.exe} [005FCF22] ScriptEd.ScriptEd (Line 79, "" + 39) + $2
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 802
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] c:\codeprojects\scripted_v1_50\ScriptEd.exe
+           (no version info)
+[01A30000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[01A50000] C:\Program Files\Logitech\iTouch\kbdhook.dll
+<10000000> 2.22.289.0 - 2.22.289
+           Keyboard Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[69B10000] c:\WINDOWS\system32\msxml4.dll
+           4.20.9848.0 - 4.20.9848.0
+           MSXML 4.0 SP 2
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76FD0000] C:\WINDOWS\system32\CLBCATQ.DLL
+           2001.12.4414.700 - 2001.12.4414.700
+[77050000] C:\WINDOWS\system32\COMRes.dll
+           2001.12.4414.700 - 2001.12.4414.700
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TButton "deletebutton"
+TForm7 "Form7"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 30.7.2008 1:13:51                                                          =
+==============================================================================
+Access violation at address 005DBA25 in module 'ScriptEd.exe'. Read of address 00000024.
+
+Exception class: EAccessViolation
+Exception message: Access violation at address 005DBA25 in module 'ScriptEd.exe'. Read of address 00000024.
+Exception address: 005DBA25
+------------------------------------------------------------------------------
+Stack list, generated 30.7.2008 1:13:50
+(001DAA25){ScriptEd.exe} [005DBA25] LoadModule.TForm6.UncompressButtonClick (Line 226, "LoadModule.pas" + 42) + $1A
+(000920F0){ScriptEd.exe} [004930F0] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(001DAA20){ScriptEd.exe} [005DBA20] LoadModule.TForm6.UncompressButtonClick (Line 226, "LoadModule.pas" + 42) + $15
+(001EF02A){ScriptEd.exe} [005F002A] AppEvnts.TCustomApplicationEvents.DoModalEnd (Line 258, "appevnts.pas" + 1) + $19
+(0008E4C6){ScriptEd.exe} [0048F4C6] Controls.TControl.Click (Line 4705, "Controls.pas" + 9) + $C
+(000815F7){ScriptEd.exe} [004825F7] StdCtrls.TButton.Click (Line 3472, "StdCtrls.pas" + 3) + $3
+(0008175E){ScriptEd.exe} [0048275E] StdCtrls.TButton.CNCommand (Line 3524, "StdCtrls.pas" + 1) + $11
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(00091FAA){ScriptEd.exe} [00492FAA] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(00081446){ScriptEd.exe} [00482446] StdCtrls.TButtonControl.WndProc (Line 3414, "StdCtrls.pas" + 13) + $6
+(0008DFA6){ScriptEd.exe} [0048EFA6] Controls.TControl.Perform (Line 4552, "Controls.pas" + 5) + $F
+(0009216C){ScriptEd.exe} [0049316C] Controls.DoControlMsg (Line 6388, "Controls.pas" + 6) + $1B
+(00092949){ScriptEd.exe} [00493949] Controls.TWinControl.WMCommand (Line 6574, "Controls.pas" + 1) + $9
+(000AED40){ScriptEd.exe} [004AFD40] Forms.TCustomForm.WMCommand (Line 4116, "Forms.pas" + 3) + $6
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(000920F0){ScriptEd.exe} [004930F0] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(0002EAD0){ScriptEd.exe} [0042FAD0] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(00091FAA){ScriptEd.exe} [00492FAA] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000AC54C){ScriptEd.exe} [004AD54C] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(00091B7C){ScriptEd.exe} [00492B7C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(00091B91){ScriptEd.exe} [00492B91] Controls.TWinControl.MainWndProc (Line 6240, "Controls.pas" + 6) + $0
+(00091B7C){ScriptEd.exe} [00492B7C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002EAD0){ScriptEd.exe} [0042FAD0] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000920F0){ScriptEd.exe} [004930F0] Controls.TWinControl.DefaultHandler (Line 6369, "Controls.pas" + 23) + $28
+(0008E9ED){ScriptEd.exe} [0048F9ED] Controls.TControl.WMLButtonUp (Line 4836, "Controls.pas" + 1) + $8
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(00091EB6){ScriptEd.exe} [00492EB6] Controls.TWinControl.WndProc (Line 6320, "Controls.pas" + 11) + $6
+(00095108){ScriptEd.exe} [00496108] Controls.TWinControl.GetHandle (Line 7802, "Controls.pas" + 1) + $3
+(00091D73){ScriptEd.exe} [00492D73] Controls.TWinControl.IsControlMouseMsg (Line 6287, "Controls.pas" + 1) + $A
+(00091FAA){ScriptEd.exe} [00492FAA] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(00081446){ScriptEd.exe} [00482446] StdCtrls.TButtonControl.WndProc (Line 3414, "StdCtrls.pas" + 13) + $6
+(00091B7C){ScriptEd.exe} [00492B7C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002EAD0){ScriptEd.exe} [0042FAD0] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000B41E4){ScriptEd.exe} [004B51E4] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000B422B){ScriptEd.exe} [004B522B] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000B035C){ScriptEd.exe} [004B135C] Forms.TCustomForm.ShowModal (Line 4823, "Forms.pas" + 24) + $5
+(001E78CB){ScriptEd.exe} [005E88CB] ScriptEdWindow.TMainForm.Selectmodule1Click (Line 1424, "ScriptEdWindow.pas" + 2) + $9
+(000A36A1){ScriptEd.exe} [004A46A1] Menus.TMenuItem.Click (Line 1826, "Menus.pas" + 14) + $C
+(000A4EFD){ScriptEd.exe} [004A5EFD] Menus.TMenu.DispatchCommand (Line 2546, "Menus.pas" + 5) + $5
+(000AED31){ScriptEd.exe} [004AFD31] Forms.TCustomForm.WMCommand (Line 4115, "Forms.pas" + 2) + $25
+(0008E29B){ScriptEd.exe} [0048F29B] Controls.TControl.WndProc (Line 4645, "Controls.pas" + 53) + $8
+(00091FAA){ScriptEd.exe} [00492FAA] Controls.TWinControl.WndProc (Line 6342, "Controls.pas" + 33) + $6
+(000AC54C){ScriptEd.exe} [004AD54C] Forms.TCustomForm.WndProc (Line 3098, "Forms.pas" + 103) + $6
+(00091B7C){ScriptEd.exe} [00492B7C] Controls.TWinControl.MainWndProc (Line 6237, "Controls.pas" + 3) + $9
+(0002EAD0){ScriptEd.exe} [0042FAD0] Classes.StdWndProc (Line 10966, "classes.pas" + 8) + $0
+(000B41E4){ScriptEd.exe} [004B51E4] Forms.TApplication.ProcessMessage (Line 6873, "Forms.pas" + 13) + $4
+(000B422B){ScriptEd.exe} [004B522B] Forms.TApplication.HandleMessage (Line 6892, "Forms.pas" + 1) + $6
+(000B44C6){ScriptEd.exe} [004B54C6] Forms.TApplication.Run (Line 6976, "Forms.pas" + 16) + $3
+(001FC29E){ScriptEd.exe} [005FD29E] ScriptEd.ScriptEd (Line 79, "" + 39) + $2
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1173
+Display  : 1024x768 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] C:\CodeProjects\ScriptEd_v1_50\ScriptEd.exe
+           (no version info)
+[01820000] C:\Program Files\Common Files\Logitech\Scrolling\LgMsgHk.dll
+<10000000> 1.1.0.0 - 1.1.0
+           Logitech Message Hook Library
+[10000000] C:\Program Files\Logitech\iTouch\iTchHk.dll
+           1.0.0.0 - 1.0.0
+           iTouch Hook Library
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[69B10000] c:\WINDOWS\system32\msxml4.dll
+           4.20.9848.0 - 4.20.9848.0
+           MSXML 4.0 SP 2
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76FD0000] C:\WINDOWS\system32\CLBCATQ.DLL
+           2001.12.4414.700 - 2001.12.4414.700
+[77050000] C:\WINDOWS\system32\COMRes.dll
+           2001.12.4414.700 - 2001.12.4414.700
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2113)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2111)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TMemo "uncompresslog"
+TForm20 "Form20"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 8.12.2009 14:13:25                                                         =
+==============================================================================
+Invalid or empty path (C:\Sierra\Arcanum\Modules).
+
+Exception class: EJVCLException
+Exception message: Invalid or empty path (C:\Sierra\Arcanum\Modules).
+Exception address: 005C239D
+------------------------------------------------------------------------------
+Stack list, generated 8.12.2009 14:13:25
+(001C1398){ScriptEd.exe} [005C2398]
+(001DA474){ScriptEd.exe} [005DB474]
+(000AB365){ScriptEd.exe} [004AC365]
+(000AAFD5){ScriptEd.exe} [004ABFD5]
+(00003AAB){ScriptEd.exe} [00404AAB]
+(000AAFA2){ScriptEd.exe} [004ABFA2]
+(000014FE){ScriptEd.exe} [004024FE]
+(000016CB){ScriptEd.exe} [004026CB]
+(000B43C8){ScriptEd.exe} [004B53C8]
+(001FB3B0){ScriptEd.exe} [005FC3B0] EditorFindLine + $151F8
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1671
+Display  : 1680x1050 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] C:\CodeProjects\ScriptEd_v1_50\ScriptEd.exe
+           1.50.4.0 - 1.50.4.0
+           ScriptEd 1.50 - Arcanum Scripting Tool
+[59A60000] C:\WINDOWS\system32\DBGHELP.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows Image Helper
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[63560000] C:\Fraps\FRAPS.DLL
+           2.9.8.7777 - 2, 9, 8, 7777
+           Fraps
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5768 - 5.1.2600.5768 (xpsp_sp3_gdr.090226-1442)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76C90000] C:\WINDOWS\system32\imagehlp.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows NT Image Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5755 - 5.1.2600.5755 (xpsp_sp3_gdr.090206-1234)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5795 - 5.1.2600.5795 (xpsp_sp3_gdr.090415-1241)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5698 - 5.1.2600.5698 (xpsp_sp3_gdr.081022-1932)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5834 - 5.1.2600.5834 (xpsp_sp3_gdr.090624-1305)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5781 - 5.1.2600.5781 (xpsp_sp3_gdr.090321-1317)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5755 - 5.1.2600.5755 (xpsp_sp3_gdr.090206-1234)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5622 - 6.00.2900.5622 (xpsp_sp3_gdr.080617-1319)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+
+==============================================================================
+= 16.3.2010 16:45:34                                                         =
+==============================================================================
+Invalid or empty path (C:\Sierra\Arcanum\Modules).
+
+Exception class: EJVCLException
+Exception message: Invalid or empty path (C:\Sierra\Arcanum\Modules).
+Exception address: 005C239D
+------------------------------------------------------------------------------
+Stack list, generated 16.3.2010 16:45:34
+(001C1398){ScriptEd.exe} [005C2398]
+(001DA474){ScriptEd.exe} [005DB474]
+(000AB365){ScriptEd.exe} [004AC365]
+(000AAFD5){ScriptEd.exe} [004ABFD5]
+(00003AAB){ScriptEd.exe} [00404AAB]
+(000AAFA2){ScriptEd.exe} [004ABFA2]
+(000014FE){ScriptEd.exe} [004024FE]
+(000016CB){ScriptEd.exe} [004026CB]
+(000B43C8){ScriptEd.exe} [004B53C8]
+(001FB3B0){ScriptEd.exe} [005FC3B0] EditorFindLine + $151F8
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1729
+Display  : 1680x1050 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] C:\CodeProjects\ScriptEd_v1_50\ScriptEd.exe
+           1.50.4.0 - 1.50.4.0
+           ScriptEd 1.50 - Arcanum Scripting Tool
+[59A60000] C:\WINDOWS\system32\DBGHELP.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows Image Helper
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5768 - 5.1.2600.5768 (xpsp_sp3_gdr.090226-1442)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76C90000] C:\WINDOWS\system32\imagehlp.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows NT Image Helper
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5755 - 5.1.2600.5755 (xpsp_sp3_gdr.090206-1234)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5795 - 5.1.2600.5795 (xpsp_sp3_gdr.090415-1241)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5698 - 5.1.2600.5698 (xpsp_sp3_gdr.081022-1932)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5912 - 6.00.2900.5912 (xpsp_sp3_gdr.091207-1454)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5834 - 5.1.2600.5834 (xpsp_sp3_gdr.090624-1305)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5781 - 5.1.2600.5781 (xpsp_sp3_gdr.090321-1317)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5755 - 5.1.2600.5755 (xpsp_sp3_gdr.090206-1234)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5622 - 6.00.2900.5622 (xpsp_sp3_gdr.080617-1319)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+
+==============================================================================
+= 16.3.2010 16:48:05                                                         =
+==============================================================================
+Access violation at address 002E0091. Read of address FFFFFFFF.
+
+Exception class: EAccessViolation
+Exception message: Access violation at address 002E0091. Read of address FFFFFFFF.
+Exception address: 002E0091
+------------------------------------------------------------------------------
+Stack list, generated 16.3.2010 16:48:05
+(FFFFF091){            } [002E0091]
+(001E439A){ScriptEd.exe} [005E539A] ScriptLineAdd + $85A
+(000A36A1){ScriptEd.exe} [004A46A1]
+(000A4EFD){ScriptEd.exe} [004A5EFD]
+(000AED31){ScriptEd.exe} [004AFD31]
+(0008E29B){ScriptEd.exe} [0048F29B]
+(001E1107){ScriptEd.exe} [005E2107]
+(00007837){ScriptEd.exe} [00408837]
+(000A4DB6){ScriptEd.exe} [004A5DB6]
+(000A31DC){ScriptEd.exe} [004A41DC]
+(000A4DB6){ScriptEd.exe} [004A5DB6]
+(000A31DC){ScriptEd.exe} [004A41DC]
+(000A4DDA){ScriptEd.exe} [004A5DDA]
+(000A31DC){ScriptEd.exe} [004A41DC]
+(000A0809){ScriptEd.exe} [004A1809]
+(001E439A){ScriptEd.exe} [005E539A] ScriptLineAdd + $85A
+(000A36A1){ScriptEd.exe} [004A46A1]
+(000A4EFD){ScriptEd.exe} [004A5EFD]
+(000AED31){ScriptEd.exe} [004AFD31]
+(0008E29B){ScriptEd.exe} [0048F29B]
+(0008E937){ScriptEd.exe} [0048F937]
+(0008E29B){ScriptEd.exe} [0048F29B]
+(00091EB6){ScriptEd.exe} [00492EB6]
+(00091FAA){ScriptEd.exe} [00492FAA]
+(000AC54C){ScriptEd.exe} [004AD54C]
+(00036B5C){ScriptEd.exe} [00437B5C]
+(00022A3A){ScriptEd.exe} [00423A3A]
+(00036B5C){ScriptEd.exe} [00437B5C]
+(00091B7C){ScriptEd.exe} [00492B7C]
+(00091FAA){ScriptEd.exe} [00492FAA]
+(000AC54C){ScriptEd.exe} [004AD54C]
+(00091B7C){ScriptEd.exe} [00492B7C]
+(0002EAD0){ScriptEd.exe} [0042FAD0]
+(000B41E4){ScriptEd.exe} [004B51E4]
+(000B422B){ScriptEd.exe} [004B522B]
+(000B44C6){ScriptEd.exe} [004B54C6]
+(001FB536){ScriptEd.exe} [005FC536] EditorFindLine + $1537E
+------------------------------------------------------------------------------
+System   : Windows XP Professional, Version: 5.1, Build: A28, "Service Pack 3"
+Processor: AMD, AMD Athlon(tm) 64 X2 Dual Core Processor 4600+, 2420 MHz MMXex SSE3 3DNow!ex 64 bits DEP
+Memory: 2047; free 1693
+Display  : 1680x1050 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] C:\CodeProjects\ScriptEd_v1_50\ScriptEd.exe
+           1.50.4.0 - 1.50.4.0
+           ScriptEd 1.50 - Arcanum Scripting Tool
+[02190000] C:\CodeProjects\ScriptEd_v1_50\plugins\PLG_ScriptDebugInfo.dll
+<00400000> (no version info)
+[59A60000] C:\WINDOWS\system32\DBGHELP.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows Image Helper
+[5AD70000] C:\WINDOWS\system32\uxtheme.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Microsoft UxTheme Library
+[69B10000] C:\WINDOWS\system32\msxml4.dll
+           4.20.9876.0 - 4.20.9876.0
+           MSXML 4.0 SP 2
+[71B20000] C:\WINDOWS\system32\mpr.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-0852)
+           Multiple Provider Router DLL
+[74720000] C:\WINDOWS\system32\MSCTF.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           MSCTF Server DLL
+[74E30000] C:\WINDOWS\system32\RICHED20.DLL
+           5.30.23.1230 - 5.30.23.1230
+           Rich Text Edit Control, v3.0
+[755C0000] C:\WINDOWS\system32\msctfime.ime
+           5.1.2600.5768 - 5.1.2600.5768 (xpsp_sp3_gdr.090226-1442)
+           Microsoft Text Frame Work Service IME
+[76390000] C:\WINDOWS\system32\imm32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP IMM32 API Client DLL
+[763B0000] C:\WINDOWS\system32\comdlg32.dll
+           6.0.2900.5512 - 6.00.2900.5512 (xpsp.080413-2105)
+           Common Dialogs DLL
+[76BF0000] C:\WINDOWS\system32\PSAPI.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Process Status Helper
+[76C90000] C:\WINDOWS\system32\imagehlp.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows NT Image Helper
+[76FD0000] C:\WINDOWS\system32\CLBCATQ.DLL
+           2001.12.4414.700 - 2001.12.4414.700
+[77050000] C:\WINDOWS\system32\COMRes.dll
+           2001.12.4414.700 - 2001.12.4414.700
+[77120000] C:\WINDOWS\system32\oleaut32.dll
+           5.1.2600.5512 - 5.1.2600.5512
+[773D0000] C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\comctl32.dll
+           6.0.2900.5512 - 6.0 (xpsp.080413-2105)
+           User Experience Controls Library
+[774E0000] C:\WINDOWS\system32\ole32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2108)
+           Microsoft OLE for Windows
+[77C00000] C:\WINDOWS\system32\version.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Version Checking and File Installation Libraries
+[77C10000] C:\WINDOWS\system32\msvcrt.dll
+           7.0.2600.5512 - 7.0.2600.5512 (xpsp.080413-2111)
+           Windows NT CRT DLL
+[77DD0000] C:\WINDOWS\system32\advapi32.dll
+           5.1.2600.5755 - 5.1.2600.5755 (xpsp_sp3_gdr.090206-1234)
+           Advanced Windows 32 Base API
+[77E70000] C:\WINDOWS\system32\RPCRT4.dll
+           5.1.2600.5795 - 5.1.2600.5795 (xpsp_sp3_gdr.090415-1241)
+           Remote Procedure Call Runtime
+[77F10000] C:\WINDOWS\system32\GDI32.dll
+           5.1.2600.5698 - 5.1.2600.5698 (xpsp_sp3_gdr.081022-1932)
+           GDI Client DLL
+[77F60000] C:\WINDOWS\system32\SHLWAPI.dll
+           6.0.2900.5912 - 6.00.2900.5912 (xpsp_sp3_gdr.091207-1454)
+           Shell Light-weight Utility Library
+[77FE0000] C:\WINDOWS\system32\Secur32.dll
+           5.1.2600.5834 - 5.1.2600.5834 (xpsp_sp3_gdr.090624-1305)
+           Security Support Provider Interface
+[7C800000] C:\WINDOWS\system32\kernel32.dll
+           5.1.2600.5781 - 5.1.2600.5781 (xpsp_sp3_gdr.090321-1317)
+           Windows NT BASE API Client DLL
+[7C900000] C:\WINDOWS\system32\ntdll.dll
+           5.1.2600.5755 - 5.1.2600.5755 (xpsp_sp3_gdr.090206-1234)
+           NT Layer DLL
+[7C9C0000] C:\WINDOWS\system32\shell32.dll
+           6.0.2900.5622 - 6.00.2900.5622 (xpsp_sp3_gdr.080617-1319)
+           Windows Shell Common Dll
+[7E410000] C:\WINDOWS\system32\user32.dll
+           5.1.2600.5512 - 5.1.2600.5512 (xpsp.080413-2105)
+           Windows XP USER API Client DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TSynEdit "ScriptEditor"
+TMainForm "MainForm"
+------------------------------------------------------------------------------
+
+==============================================================================
+= 13.10.2010 13:52:21                                                        =
+==============================================================================
+Invalid or empty path (I:\Rojua\Sierra\Arcanum\Modules).
+
+Exception class: EJVCLException
+Exception message: Invalid or empty path (I:\Rojua\Sierra\Arcanum\Modules).
+Exception address: 005C239D
+------------------------------------------------------------------------------
+Stack list, generated 13.10.2010 13:52:21
+(001C1398){ScriptEd.exe} [005C2398]
+(001DA474){ScriptEd.exe} [005DB474]
+(000AB365){ScriptEd.exe} [004AC365]
+(000AAFD5){ScriptEd.exe} [004ABFD5]
+(00003AAB){ScriptEd.exe} [00404AAB]
+(000AAFA2){ScriptEd.exe} [004ABFA2]
+(000014FE){ScriptEd.exe} [004024FE]
+(000016CB){ScriptEd.exe} [004026CB]
+(000B43C8){ScriptEd.exe} [004B53C8]
+(001FB3B0){ScriptEd.exe} [005FC3B0] EditorFindLine + $151F8
+------------------------------------------------------------------------------
+System   :  Workstation, Version: 6.1, Build: 1DB0, ""
+Processor: Intel, Intel(R) Core(TM)2 Duo CPU     E6750  @ 2.66GHz, 3120 MHz MMX SSE3 64 bits DEP
+Memory: 4094; free 2624
+Display  : 1680x1050 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] C:\CodeProjects\ScriptEd_v1_50\ScriptEd.exe
+           1.50.4.0 - 1.50.4.0
+           ScriptEd 1.50 - Arcanum Scripting Tool
+[10000000] C:\Program Files (x86)\Webteh\BSplayerPro\mmkeybsupp.dll
+           1.0.0.0 - 1, 0, 0, 0
+           BSP Shell hook
+[61060000] C:\Windows\system32\mpr.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Multiple Provider Router DLL
+[72160000] C:\Windows\syswow64\dbghelp.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Windows Image Helper
+[726C0000] C:\Windows\system32\uxtheme.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Microsoft UxTheme Library
+[727A0000] C:\Windows\system32\RICHED20.DLL
+           5.31.23.1229 - 5.31.23.1229
+           Rich Text Edit Control, v3.1
+[72890000] C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7600.16385_none_421189da2b7fabfc\comctl32.dll
+           6.10.7600.16385 - 6.10 (win7_rtm.090713-1255)
+           User Experience Controls Library
+[73660000] C:\Windows\system32\version.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Version Checking and File Installation Libraries
+[74C00000] C:\Windows\syswow64\CRYPTBASE.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Base cryptographic API DLL
+[74C10000] C:\Windows\syswow64\SspiCli.dll
+           6.1.7600.16484 - 6.1.7600.16484 (win7_gdr.091210-1534)
+           Security Support Provider Interface
+[74C70000] C:\Windows\syswow64\shell32.dll
+           6.1.7600.16644 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Windows Shell Common Dll
+[758C0000] C:\Windows\syswow64\imm32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Multi-User Windows IMM32 API Client DLL
+[75960000] C:\Windows\syswow64\SHLWAPI.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Shell Light-weight Utility Library
+[759C0000] C:\Windows\syswow64\MSCTF.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           MSCTF Server DLL
+[75A90000] C:\Windows\syswow64\msvcrt.dll
+           7.0.7600.16385 - 7.0.7600.16385 (win7_rtm.090713-1255)
+           Windows NT CRT DLL
+[75B40000] C:\Windows\syswow64\ole32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Microsoft OLE for Windows
+[75CA0000] C:\Windows\syswow64\comdlg32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Common Dialogs DLL
+[75D20000] C:\Windows\syswow64\LPK.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Language Pack
+[75E50000] C:\Windows\syswow64\PSAPI.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Process Status Helper
+[76180000] C:\Windows\syswow64\GDI32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           GDI Client DLL
+[76210000] C:\Windows\syswow64\RPCRT4.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Remote Procedure Call Runtime
+[76300000] C:\Windows\syswow64\oleaut32.dll
+           6.1.7600.16567 - 6.1.7600.16567
+[763F0000] C:\Windows\syswow64\KERNELBASE.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Windows NT BASE API Client DLL
+[76440000] C:\Windows\SysWOW64\sechost.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Host for SCM/SDDL/LSA Lookup APIs
+[76660000] C:\Windows\syswow64\CLBCatQ.DLL
+           2001.12.8530.16385 - 2001.12.8530.16385 (win7_rtm.090713-1255)
+           COM+ Configuration Catalog
+[766F0000] C:\Windows\syswow64\ADVAPI32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Advanced Windows 32 Base API
+[767D0000] C:\Windows\syswow64\imagehlp.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Windows NT Image Helper
+[76810000] C:\Windows\syswow64\kernel32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Windows NT BASE API Client DLL
+[76910000] C:\Windows\syswow64\USP10.dll
+           1.626.7600.16385 - 1.0626.7600.16385 (win7_rtm.090713-1255)
+           Uniscribe Unicode script processor
+[76B70000] C:\Windows\syswow64\user32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Multi-User Windows USER API Client DLL
+[770A0000] C:\Windows\SysWOW64\ntdll.dll
+           6.1.7600.16559 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           NT Layer DLL
+------------------------------------------------------------------------------
+
+==============================================================================
+= 13.10.2010 13:53:22                                                        =
+==============================================================================
+Invalid filename.
+
+Exception class: EInOutError
+Exception message: Invalid filename.
+Exception address: 005EC5E0
+------------------------------------------------------------------------------
+Stack list, generated 13.10.2010 13:53:22
+(001EB5DB){ScriptEd.exe} [005EC5DB] EditorFindLine + $5423
+(00001D6D){ScriptEd.exe} [00402D6D]
+(00001CF6){ScriptEd.exe} [00402CF6]
+(001EB5DB){ScriptEd.exe} [005EC5DB] EditorFindLine + $5423
+(00180691){ScriptEd.exe} [00581691]
+(00180739){ScriptEd.exe} [00581739]
+(000A36A1){ScriptEd.exe} [004A46A1]
+(000A4EFD){ScriptEd.exe} [004A5EFD]
+(000AED31){ScriptEd.exe} [004AFD31]
+(0008E29B){ScriptEd.exe} [0048F29B]
+(00091EB6){ScriptEd.exe} [00492EB6]
+(00091FAA){ScriptEd.exe} [00492FAA]
+(000AC54C){ScriptEd.exe} [004AD54C]
+(00022A3A){ScriptEd.exe} [00423A3A]
+(00036B5C){ScriptEd.exe} [00437B5C]
+(00091B7C){ScriptEd.exe} [00492B7C]
+(00091B91){ScriptEd.exe} [00492B91]
+(0002EAD0){ScriptEd.exe} [0042FAD0]
+(00091FAA){ScriptEd.exe} [00492FAA]
+(000AC54C){ScriptEd.exe} [004AD54C]
+(00022A3A){ScriptEd.exe} [00423A3A]
+(00036B5C){ScriptEd.exe} [00437B5C]
+(00091B7C){ScriptEd.exe} [00492B7C]
+(0002EAD0){ScriptEd.exe} [0042FAD0]
+(000B41E4){ScriptEd.exe} [004B51E4]
+(000B422B){ScriptEd.exe} [004B522B]
+(000B44C6){ScriptEd.exe} [004B54C6]
+(001FB536){ScriptEd.exe} [005FC536] EditorFindLine + $1537E
+------------------------------------------------------------------------------
+System   :  Workstation, Version: 6.1, Build: 1DB0, ""
+Processor: Intel, Intel(R) Core(TM)2 Duo CPU     E6750  @ 2.66GHz, 3120 MHz MMX SSE3 64 bits DEP
+Memory: 4094; free 2571
+Display  : 1680x1050 pixels, 32 bpp
+------------------------------------------------------------------------------
+List of loaded modules:
+[00400000] C:\CodeProjects\ScriptEd_v1_50\ScriptEd.exe
+           1.50.4.0 - 1.50.4.0
+           ScriptEd 1.50 - Arcanum Scripting Tool
+[10000000] C:\Program Files (x86)\Webteh\BSplayerPro\mmkeybsupp.dll
+           1.0.0.0 - 1, 0, 0, 0
+           BSP Shell hook
+[61060000] C:\Windows\system32\mpr.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Multiple Provider Router DLL
+[69B10000] C:\Windows\SysWOW64\msxml4.dll
+           4.20.9876.0 - 4.20.9876.0
+           MSXML 4.0 SP 2
+[72160000] C:\Windows\syswow64\dbghelp.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Windows Image Helper
+[726C0000] C:\Windows\system32\uxtheme.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Microsoft UxTheme Library
+[727A0000] C:\Windows\system32\RICHED20.DLL
+           5.31.23.1229 - 5.31.23.1229
+           Rich Text Edit Control, v3.1
+[72890000] C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7600.16385_none_421189da2b7fabfc\comctl32.dll
+           6.10.7600.16385 - 6.10 (win7_rtm.090713-1255)
+           User Experience Controls Library
+[73660000] C:\Windows\system32\version.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Version Checking and File Installation Libraries
+[74C00000] C:\Windows\syswow64\CRYPTBASE.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Base cryptographic API DLL
+[74C10000] C:\Windows\syswow64\SspiCli.dll
+           6.1.7600.16484 - 6.1.7600.16484 (win7_gdr.091210-1534)
+           Security Support Provider Interface
+[74C70000] C:\Windows\syswow64\shell32.dll
+           6.1.7600.16644 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Windows Shell Common Dll
+[758C0000] C:\Windows\syswow64\imm32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Multi-User Windows IMM32 API Client DLL
+[75960000] C:\Windows\syswow64\SHLWAPI.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Shell Light-weight Utility Library
+[759C0000] C:\Windows\syswow64\MSCTF.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           MSCTF Server DLL
+[75A90000] C:\Windows\syswow64\msvcrt.dll
+           7.0.7600.16385 - 7.0.7600.16385 (win7_rtm.090713-1255)
+           Windows NT CRT DLL
+[75B40000] C:\Windows\syswow64\ole32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Microsoft OLE for Windows
+[75CA0000] C:\Windows\syswow64\comdlg32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Common Dialogs DLL
+[75D20000] C:\Windows\syswow64\LPK.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Language Pack
+[75E50000] C:\Windows\syswow64\PSAPI.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Process Status Helper
+[76180000] C:\Windows\syswow64\GDI32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           GDI Client DLL
+[76210000] C:\Windows\syswow64\RPCRT4.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Remote Procedure Call Runtime
+[76300000] C:\Windows\syswow64\oleaut32.dll
+           6.1.7600.16567 - 6.1.7600.16567
+[763F0000] C:\Windows\syswow64\KERNELBASE.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Windows NT BASE API Client DLL
+[76440000] C:\Windows\SysWOW64\sechost.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Host for SCM/SDDL/LSA Lookup APIs
+[76660000] C:\Windows\syswow64\CLBCatQ.DLL
+           2001.12.8530.16385 - 2001.12.8530.16385 (win7_rtm.090713-1255)
+           COM+ Configuration Catalog
+[766F0000] C:\Windows\syswow64\ADVAPI32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Advanced Windows 32 Base API
+[767D0000] C:\Windows\syswow64\imagehlp.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Windows NT Image Helper
+[76810000] C:\Windows\syswow64\kernel32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Windows NT BASE API Client DLL
+[76910000] C:\Windows\syswow64\USP10.dll
+           1.626.7600.16385 - 1.0626.7600.16385 (win7_rtm.090713-1255)
+           Uniscribe Unicode script processor
+[76B70000] C:\Windows\syswow64\user32.dll
+           6.1.7600.16385 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           Multi-User Windows USER API Client DLL
+[770A0000] C:\Windows\SysWOW64\ntdll.dll
+           6.1.7600.16559 - 6.1.7600.16385 (win7_rtm.090713-1255)
+           NT Layer DLL
+------------------------------------------------------------------------------
+Active Controls hierarchy:
+TSynEdit "ScriptEditor"
+TMainForm "MainForm"
+------------------------------------------------------------------------------

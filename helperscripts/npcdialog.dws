@@ -1,0 +1,19 @@
+// NPC Initiated dialogue
+
+var tile_range, dlg_line: integer;
+
+tile_range := strtoint(inputbox('Enter value','Enter the tile range for the trigger','0'));
+
+dlg_line := strtoint(InputBox('Enter value','Enter the line number of the attached dialog script to call','0'));
+
+EditorAddLine('get location of Attachee and store X in Local 0 and Y in Local 1');
+EditorAddLine('');
+EditorAddLine('IF Player is within '+inttostr(tile_range)+' tiles of location X:Local 0 Y:Local 1 '+#13#10+' THEN do nothing '+#13#10+' ELSE Return and RUN default');
+EditorAddLine('');
+EditorAddLine('call script attached to Attachee at point 9 at line '+inttostr(dlg_line)+' with triggerer Triggerer');
+EditorAddLine('');
+EditorAddLine('remove this script');
+EditorAddLine('');
+EditorAddLine('Return and RUN default');
+EditorAddLine('');
+CompileScript; 

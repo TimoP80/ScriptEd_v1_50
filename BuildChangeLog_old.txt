@@ -1,0 +1,56 @@
+ScriptEd 1.50-beta Build 3
+
+Changes made in this release:
+
+- Added a right-click menu for module script loader for various
+  operations. Currently only for deleting a script so you can
+  conveniently delete scripts that you don't need.
+
+- Fixed some bugs in the player option editor regarding data
+  left in from a previously edited player option. The temporary
+  data placeholders were not cleared properly.
+
+- Fixed incorrect code when loading compressed modules.
+
+- Player option editor now gets focused properly when you move
+  a player option up or down. The problem was that UpdatePlayerOptions 
+  was called after selecting the line which caused the list to lose focus.
+
+- Added buttons for decompressing and compressing module data.
+
+- Added helper script manager to preferences screen. 
+
+- Added automatic helper script importing through a procedure called 
+  ImportScript that may be present in a script. This is used for providing 
+  additional helper scripts with an installer script that contains a series 
+  AddHelperScript commands to import each script to ScriptEd.
+
+- DAT creation functions tweaked to work properly. The filenames
+  in the directory tree were stored incorrectly, without a null
+  character in the end. 
+
+- Added more right-click info tip data types: Script number,
+  basic prototype, stat. 
+
+- Improved dat file handling, now it should report the filename it tried 
+  to open if error occurs
+
+- DLG and MES parser will now ignore any input outside the curly braces 
+  that is not prepended with //, this improves compatibility with just about 
+  any dialogue or message file.
+
+- The script is now recompiled on save to ensure that the script
+  is up to date in case the user forgot to compile the script after
+  most recent changes.
+
+- Added folder monitoring for the module list so now when new files
+  or folders are added or removed, the list will automatically
+  refresh.
+
+- Fixed crash when pressing OK in module selector without anything
+  selected.
+
+- Added a setting for turning on or off the confirmation of deleting 
+  a player option
+
+- Various error handling tweaks

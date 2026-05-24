@@ -1,0 +1,144 @@
+// Keep in sync with the enum Script_Action_Type in Script.h
+
+{0}{do nothing}
+{1}{return and SKIP default}
+{2}{return and RUN default}
+{3}{goto line (num)}
+{4}{dialog (num)}
+{5}{remove this script}
+{6}{change this script to script (num)}
+{7}{call script (num) at line (num) with triggerer (obj) and attachee (obj)}
+{8}{set local flag (num) to true}
+{9}{clear local flag (num)}
+{10}{(num) = (num)}
+{11}{(num) = (num) + (num)}
+{12}{(num) = (num) - (num)}
+{13}{(num) = (num) * (num)}
+{14}{(num) = (num) / (num)}
+{15}{(obj) = (obj)}
+{16}{set PC (obj) quest (num) to state (num)}
+{17}{set quest (num) to global state (num)}
+{18}{loop for (obj)}
+{19}{loop end}
+{20}{loop break}
+{21}{have critter (obj) become a follower of (obj)}
+{22}{have critter (obj) stop following his leader}
+{23}{float line (num) above (obj)}
+{24}{print line (num) with a message class of (num)}
+{25}{add blessing (num) to (obj)}
+{26}{remove blessing (num) from (obj)}
+{27}{add curse (num) to (obj)}
+{28}{remove curse (num) from (obj)}
+{29}{reaction of npc (obj) to pc (obj): store in (num)}
+{30}{reaction of npc (obj) to pc (obj): set to (num)}
+{31}{reaction of npc (obj) to pc (obj): adjust by (num)}
+{32}{armor of (obj): get in (num)}
+{33}{stat (num) of (obj): store in (num)}
+{34}{object type of (obj): store in (num)}
+{35}{gold of (obj): adjust by (num)}
+{36}{combat: (obj) attacks (obj)}
+{37}{random number (num) to (num): store in (num)}
+{38}{social class of npc (obj): store in (num)}
+{39}{origin of npc (obj): store in (num)}
+{40}{transform Attachee into basic prototype (num)}
+{41}{transfer item named (num) from (obj) to (obj)}
+{42}{story state: store in (num)}
+{43}{story state: set to (num)}
+{44}{teleport (obj) to map (num) at X:(num) Y:(num)}
+{45}{set day standpoint of critter (obj) to X:(num) Y:(num) on this map}
+{46}{set night standpoint of critter (obj) to X:(num) Y:(num) on this map}
+{47}{skill (num) of (obj): store in (num)}
+{48}{spells: have (obj) cast spell (num) on (obj)}
+{49}{mark map location (num) of pc (obj) as known}
+{50}{rumor: set rumor (num) for pc (obj)}
+{51}{rumor: quell rumor (num) for pc (obj)}
+{52}{create object with basic prototype (num) near (obj)}
+{53}{lock state of (obj): set to (num)}
+{54}{call script (num) at line (num) with triggerer (obj) and attachee (obj) in (num) seconds}
+{55}{call script (num) at line (num) with triggerer (obj) and attachee (obj) at second (num)}
+{56}{toggle (obj) state on/off}
+{57}{toggle (obj) invulnerability}
+{58}{kill (obj)}
+{59}{change art num of (obj) to (num)}
+{60}{damage (obj) for (num) points of type (num) damage}
+{61}{spells: cast spell (num) on (obj)}
+{62}{have (obj) perform animation (num)}
+{63}{give (obj) xps for a quest level (num)}
+{64}{written UI start: book (num) for reader (obj)}
+{65}{written UI start: image (num) for reader (obj)}
+{66}{create item with basic prototype (num) inside (obj)}
+{67}{have critter (obj) wait for his leader}
+{68}{destroy (obj)}
+{69}{have critter (obj) walk to X:(num) Y:(num)}
+{70}{weapon of (obj): get in (num)}
+{71}{distance between (obj) and (obj): get in (num)}
+{72}{reputation: give (obj) the reputation (num)}
+{73}{reputation: remove from (obj) the reputation (num)}
+{74}{have critter (obj) run to X:(num) Y:(num)}
+{75}{heal (obj) for (num) points}
+{76}{heal (obj) for (num) fatigue points}
+{77}{give (obj) the effect (num) with cause (num)}
+{78}{remove from (obj) the effect (num)}
+{79}{have (obj) use (obj) on (obj) using skill (num) with modifier (num)}
+{80}{magic/tech: adjust (num) by item (obj) used by (obj) on (obj): store in (num)}
+{81}{call script attached to (obj) at point (num) at line (num) with triggerer (obj)}
+{82}{play sound (num)}
+{83}{play sound (num) at (obj)}
+{84}{area of (obj): store in (num)}
+{85}{newspaper: queue (num) with priority (num)}
+{86}{newspaper: float current headline over (obj)}
+{87}{play sound scheme (num) and (num)}
+{88}{toggle (obj) open/closed}
+{89}{faction of npc (obj): store in (num)}
+{90}{scroll distance: store in (num)}
+{91}{magic/tech: adjust (num) by item (obj) used by (obj): store in (num)}
+{92}{rename (obj) as (num)}
+{93}{have (obj) instantly become prone}
+{94}{written start in (obj) set to (num)}
+{95}{get location of (obj) and store X in (num) and Y in (num)}
+{96}{day: store days since startup in (num)}
+{97}{hour: store current game hour in (num)}
+{98}{minute: store current game minute in (num)}
+{99}{change script attached to (obj) at point (num) to script (num)}
+{100}{set global flag (num) to true}
+{101}{clear global flag (num)}
+{102}{fade and teleport: pass (num) seconds, play (num) sound, play (num) movie, and teleport (obj) to map (num) at X:(num) Y:(num)}
+{103}{fade: pass (num) seconds, play (num) sound, and play (num) movie, with (num) seconds during fade}
+{104}{spell eye candy: play (num) on (obj)}
+{105}{hour: store hours since startup in (num)}
+{106}{toggle the blocked state of sector at location X:(num) and Y:(num)}
+{107}{hit points of (obj): store current in (num) and maximum in (num)}
+{108}{fatigue of critter (obj): store current in (num) and maximum in (num)}
+{109}{combat: force (obj) to stop attacking}
+{110}{toggle monster generator (num) on/off}
+{111}{armor coverage of item (obj): store in (num)}
+{112}{give (obj) spell mastery in college (num)}
+{113}{unfog townmap (num)}
+{114}{written UI start: plaque (num) for reader (obj)}
+{115}{have (obj) try to steal 100 coins from (obj)}
+{116}{spell eye candy: stop (num) on (obj)}
+{117}{grant one fate point to (obj)}
+{118}{spells: have (obj) cast free spell (num) on (obj)}
+{119}{set PC (obj) quest (num) to state unbotched}
+{120}{script eye candy: play (num) on (obj)}
+{121}{spells: have (obj) cast unresistable spell (num) on (obj)}
+{122}{spells: have (obj) cast free and unresistable spell (num) on (obj)}
+{123}{touch art (num)}
+{124}{script eye candy: stop (num) on (obj)}
+{125}{remove from time queue the call to script (num) with attachee (obj)}
+{126}{destroy item named (num) in inventory of (obj)}
+{127}{toggle item (obj) inventory display on/off}
+{128}{heal (obj) for (num) poison points}
+{129}{schematic UI start: display for (obj)}
+{130}{spells: stop spell (num) on (obj)}
+{131}{slideshow: queue slide (num)}
+{132}{end game and play slides}
+{133}{rotation of (obj): set to (num)}
+{134}{faction of npc (obj): set to (num)}
+{135}{drain (num) charges from (obj)}
+{136}{spells: cast unresistable spell (num) on (obj)}
+{137}{stat (num) of (obj): adjust by (num)}
+{138}{damage (obj) unresistably for (num) points of type (num) damage}
+{139}{autolevel scheme for (obj): change to (num)}
+{140}{set day standpoint of critter (obj) to X:(num) Y:(num) on map (num)}
+{141}{set night standpoint of critter (obj) to X:(num) Y:(num) on map (num)}

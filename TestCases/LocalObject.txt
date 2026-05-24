@@ -1,0 +1,5 @@
+description ""
+MAX_LINES_ALLOCATED 10
+
+0. armor of Local Object 1: get in Local 0
+

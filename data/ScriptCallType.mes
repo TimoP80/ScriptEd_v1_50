@@ -1,0 +1,7 @@
+// ScriptEd internal data
+// 
+// script call types
+{0}{Call script at line (n)}
+{1}{Call script at line (n) - in (n) seconds}
+{2}{Call script at line (n) - at second (n)}
+{3}{Call script attached to object}

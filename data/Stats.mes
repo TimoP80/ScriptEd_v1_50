@@ -1,0 +1,58 @@
+// Stats:
+// 
+// 0	stat_strenght
+// 1	stat_dexterity
+// 2	stat_constitution
+// 3	stat_beauty
+// 4	stat_intelligence
+// 5	stat_perception
+// 6	stat_willpower
+// 7	stat_charisma
+// 8	stat_carry_weight
+// 9	stat_damage_bonus
+// 10	stat_ac_adjustment
+// 11	stat_speed
+// 12	stat_heal_rate
+// 13	stat_poison_recovery_rate
+// 14	stat_reaction_modifier
+// 15	stat_max_followers
+// 16	stat_magic_tech_aptitude
+// 17	stat_level
+// 18	stat_experience_points
+// 19	stat_alignment
+// 20	stat_fate_points
+// 21	stat_unspent_points
+// 22	stat_magic_points
+// 23	stat_tech_points
+// 24	stat_poison_level
+// 25	stat_age
+// 26	stat_gender
+// 27	stat_race
+{0}{Strength}
+{1}{Dexterity}
+{2}{Constitution}
+{3}{Beauty}
+{4}{Intelligence}
+{5}{Perception}
+{6}{Willpower}
+{7}{Charisma}
+{8}{Carry weight}
+{9}{Damage Bonus}
+{10}{AC adjustment}
+{11}{Speed}
+{12}{Heal Rate}
+{13}{Poson Recovery Rate}
+{14}{Reaction Modifier}
+{15}{Max Followers}
+{16}{Magic / Tech Aptitude}
+{17}{Level}
+{18}{Experience points}
+{19}{Alignment}
+{20}{Fate points}
+{21}{Unspent points}
+{22}{Magic points}
+{23}{Tech points}
+{24}{Poison level}
+{25}{Age}
+{26}{Gender}
+{27}{Race}

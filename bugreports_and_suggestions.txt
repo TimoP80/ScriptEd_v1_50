@@ -1,0 +1,103 @@
+First, I have to say that the new scripted looks awesome. I can tell that you've added some functionality that I would only have dreamed of in the last release, even if it isn't complete yet. Here are some of my comments on the script parsing - hopefully they'll help in creating a finished version. I realize that this is very, very long, and I apologize to everybody for that.
+
+---
+
+3. Would it be possible to add headers for MES files? I'm mainly thinking of the ones TROIKA put in, but I sometimes add some as well. Minor issue, though.
+
+10. Would it be difficult to add a search function for load script? I am working with around 200 scripts on my mod, and there are many times that for Arcanum. Even when I know which script to load, and try to name important scripts in ways that make them stand out, it can take me awhile to find them. It would be nice to have a search field under every column of the load script window, where I could type the script number and it would scroll down and select it, or start typing the name of the script. A bonus would be searching for keywords, if there are many scripts that start with the same name, but that would be secondary.
+
+12. I like that the description can be changed from the actual text window with the script commands, but when I type a description then compile, it throws some gibberish at the end.
+
+13. Couldn't load a certain script with dialog. This is the error window:
+Quote:
+ERROR WHILE PARSING DIALOG ENTRY! string=
+
+Quote:
+" is not a valid integer value.
+
+It then didn't show the script lines, although if I opened the dialog editor then closed it, it would then show the script lines. It looks like this is due to not using "//" for a comment, although TROIKA did this all the time, as only bracketed values are read by the game engine anyway. I don't have too much of a problem adding slashes, though, but it would be nice if scripted interpreted everything not in brackets as comments, or even if it found data like this, it would just skip over it and function normally.
+
+16. Some issue with line overruns across columns in about window
+
+17. I like what you are doing with script templates. I'd like them even if I didn't realize that I can probably create my own, which is a pretty amazing feature at this point in development. I'd also be willing to help write these.
+
+18. For the "NPC initiated dialog" script template, I have a few comments. I'd copy and paste, but there's the copy shortcut problem I mentioned above. Instead, I just copied and pasted from npcdialog.dws
+
+Quote:
+get location of Attachee and store X in Local 0 and Y in Local 1
+IF Player is within '+inttostr(tile_range)+' tiles of location X:Local 0 Y:Local 1
+THEN call script '+inttostr(this_script)+' at line 3 with triggerer Triggerer and attachee Attachee
+Return and RUN default
+call script '+inttostr(this_script)+' at line 6 with triggerer Triggerer and attachee Attachee in 1 seconds
+call script '+inttostr(dlg_script)+' at line 0 with triggerer Player and attachee Attachee
+Return and SKIP default
+change script attached to Attachee at point 19 to script 0
+Return and SKIP default
+
+-looks like you need a new variable for the line that this starts on, if this isn't inserted on line 0
+-as this is assumed to be a heartbeat script ("change script attached to Attachee at point 19 to script 0"), you probably don't have to have the script call itself. It's going to keep calling itself at line 0 anyway, so this could be problematic. An HB script like this might also be needed to perform other functions, i.e. initiating dialog AND setting a certain gf if the attachee is dead, and using two HB scripts might be useful. Here's my suggestion, which I created by adding a new line to helperscripts.dws and adding a new dws file:
+
+teamanpcdialog.sws wrote:
+// NPC Initiated dialogue
+
+var tile_range, dlg_line: integer;
+
+tile_range := strtoint(inputbox('Enter value','Enter the tile range for the trigger','0'));
+
+dlg_line := strtoint(InputBox('Enter value','Enter the line number of the attached dialog script to call','0'));
+
+EditorAddLine('get location of Attachee and store X in Local 0 and Y in Local 1');
+EditorAddLine('');
+EditorAddLine('IF Player is within '+inttostr(tile_range)+' tiles of location X:Local 0 Y:Local 1 '+#13#10+' THEN do nothing '+#13#10+' ELSE Return and RUN default');
+EditorAddLine('');
+EditorAddLine('call script attached to Attachee at point 9 at line '+inttostr(dlg_line)+' with triggerer Triggerer');
+EditorAddLine('');
+EditorAddLine('remove this script');
+EditorAddLine('');
+EditorAddLine('Return and RUN default');
+EditorAddLine('');
+CompileScript;
+
+22. I really like how a comment is added to the script to indicate when the script was last edited, but I don't know the conditions for adding this, so I haven't been able to recreate it
+
+23. It would be nice to have the "last edited" data available under the load script menu for a loaded module
+
+24. The header created for the dlg file is really helpful. I used to try to add a table of where a script file calls a dialog, but I stopped because it was so time-consuming. This is really helpful. It would be nice to have the date and time it was last edited here as well.
+
+25. I don't know how difficult this would be, but something I really try to keep track of is where a dialog line is called by another script's dialog line. For example, when the player is talking to one person, i.e. Vollinger, then something the player says causes the dialog to resume at someone else's dialog, i.e. Virgil's. I wonder if this could be kept track of with scripted as well. However, I use one script line with "call script attached to clo at point gv1 at line gv2 with triggerer triggerer", where line gv2 on the clo's script is "dialog gv 3", etc... so this might be effectively impossible. It might be helpful for the scripts of sane people, however.
+
+// will consider this
+28. Editing PC lines in dialog editor: To save time, it would be really helpful to be able to edit the fields directly, spreadsheet style, without using the PC line wizard. THis is a major advantage that notepad currently has over your dialog editor. I imagine that there will still be some use for notepad in conjunction with dialog editor at this point, with dialog editor taking care of the line mapping, remapping, and gathering data, etc. after a document has been created with notepad. Of course, the more functionality and speed of your editor, the better.
+
+// adding em
+29. PC line comments: it would be helpful to have these in a column to the far right in the place where PC responses are listed. Otherwise, they aren't very accessible, and the user might forget that there's even a comment there, or might spend awhile looking for them.
+
+// I was thinking of this ...
+// Page list 
+31. For floats, it's good to see the "starting entry of a float message group" checkbox. I assume that this is for line renumbering. I'd imagine that the box should really be checked for each and every float line, rather than just the first one. It would be nice to have an option to just add a block of floats all at once, where the floats will appear under a single node, and there will just be a bunch of fields for different NPC floats rather than a section with PC response lines. THis would also help reduce the number of node entries in the left side of the editor window.
+
+32. To be able to look through the node entries, I would really like to be able to categorize them. For instance, you might have a "starting line" check box under a NPC line, to indicate that this dialog line is directly called by the script. The node text in the left panel would then, for instance, change to a larger point font, or become orange, etc. This would really be helpful because there are some parts of a dialog that are just more important than others. Take for example a follower's dialog. The first line of that dialog isn't the menu the PC gets when clicking on the follower; instead, it's usually just the greeting when the PC meets the potential follower for the first time. The actual follower meny might be down in the 400s section. Or, take the dialog for a very important NPC. There might be a section near the top for the first greeting, but there might be a section below for the initial greeting of unintelligent PCs, or unlikable PCs, or sections for when the PC has returned later, or where the NPC starts dialog with something like "I hope you've re-considered my offer" etc. These are the really important lines in a dialog, as they are a logical break from the sections above, but the sections following them flow logically from what the player picks. I usually spend a lot of time trying to separate them in notepad, and spend a lot of time scrolling around trying to find the right section. Having the important nodes in a different color, bold, underlined, or different font size, etc., would be really helpful. There could also be section dividers: as it is, I can see myself creating nodes named "-----" just to try to sort through 100 node names. Having an option to make a node appear important in the left-side menu is something I consider really important.
+
+35. It's really helpful when scripted automatically replaces the opcode macro I just wrote with the actual string, without waiting for me to compile. THat way, I can be sure that I didn't mistype something like "esiv", and if there is ever a conflict between the custom opcode macros and the actual opcodes (I remember scripted used to not be able to do "toggle (obj) open/closed" because it wanted to interprit "clo" as current looped object).
+
+37. I know you said that you are going to eliminate a lot of the debug messages once this program gets closer to a final release, but it would be nice to be able to choose how verbose the logging is in the preferences menu
+
+// resolve this
+41. The dialog editor evaluates blank lines as floats: For example:
+Quote:
+{40}{NPC line}{NPC line}{}{}{}{}
+{41}{E:}{}{1}{}{0}{}
+{42}{}{}{}{}{}{}
+{43}{}{}{}{}{}{}
+{44}{}{}{}{}{}{}
+{45}{NPC line 2}{NPC line 2}{}{}{}{}
+
+Rather than 40 and 45 being nodes, it's 40, 42, 43, 44, and 45 that are nodes. While I don't do this personally, there are scripts in Arcanum (and TROIKA mods) that do this. Again, keeping with trying to minimize the list of nodes, or be able to differentiate the many values, you might gray out the names of nodes that are blank, or have the option to delete all of them, or have gray for floats and very light gray for blank floats like the ones above. This is just a suggestion - it's probably worth discussion first.
+
+44. MES Quest Editor doesn't actually compare line numbers from gamequestlog.mes/gamequestlogdumb.mes and gamequest.mes. Instead, it takes the line numbers from gamequestlog&gamequestlogdumb, then matches the gamequest.mes entries with them regardless of line number. For example, if I have quest 1000, 1001, 1002, and 1003 in gamequestlog, but only 1000, 1001, and 1003 in gamequest, the data from gamequest.mes' line 1003 will be matched with gamequestlog.mes' line 1002, and the data will be shown as quest 1002 in the MES editor. Selecting 1003 will cause a read access error.
+
+// yeeees will be done
+// useful shit anyway
+47. Gameoname.mes - the editor is especially in need of division or separations of sections of this file, as onames for different object types have hard-coded value ranges (I.e. "Scenery ranges from 1800 - 1979" doesn't work very well as a comment for entry 1800)
+
+48. Journal Entry Editor - I know that some of these editors are placeholders, so the data can be altered for now until further functionality can be implemented. Some suggestions for a more complex journal entry editor: List the nodes by quest number, then have entries at the top by socail class (just the social classes actually being used, not all of them). The bottom, where the data can actually be entered, could really use a "use the same as male to male" type check box for each of the other entries, although it's conceivable that a m2f entry might be better served by using the f2m option rather than m2m, if it isn't already copying the m2m entry. I also have comments for a newspaper editor, but I'll hold back for now because I realize that I've probably already swamped you.

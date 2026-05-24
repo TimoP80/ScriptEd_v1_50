@@ -1,0 +1,9 @@
+// Keep in sync with the enum Script_Value_Type in Script.h
+
+{0}{Counter}
+{1}{Global Variable}
+{2}{Local}
+{3}{Number}
+{4}{Global Flag}
+{5}{PC Variable}
+{6}{PC Flag}

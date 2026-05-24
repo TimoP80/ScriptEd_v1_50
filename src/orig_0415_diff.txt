@@ -1,0 +1,506 @@
+diff orig/ArcanumSCRLib.pas ArcanumSCRLib.pas
+1017c1017
+<   P: PChar;
+---
+> 	P: PChar;
+1019,1025c1019,1031
+<   Result := False;
+<   if s = '' then
+<     exit;
+<   P := PChar(S);
+<   while P^ <> #0 do
+<   begin
+<     if not (P^ in ['0'..'9', '-']) then
+---
+> 	Result := False;
+> 	if s = '' then
+> 		exit;
+> 	P := PChar(S);
+> 	if (P^ = '-') then
+> 	begin
+> 		Inc(P);
+> 		if (P^ = #0) then
+> 			exit;
+> 	end;
+> 	while P^ <> #0 do
+> 	begin
+>     if not (P^ in ['0'..'9']) then
+1045,1052c1051,1058
+<   dest: String;
+<   currentword: String;
+<   varindex: Integer;
+<   lookahead: String;
+<   pcvarfocus: String;
+<   paramcounter: Integer;
+<   wordcnt: Integer;
+<   x, t: Integer;
+---
+> 	dest: String;
+> 	currentword: String;
+> 	varindex: Integer;
+> 	lookahead: String;
+> 	pcvarfocus: String;
+> 	paramcounter: Integer;
+> 	wordcnt: Integer;
+> 	x, t, ct, tmp1, tmp2: Integer;
+1054,1187c1060,1198
+<   try
+<     dest := sourcestring;
+<     paramcounter := 0;
+< 
+<     wordcnt := WordCount(dest, [':', ' ', ',']);
+<     t := 1;
+<     while t <= wordcnt do
+<     begin
+< 
+<       currentword := extractword(t, dest, [':', ' ', ',']);
+<       lookahead := extractword(t + 1, dest, [':', ' ', ',']);
+<       if (currentword = 'PC') and (lookahead = 'Variable') then
+<       begin
+<         currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']) + ' ' +
+<           extractword(t + 2, dest, [':', ' ', ',']) + ' ' + extractword(t + 3, dest, [':', ' ', ',']) + ' ' +
+<           extractword(t + 4, dest, [':', ' ', ',']);
+<         pcvarfocus := extractword(t + 4, dest, [':', ' ', ',']);
+<         varindex := StrToInt(extractword(t + 2, dest, [':', ' ', ',']));
+<         thescrline.VarTypes[paramcounter] := 5;
+< 
+<         thescrline.VarValue[paramcounter] := Makelong(varindex, GetMesIDByString(pcvarfocus, FocusData));
+<         Inc(t, 4);
+<         Inc(paramcounter);
+<       end else
+<       if (currentword = 'PC') and (lookahead = 'Flag') then
+<       begin
+<         currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']) + ' ' +
+<           extractword(t + 2, dest, [':', ' ', ',']) + ' ' + extractword(t + 3, dest, [':', ' ', ',']) + ' ' +
+<           extractword(t + 4, dest, [':', ' ', ',']);
+<         pcvarfocus := extractword(t + 4, dest, [':', ' ', ',']);
+<         varindex := StrToInt(extractword(t + 2, dest, [':', ' ', ',']));
+<         thescrline.VarTypes[paramcounter] := 6;
+<         thescrline.VarValue[paramcounter] := Makelong(varindex, GetMesIDByString(pcvarfocus, FocusData));
+<         Inc(t, 4);
+<         Inc(paramcounter);
+<       end else
+< 
+<       if (currentword = 'Local') then
+<       begin
+<         if extractword(t + 1, dest, [':', ' ', ',']) = 'Object' then
+<         begin
+<           currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']) + ' ' + extractword(t + 2, dest, [':', ' ', ',']);
+<           thescrline.VarTypes[paramcounter] := 11;
+< 
+<           thescrline.VarValue[paramcounter] := StrToInt(extractword(t + 2, dest, [':', ' ', ',']));
+<           //   dest := StringReplace(dest, currentword, '(num)', []);
+<           Inc(paramcounter);
+<           Inc(t, 3);
+<         end else
+<         begin
+<           currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']);
+<           thescrline.VarTypes[paramcounter] := 2;
+< 
+<           thescrline.VarValue[paramcounter] := StrToInt(extractword(t + 1, dest, [':', ' ', ',']));
+<           //   dest := StringReplace(dest, currentword, '(num)', []);
+<           Inc(paramcounter);
+<           Inc(t, 2);
+<         end;
+< 
+<       end else
+<       if currentword = 'Counter' then
+<       begin
+<         currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']);
+<         thescrline.VarTypes[paramcounter] := 0;
+<         thescrline.VarValue[paramcounter] := StrToInt(extractword(t + 1, dest, [':', ' ', ',']));
+<         //   dest := StringReplace(dest, currentword, '(num)', []);
+<         Inc(paramcounter);
+<         Inc(t, 2);
+<       end else
+< 
+<       if currentword = 'Global' then
+<       begin
+<         //      thescrline.VarValue[paramcounter] := 0;
+<         currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']) + ' ' + extractword(t + 2, dest, [':', ' ', ',']);
+<         if extractword(t + 1, dest, [':', ' ', ',']) = 'Flag' then
+<           thescrline.VarTypes[paramcounter] := 4
+<         else
+<         if extractword(t + 1, dest, [':', ' ', ',']) = 'Variable' then
+<           thescrline.VarTypes[paramcounter] := 1;
+<         thescrline.VarValue[paramcounter] := StrToInt(extractword(t + 2, dest, [':', ' ', ',']));
+< 
+<         //  dest := StringReplace(dest, currentword, '(num)', []);
+<         Inc(paramcounter);
+<         Inc(t, 3);
+<       end else
+< 
+<       if IsStrANumber(currentword) = True then
+<       begin
+<         thescrline.VarValue[paramcounter] := 0;
+<         //dest := StringReplace(dest, currentword, '(num)', []);
+<         if currentword <> '' then
+<         begin
+<           thescrline.VarTypes[paramcounter] := 3;
+<           thescrline.VarValue[paramcounter] := StrToInt(currentword);
+<           if (extractword(t + 1, dest, [':', ' ', ',']) = 'coins') and (extractword(t - 1, dest, [':', ' ', ',']) = 'steal') then
+<           begin
+<           end else
+<             Inc(paramcounter);
+<         end else
+<         begin
+<           thescrline.VarTypes[paramcounter] := 0;
+<         end;
+< 
+<       end;
+< 
+<       for x := 0 to FocusData.entrycnt - 1 do
+<       begin
+<         if ((pos(focusdata.entries[x].messagestr, dest) = WordPosition(t, dest, [':', ' ', ','])) and
+<           (WordPosition(t, dest, [':', ' ', ',']) > 0) and (pos('PC Variable', dest) = 0) and (pos('PC Flag', dest) = 0)) then
+<         begin
+<           thescrline.VarTypes[paramcounter] := focusdata.entries[x].index;
+<           if thescrline.VarTypes[paramcounter] = 11 then
+<           begin
+<             thescrline.VarValue[paramcounter] := 0;
+<           end;
+< 
+<           thescrline.VarValue[paramcounter] := 0;
+<           Inc(paramcounter);
+<           // Inc(t, wordcount(focusdata.entries[t].messagestr, [' ']));
+<           dest := StringReplace(dest, focusdata.entries[x].messagestr, '(obj)', []);
+<           break;
+<         end;
+<       end;
+< 
+<       Inc(t);
+<     end;
+< 
+<   except
+<     on e: Exception do
+<     begin
+<       // EPIC FAIL - something just went wrong and we want to let the user know
+<       consoledebug('Exception occured ' + e.message);
+<     end
+<   end;
+---
+> 	try
+> 		dest := sourcestring;
+> 		paramcounter := 0;
+> 
+> 		wordcnt := WordCount(dest, [':', ' ', ',']);
+> 		t := 1;
+> 		while t <= wordcnt do
+> 		begin
+> 			ct := t; // Save current word#
+> 			currentword := extractword(t, dest, [':', ' ', ',']);
+> 			lookahead := extractword(t + 1, dest, [':', ' ', ',']);
+> 			if (currentword = 'PC') and (lookahead = 'Variable') then
+> 			begin
+> 				currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']) + ' ' +
+> 					extractword(t + 2, dest, [':', ' ', ',']) + ' ' + extractword(t + 3, dest, [':', ' ', ',']) + ' ' +
+> 					extractword(t + 4, dest, [':', ' ', ',']);
+> 				pcvarfocus := extractword(t + 4, dest, [':', ' ', ',']);
+> 				varindex := StrToInt(extractword(t + 2, dest, [':', ' ', ',']));
+> 				thescrline.VarTypes[paramcounter] := 5;
+> 
+> 				thescrline.VarValue[paramcounter] := Makelong(varindex, GetMesIDByString(pcvarfocus, FocusData));
+> 				Inc(t, 4);
+> 				Inc(paramcounter);
+> 			end else
+> 			if (currentword = 'PC') and (lookahead = 'Flag') then
+> 			begin
+> 				currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']) + ' ' +
+> 					extractword(t + 2, dest, [':', ' ', ',']) + ' ' + extractword(t + 3, dest, [':', ' ', ',']) + ' ' +
+> 					extractword(t + 4, dest, [':', ' ', ',']);
+> 				pcvarfocus := extractword(t + 4, dest, [':', ' ', ',']);
+> 				varindex := StrToInt(extractword(t + 2, dest, [':', ' ', ',']));
+> 				thescrline.VarTypes[paramcounter] := 6;
+> 				thescrline.VarValue[paramcounter] := Makelong(varindex, GetMesIDByString(pcvarfocus, FocusData));
+> 				Inc(t, 4);
+> 				Inc(paramcounter);
+> 			end else
+> 
+> 			if (currentword = 'Local') then
+> 			begin
+> 				if extractword(t + 1, dest, [':', ' ', ',']) = 'Object' then
+> 				begin
+> 					currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']) + ' ' + extractword(t + 2, dest, [':', ' ', ',']);
+> 					thescrline.VarTypes[paramcounter] := 11;
+> 
+> 					thescrline.VarValue[paramcounter] := StrToInt(extractword(t + 2, dest, [':', ' ', ',']));
+> 					//   dest := StringReplace(dest, currentword, '(num)', []);
+> 					Inc(paramcounter);
+> 					Inc(t, 3);
+> 				end else
+> 				begin
+> 					currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']);
+> 					thescrline.VarTypes[paramcounter] := 2;
+> 
+> 					thescrline.VarValue[paramcounter] := StrToInt(extractword(t + 1, dest, [':', ' ', ',']));
+> 					//   dest := StringReplace(dest, currentword, '(num)', []);
+> 					Inc(paramcounter);
+> 					Inc(t, 2);
+> 				end;
+> 
+> 			end else
+> 			if currentword = 'Counter' then
+> 			begin
+> 				currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']);
+> 				thescrline.VarTypes[paramcounter] := 0;
+> 				thescrline.VarValue[paramcounter] := StrToInt(extractword(t + 1, dest, [':', ' ', ',']));
+> 				//   dest := StringReplace(dest, currentword, '(num)', []);
+> 				Inc(paramcounter);
+> 				Inc(t, 2);
+> 			end else
+> 
+> 			if currentword = 'Global' then
+> 			begin
+> 				//      thescrline.VarValue[paramcounter] := 0;
+> 				currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']) + ' ' + extractword(t + 2, dest, [':', ' ', ',']);
+> 				if extractword(t + 1, dest, [':', ' ', ',']) = 'Flag' then
+> 					thescrline.VarTypes[paramcounter] := 4
+> 				else
+> 				if extractword(t + 1, dest, [':', ' ', ',']) = 'Variable' then
+> 					thescrline.VarTypes[paramcounter] := 1;
+> 				thescrline.VarValue[paramcounter] := StrToInt(extractword(t + 2, dest, [':', ' ', ',']));
+> 
+> 				//  dest := StringReplace(dest, currentword, '(num)', []);
+> 				Inc(paramcounter);
+> 				Inc(t, 3);
+> 			end else
+> 
+> 			if IsStrANumber(currentword) = True then
+> 			begin
+> 				thescrline.VarValue[paramcounter] := 0;
+> 				//dest := StringReplace(dest, currentword, '(num)', []);
+> 				if currentword <> '' then
+> 				begin
+> 					thescrline.VarTypes[paramcounter] := 3;
+> 					thescrline.VarValue[paramcounter] := StrToInt(currentword);
+> 					if (extractword(t + 1, dest, [':', ' ', ',']) = 'coins') and (extractword(t - 1, dest, [':', ' ', ',']) = 'steal') then
+> 					begin
+> 					end else
+> 						Inc(paramcounter);
+> 				end else
+> 				begin
+> 					thescrline.VarTypes[paramcounter] := 0;
+> 				end;
+> 
+> 			end;
+> 
+> 			for x := 0 to FocusData.entrycnt - 1 do
+> 			begin
+> 				tmp1 := WordPosition(t, dest, [':', ' ', ',']);  // postprocessing word position
+> 				tmp2 := WordPosition(ct, dest, [':', ' ', ',']); // original (preprocessing) word position
+> 				if ((pos(focusdata.entries[x].messagestr, dest) = tmp1) and (tmp1 > 0) and // make certain current word is one of the focus MES entries and
+> 					(pos('PC Variable', dest) <> tmp2) and (pos('PC Flag', dest) <> tmp2)) then // the original current phrase wasn't PC Variable or PC Flag
+> 				//if ((pos(focusdata.entries[x].messagestr, dest) = WordPosition(t, dest, [':', ' ', ','])) and
+> 				//	(WordPosition(t, dest, [':', ' ', ',']) > 0) and (pos('PC Variable', dest) = 0) and (pos('PC Flag', dest) = 0)) then
+> 				begin
+> 					thescrline.VarTypes[paramcounter] := focusdata.entries[x].index;
+> 					//if thescrline.VarTypes[paramcounter] = 11 then
+> 					//begin
+> 					//  thescrline.VarValue[paramcounter] := 0;
+> 					//end;
+> 
+> 					thescrline.VarValue[paramcounter] := 0;
+> 					Inc(paramcounter);
+> 					// Inc(t, wordcount(focusdata.entries[t].messagestr, [' ']));
+> 					dest := StringReplace(dest, focusdata.entries[x].messagestr, '(obj)', []);
+> 					wordcnt := WordCount(dest, [':', ' ', ',']); // Might have changed.
+> 					break;
+> 				end;
+> 			end;
+> 
+> 			Inc(t);
+> 		end;
+> 
+> 	except
+> 		on e: Exception do
+> 		begin
+> 			// EPIC FAIL - something just went wrong and we want to let the user know
+> 			consoledebug('Exception occured ' + e.message);
+> 		end
+> 	end;
+1211,1290c1222,1304
+<   dest := sourcestring;
+<   for t := 0 to FocusData.entrycnt - 1 do
+<   begin
+<     if (pos(focusdata.entries[t].messagestr, dest) <> 0) and (pos('PC Variable', dest) = 0) and
+<       (pos('PC Flag', dest) = 0) and (t <> 11) then
+<       dest := StringReplace(dest, focusdata.entries[t].messagestr, '(obj)', [rfReplaceAll]);
+<   end;
+< 
+< 
+<   wordcnt := WordCount(dest, [':', ' ', ',']);
+<   t := 1;
+<   while t <= wordcnt do
+<   begin
+<     currentword := extractword(t, dest, [':', ' ', ',']);
+<     lookahead := extractword(t + 1, dest, [':', ' ', ',']);
+< 
+<     if (currentword = 'PC') and (lookahead = 'Variable') then
+<     begin
+<       currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']) + ' ' +
+<         extractword(t + 2, dest, [':', ' ', ',']) + ' ' + extractword(t + 3, dest, [':', ' ', ',']) + ' ' +
+<         extractword(t + 4, dest, [':', ' ', ',']);
+<       dest := StringReplace(dest, currentword, '(num)', []);
+<     end else
+<     if (currentword = 'PC') and (lookahead = 'Flag') then
+<     begin
+<       currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']) + ' ' +
+<         extractword(t + 2, dest, [':', ' ', ',']) + ' ' + extractword(t + 3, dest, [':', ' ', ',']) + ' ' +
+<         extractword(t + 4, dest, [':', ' ', ',']);
+<       dest := StringReplace(dest, currentword, '(num)', []);
+<     end else
+<     if currentword = 'Local' then
+<     begin
+<       lookahead := extractword(t + 1, dest, [':', ' ', ',']);
+<       if IsStrANumber(lookahead) = True then
+<       begin
+<         currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']);
+<         dest := StringReplace(dest, currentword, '(num)', []);
+<         Inc(t);
+<       end else
+<       if lookahead = 'Object' then
+<       begin
+<         dest := StringReplace(dest, currentword + ' ' + lookahead + ' ' + extractword(t + 2, dest, [':', ' ', ',']), '(obj)', []);
+<       end;
+<       if lookahead = 'Flag' then
+<       begin
+<         dest := StringReplace(dest, currentword + ' ' + lookahead + ' ' + extractword(t + 2, dest, [':', ' ', ',']), '(num)', []);
+<       end;
+< 
+<     end else
+<     if currentword = 'Counter' then
+<     begin
+<       currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']);
+<       dest := StringReplace(dest, currentword, '(num)', []);
+<       Inc(t);
+<     end else
+<     if currentword = 'Global' then
+<     begin
+<       currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']) + ' ' + extractword(t + 2, dest, [':', ' ', ',']);
+<       dest := StringReplace(dest, currentword, '(num)', []);
+<       Inc(t);
+<     end else
+< 
+<     if IsStrANumber(currentword) = True then
+< 
+<     begin
+<       if (extractword(t + 1, dest, [':', ' ', ',']) = 'coins') and (extractword(t - 1, dest, [':', ' ', ',']) = 'steal') then
+<       begin
+<         //  consoledebug('reserved opcode parameter');
+<       end else
+< 
+<         dest := StringReplace(dest, currentword, '(num)', []);
+< 
+<     end;
+< 
+<     Inc(t);
+<   end;
+<   Result := GetMesIDByString(dest, messagedata);
+<   if Result = -1 then
+<   begin
+<     Result := GetMesIDByStringLowercase(dest, messagedata);
+---
+> 	dest := sourcestring;
+> 	for t := 0 to FocusData.entrycnt - 1 do
+> 	begin
+> 		//if (pos(focusdata.entries[t].messagestr, dest) <> 0) and (pos('PC Variable', dest) = 0) and
+> 		//	(pos('PC Flag', dest) = 0) and (t <> 11) then
+> 		if (pos(focusdata.entries[t].messagestr, dest) <> 0) and (t <> 11) then
+> 			dest := StringReplace(dest, focusdata.entries[t].messagestr, '(obj)', [rfReplaceAll]);
+> 	end;
+> 
+> 
+> 	wordcnt := WordCount(dest, [':', ' ', ',']);
+> 	t := 1;
+> 	while t <= wordcnt do
+> 	begin
+> 		currentword := extractword(t, dest, [':', ' ', ',']);
+> 		lookahead := extractword(t + 1, dest, [':', ' ', ',']);
+> 
+> 		if (currentword = 'PC') and (lookahead = 'Variable') then
+> 		begin
+> 			currentword := currentword + ' ' + lookahead + ' ' +
+> 				extractword(t + 2, dest, [':', ' ', ',']) + ' ' + extractword(t + 3, dest, [':', ' ', ',']) + ' ' +
+> 				extractword(t + 4, dest, [':', ' ', ',']);
+> 			dest := StringReplace(dest, currentword, '(num)', []);
+> 			//consoledebug(currentword + ' -> (num), ln now: ' + dest);
+> 		end else
+> 		if (currentword = 'PC') and (lookahead = 'Flag') then
+> 		begin
+> 			currentword := currentword + ' ' + lookahead + ' ' +
+> 				extractword(t + 2, dest, [':', ' ', ',']) + ' ' + extractword(t + 3, dest, [':', ' ', ',']) + ' ' +
+> 				extractword(t + 4, dest, [':', ' ', ',']);
+> 			dest := StringReplace(dest, currentword, '(num)', []);
+> 			//consoledebug(currentword + ' -> (num), ln now: ' + dest);
+> 		end else
+> 		if currentword = 'Local' then
+> 		begin
+> 			lookahead := extractword(t + 1, dest, [':', ' ', ',']);
+> 			if IsStrANumber(lookahead) = True then
+> 			begin
+> 				currentword := currentword + ' ' + lookahead;
+> 				dest := StringReplace(dest, currentword, '(num)', []);
+> 				Inc(t);
+> 			end else
+> 			if lookahead = 'Object' then
+> 			begin
+> 				dest := StringReplace(dest, currentword + ' ' + lookahead + ' ' + extractword(t + 2, dest, [':', ' ', ',']), '(obj)', []);
+> 			end;
+> 			if lookahead = 'Flag' then
+> 			begin
+> 				dest := StringReplace(dest, currentword + ' ' + lookahead + ' ' + extractword(t + 2, dest, [':', ' ', ',']), '(num)', []);
+> 			end;
+> 
+> 		end else
+> 		if currentword = 'Counter' then
+> 		begin
+> 			currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']);
+> 			dest := StringReplace(dest, currentword, '(num)', []);
+> 			Inc(t);
+> 		end else
+> 		if currentword = 'Global' then
+> 		begin
+> 			currentword := currentword + ' ' + extractword(t + 1, dest, [':', ' ', ',']) + ' ' + extractword(t + 2, dest, [':', ' ', ',']);
+> 			dest := StringReplace(dest, currentword, '(num)', []);
+> 			Inc(t);
+> 		end else
+> 
+> 		if IsStrANumber(currentword) = True then
+> 
+> 		begin
+> 			if (extractword(t + 1, dest, [':', ' ', ',']) = 'coins') and (extractword(t - 1, dest, [':', ' ', ',']) = 'steal') then
+> 			begin
+> 				//  consoledebug('reserved opcode parameter');
+> 			end else
+> 
+> 				dest := StringReplace(dest, currentword, '(num)', []);
+> 
+> 		end;
+> 
+> 		Inc(t);
+> 	end;
+> 	Result := GetMesIDByString(dest, messagedata);
+> 	if Result = -1 then
+> 	begin
+> 		Result := GetMesIDByStringLowercase(dest, messagedata);
+1292,1293c1306,1307
+<     if Result = -1 then
+<       consoledebug('Warning: Opcode lookup failed for line ' + dest);
+---
+> 		if Result = -1 then
+> 			consoledebug('Warning: Opcode lookup failed for line: ' + dest);
+
+diff orig/ScriptEdWindow.pas ScriptEdWindow.pas
+
+
+
+1051c1051
+<   dlgptr := curdlg;
+---
+>   dlgptr := PDialogueFile(curdlg);
+1058,1059c1058,1059
+<   // consoledebug('Setting script pointer');
+<   scrptr := CurrentScript;
+---
+> 	// consoledebug('Setting script pointer');
+> 	scrptr := PScriptFile(CurrentScript);

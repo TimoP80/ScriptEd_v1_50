@@ -1,0 +1,26 @@
+// Keep in sync with the enum Script_Focus_Object in Script.h
+
+{0}{Triggerer}
+{1}{Attachee}
+{2}{Every Follower (single player)}
+{3}{Any Follower (single player)}
+{4}{Everyone in Party (PC only, multiplayer)}
+{5}{Anyone in Party (PC only, multiplayer)}
+{6}{Everyone in Team (PC and NPC, multiplayer)}
+{7}{Anyone in Team (PC and NPC, multiplayer)}
+{8}{Everyone in Vicinity}
+{9}{Anyone in Vicinity}
+{10}{Current Looped Object}
+{11}{Local Object}
+{12}{Extra Object}
+{13}{Everyone in Group (PC and NPC, single player)}
+{14}{Anyone in Group (PC and NPC, single player)}
+{15}{Every Scenery in Vicinity}
+{16}{Any Scenery in Vicinity}
+{17}{Every Container in Vicinity}
+{18}{Any Container in Vicinity}
+{19}{Every Portal in Vicinity}
+{20}{Any Portal in Vicinity}
+{21}{Player}
+{22}{Every Item in Vicinity}
+{23}{Any Item in Vicinity}

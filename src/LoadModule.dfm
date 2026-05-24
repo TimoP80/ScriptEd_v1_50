@@ -1,0 +1,126 @@
+object Form6: TForm6
+  Left = 684
+  Top = 237
+  Caption = 'Select Module'
+  ClientHeight = 438
+  ClientWidth = 680
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  OnCreate = FormCreate
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object CompressButton: TJvArrowButton
+    Left = 136
+    Top = 408
+    Width = 129
+    Height = 25
+    DropDown = PopupMenu1
+    Caption = 'Compress module:'
+    FillFont.Charset = DEFAULT_CHARSET
+    FillFont.Color = clWindowText
+    FillFont.Height = -11
+    FillFont.Name = 'Tahoma'
+    FillFont.Style = []
+  end
+  object ListView1: TListView
+    Left = 8
+    Top = 17
+    Width = 665
+    Height = 385
+    Columns = <
+      item
+        Caption = 'Module name'
+        Width = 250
+      end
+      item
+        Caption = 'Type (compressed / folder)'
+        Width = 190
+      end
+      item
+        Caption = 'Number of scripts'
+        Width = 204
+      end>
+    GridLines = True
+    RowSelect = True
+    TabOrder = 0
+    ViewStyle = vsReport
+    OnClick = ListView1Click
+    OnDblClick = ListView1DblClick
+  end
+  object OKButton: TButton
+    Left = 488
+    Top = 408
+    Width = 89
+    Height = 25
+    Caption = 'OK'
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object Button2: TButton
+    Left = 584
+    Top = 408
+    Width = 89
+    Height = 25
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 2
+  end
+  object waitpanel: TPanel
+    Left = 80
+    Top = 152
+    Width = 545
+    Height = 89
+    Caption = 'Please wait... Gathering module data'
+    TabOrder = 3
+    Visible = False
+  end
+  object UncompressButton: TButton
+    Left = 16
+    Top = 408
+    Width = 113
+    Height = 25
+    Caption = 'Uncompress module'
+    Enabled = False
+    TabOrder = 4
+    OnClick = UncompressButtonClick
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = Timer1Timer
+    Left = 88
+    Top = 56
+  end
+  object JvChangeNotify1: TJvChangeNotify
+    Notifications = <>
+    CheckInterval = 500
+    OnChangeNotify = JvChangeNotify1ChangeNotify
+    Left = 200
+    Top = 104
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = 'dat'
+    Filter = 'Arcanum DAT files (*.dat)|*.dat'
+    Left = 344
+    Top = 392
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 416
+    Top = 352
+    object Standardmode1: TMenuItem
+      Caption = 'Standard mode (create single .dat)'
+      OnClick = Standardmode1Click
+    end
+    object Advancedmodesplitintopatchn1: TMenuItem
+      Caption = 'Advanced mode (split into *.patch[n])'
+      OnClick = Advancedmodesplitintopatchn1Click
+    end
+  end
+end

@@ -1,0 +1,67 @@
+unit InterNPCDialogue;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, ModuleLoader, mesfileshow, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TForm29 = class(TForm)
+    Button1: TButton;
+    Button2: TButton;
+    Label1: TLabel;
+    Label2: TLabel;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form29: TForm29;
+  globalvar_dialogue: integer;
+  globalvar_script: integer;
+
+implementation
+
+{$R *.dfm}
+
+uses GenericSelectorWindow;
+
+procedure TForm29.Button1Click(Sender: TObject);
+begin
+  form16.Caption := 'Select Global Variable';
+  form16.Label1.Caption := 'List of global vars in module "' +
+    modulefolder + '"';
+  fillindatafrommesfile(ScriptGlobalVars);
+  form16.showmodal;
+  if form16.modalresult = mrOk then
+    globalvar_dialogue := ScriptGlobalVars.entries
+      [form16.JvHTListBox1.itemindex].Index
+  else if form16.modalresult = mrCancel then
+    globalvar_dialogue := -1;
+
+  Label1.Caption := inttostr(globalvar_dialogue);
+
+end;
+
+procedure TForm29.Button2Click(Sender: TObject);
+begin
+  form16.Caption := 'Select Global Variable';
+  form16.Label1.Caption := 'List of global vars in module "' +
+    modulefolder + '"';
+  fillindatafrommesfile(ScriptGlobalVars);
+  form16.showmodal;
+  if form16.modalresult = mrOk then
+    globalvar_script := ScriptGlobalVars.entries
+      [form16.JvHTListBox1.itemindex].Index
+  else if form16.modalresult = mrCancel then
+    globalvar_script := -1;
+
+  Label1.Caption := inttostr(globalvar_script);
+end;
+
+end.

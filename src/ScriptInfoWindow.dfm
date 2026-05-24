@@ -1,0 +1,151 @@
+object Form21: TForm21
+  Left = 358
+  Top = 218
+  Caption = 'Script Information'
+  ClientHeight = 339
+  ClientWidth = 614
+  Color = clBtnFace
+  Font.Charset = ANSI_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'DejaVu Sans Mono'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 14
+  object Bevel1: TBevel
+    Left = 9
+    Top = 9
+    Width = 604
+    Height = 276
+    Shape = bsFrame
+  end
+  object Label1: TLabel
+    Left = 17
+    Top = 17
+    Width = 148
+    Height = 14
+    AutoSize = False
+    Caption = 'Name:'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 17
+    Top = 103
+    Width = 139
+    Height = 14
+    AutoSize = False
+    Caption = 'Detailed Information:'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 17
+    Top = 69
+    Width = 148
+    Height = 14
+    AutoSize = False
+    Caption = 'Author:'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 17
+    Top = 43
+    Width = 148
+    Height = 14
+    AutoSize = False
+    Caption = 'Description:'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object scriptname: TLabel
+    Left = 164
+    Top = 17
+    Width = 427
+    Height = 14
+    AutoSize = False
+    Caption = 'x'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentFont = False
+  end
+  object description: TLabel
+    Left = 164
+    Top = 43
+    Width = 432
+    Height = 14
+    AutoSize = False
+    Caption = 'x'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentFont = False
+  end
+  object author: TLabel
+    Left = 164
+    Top = 69
+    Width = 432
+    Height = 14
+    AutoSize = False
+    Caption = 'x'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentFont = False
+  end
+  object infotext: TMemo
+    Left = 17
+    Top = 121
+    Width = 587
+    Height = 147
+    Color = clCream
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentFont = False
+    ScrollBars = ssVertical
+    TabOrder = 0
+  end
+  object Button1: TButton
+    Left = 276
+    Top = 293
+    Width = 104
+    Height = 35
+    Caption = 'OK'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Arial'
+    Font.Style = []
+    ModalResult = 1
+    ParentFont = False
+    TabOrder = 1
+  end
+end

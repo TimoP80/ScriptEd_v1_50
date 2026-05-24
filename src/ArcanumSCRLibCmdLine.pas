@@ -1,0 +1,2341 @@
+unit ArcanumSCRLibcmdline;
+
+(*
+
+  Arcanum SCR Lib
+  Replacement for the lost ScriptEd source code
+
+  Much better programming this time around. So far implemented:
+
+  - MES parser - ultrafast and no hand written code this time,
+  preserves comments and linebreaks when saving the file.
+
+  - Script Loading
+
+  - Script Decoding                       - done much faster than before
+
+  - Script Parsing from text and
+  conversion to binary                  - 50% less code than before
+
+  - 100% compatible with old ScriptEd text format
+
+  - More accurate compiling, no incorrect output encountered so far
+
+  - opcodes defined as constants - this enables much easier
+  implementation of the script engine for a potential Dialog Debugger
+  rewrite
+
+
+  Coding time breakdown:
+
+  Data init +
+  Loading + decoding routines         5  hours
+  MES Parser                          10 minutes
+  DLG Parser                          20 minutes
+  Compiling + saving routines         7 hours
+  Parser finetuning                   ~4 hours
+
+*)
+
+interface
+
+uses Windows, Classes, JclMath, MahBit32, SysUtils, strutils_,
+  ScriptEdConfigcmdline, arcdatlibcmdline, Registry, mesparsercmdline,
+  MESFileIOcmdline;
+
+type
+  scrline = record
+    opcode: Integer;
+    VarTypes: array [0 .. 7] of Byte;
+    VarValue: array [0 .. 7] of Integer;
+
+  end;
+
+  ScriptLine = record
+    ifPart: scrline;
+    thenPart: scrline;
+    elsePart: scrline;
+  end;
+
+  ScriptFile = record
+    filename: ansiString;
+    script_id: Integer; // -1 if no valid id is found
+    LocalFlags: Integer;
+    Counter0: Byte;
+    Counter1: Byte;
+    Counter2: Byte;
+    Counter3: Byte;
+    Description: array [0 .. 39] of ansiChar;
+    ScriptFlags: Integer;
+    ScriptLines: array of ^ScriptLine;
+    LineCount: Integer;
+    MaxLinesAllocated: Integer;
+    Junk: Integer;
+  end;
+
+const
+  SA_DO_NOTHING = 0;
+  SA_RETURN_SKIP = 1;
+  SA_RETURN_RUN = 2;
+  SA_GOTO = 3;
+  SA_DIALOG = 4;
+  SA_REMOVE_SCRIPT = 5;
+  SA_CHANGE_SCRIPT = 6;
+  SA_CALL_SCRIPT = 7;
+  SA_SET_LOCAL_FLAG = 8;
+  SA_CLEAR_LOCAL_FLAG = 9;
+  SA_NUM_ASSIGN = 10;
+  SA_NUM_ADD = 11;
+  SA_NUM_SUBTRACT = 12;
+  SA_NUM_MULTIPLY = 13;
+  SA_NUM_DIVIDE = 14;
+  SA_OBJ_ASSIGN = 15;
+  SA_SET_PC_QUEST_STATE = 16;
+  SA_SET_GLOBAL_QUEST_STATE = 17;
+  SA_LOOP_FOR = 18;
+  SA_LOOP_END = 19;
+  SA_LOOP_BREAK = 20;
+  SA_CRITTER_PARTY_ADD = 21;
+  SA_CRITTER_PARTY_REMOVE = 22;
+  SA_FLOAT_LINE = 23;
+  SA_PRINT_LINE = 24;
+  SA_BLESSING_ADD = 25;
+  SA_BLESSING_REMOVE = 26;
+  SA_CURSE_ADD = 27;
+  SA_CURSE_REMOVE = 28;
+  SA_STORE_REACTION = 29;
+  SA_SET_REACTION = 30;
+  SA_ADJUST_REACTION = 31;
+  SA_STORE_ARMOR = 32;
+  SA_STORE_STAT = 33;
+  SA_STORE_OBJECT_TYPE = 34;
+  SA_ADJUST_GOLD = 35;
+  SA_CRITTER_ATTACK = 36;
+  SA_RANDOM_NUMBER = 37;
+  SA_SOCIAL_CLASS = 38;
+  SA_NPC_ORIGIN_STORE = 39;
+  SA_TRANSFORM_TO_BASIC_PROTO = 40;
+  SA_TRANSFER_NAMED_ITEM = 41;
+  SA_STORY_STATE_STORE = 42;
+  SA_STORY_STATE_SET = 43;
+  SA_TELEPORT_OBJECT = 44;
+  SA_DAY_STAND_POINT_SET_CURRENT_MAP = 45;
+  SA_NIGHT_STAND_POINT_SET_CURRENT_MAP = 46;
+  SA_SKILL_STORE = 47;
+  SA_CAST_SPELL = 48;
+  SA_MARK_LOCATION = 49;
+  SA_SET_RUMOR = 50;
+  SA_QUELL_RUMOR = 51;
+  SA_OBJ_CREATE = 52;
+  SA_LOCK_STATE_SET = 53;
+  SA_CALL_SCRIPT_IN_SECONDS = 54;
+  SA_CALL_SCRIPT_AT_SECOND = 55;
+  SA_OBJ_STATE_TOGGLE = 56;
+  SA_OBJ_INVULNERABLE_TOGGLE = 57;
+  SA_OBJ_KILL = 58;
+  SA_ART_CHANGE = 59;
+  SA_OBJ_DAMAGE = 60;
+  SA_CAST_SPELL_GLOBAL = 61;
+  SA_OBJ_ANIMATE = 62;
+  SA_GIVE_XP_QUEST_LEVEL = 63;
+  SA_WRITTEN_UI_START_BOOK = 64;
+  SA_WRITTEN_UI_START_IMAGE = 65;
+  SA_CREATE_ITEM_INSIDE_OBJ = 66;
+  SA_CRITTEr_WAIT_LEADER = 67;
+  SA_OBJ_DESTROY = 68;
+  SA_CRITTER_WALk = 69;
+  SA_STORE_WEAPON = 70;
+  SA_OBJ_DISTANCE_GET = 71;
+  SA_OBJ_GIVE_REP = 72;
+  SA_OBJ_REMOVE_REP = 73;
+  SA_CRITTER_RUN = 74;
+  SA_HEAL_POINTS = 75;
+  SA_HEAL_FATIGUE = 76;
+  SA_OBJ_EFFECT_GIVE = 77;
+  SA_OBJ_EFFECT_REMOVE = 78;
+  SA_USE_OBJ_ON_OBJ_WITH_SKILL_MOD = 79;
+  SA_ADJUST_MAGIC_TECH = 80;
+  SA_CALL_SCRIPT_ATTACHED_TO = 81;
+  SA_PLAY_SOUND = 82;
+  SA_PLAY_SOUND_AT = 83;
+  SA_OBJ_AREA_STORE = 84;
+  SA_QUEUE_NEWSPAPER = 85;
+  SA_FLOAT_NEWSPAPER_HEADLINE = 86;
+  SA_PLAY_SOUND_SCHEME = 87;
+  SA_OBJ_TOGGLE_OPEN_CLOSED = 88;
+  SA_STORE_FACTION = 89;
+  SA_SCROLL_DISTANCE_STORE = 90;
+  SA_MAGIC_TECH_ADJUST = 91;
+  SA_OBJ_RENAME = 92;
+  SA_OBJ_PRONE = 93;
+  SA_WRITTEN_START_IN_OBJ_SET = 94;
+  SA_OBJ_LOCATION_STORE = 95;
+  SA_STORE_DAYS_SINCE_STARTUP = 96;
+  SA_STORE_GAME_HOUR = 97;
+  SA_STORE_GAME_MINUTE = 98;
+  SA_OBJ_CHANGE_SCRIPT_AT_POINT = 99;
+  SA_SET_GLOBAL_FLAG = 100;
+  SA_CLEAR_GLOBAL_FLAG = 101;
+  SA_FADE_TELEPORT_MOVE = 102;
+  SA_FADE_WAIT_PLAY_SFX_MOVIE = 103;
+  SA_SPELL_EYECANDY_PLAY = 104;
+  SA_STORE_HOURS_SINCE_STARTUP = 105;
+  SA_BLOCKED_STATE_TOGGLE = 106;
+  SA_HITPOINTS_STORE_CURRENT_MAX = 107;
+  SA_FATIGUE_STORE_CURRENT_MAX = 108;
+  SA_COMBAT_OBJ_FORCE_STOP = 109;
+  SA_MONSTERGEN_TOGGLE = 110;
+  SA_ARMOR_COVERAGE_STORE = 111;
+  SA_OBJ_SPELL_MASTERY_GIVE = 112;
+  SA_TOWNMAP_UNFOG = 113;
+  SA_WRITTEN_UI_PLAQUE_START = 114;
+  SA_OBJ_STEAL_100_COINS = 115;
+  SA_STOP_SPELL_EYECANDY = 116;
+  SA_GIVE_FATE_POINT = 117;
+  SA_OBJ_FREE_SPELL_CAST = 118;
+  SA_PC_QUEST_UNBOTCHED = 119;
+  SA_PLAY_SCRIPT_EYECANDY = 120;
+  SA_OBJ_UNRESISTABLE_SPELL_CAST = 121;
+  SA_OBJ_FREE_UNRESISTABLE_SPELL_CAST = 122;
+  SA_TOUCH_ART = 123;
+  SA_STOP_SCRIPT_EYECANDY = 124;
+  SA_REMOVE_SCRIPT_CALL_FROM_QUEUE = 125;
+  SA_DESTROY_ITEM = 126;
+  SA_OBJ_INVENTORY_TOGGLE = 127;
+  SA_OBJ_POISON_HEAL = 128;
+  SA_DISPLAY_SCHEMATIC_UI = 129;
+  SA_STOP_SPELL = 130;
+  SA_QUEUE_SLIDE = 131;
+  SA_END_GAME_PLAY_SLIDES = 132;
+  SA_OBJ_SET_ROTATION = 133;
+  SA_SET_OBJ_FACTION = 134;
+  SA_DRAIN_CHARGES = 135;
+  SA_GLOBAL_CAST_UNRESISTABLE_SPELL = 136;
+  SA_OBJ_ADJUST_STAT = 137;
+  SA_DAMAGE_OBJ_UNRESISTABLE = 138;
+  SA_CHANGE_AUTOLEVEL_SCHEME = 139;
+  SA_OBJ_SET_DAY_STANDPOINT_ON_MAP = 140;
+  SA_OBJ_SET_NIGHT_STANDPOINT_ON_MAP = 141;
+
+const
+  SC_DAYTIME = 1;
+  SC_OBJ_HAS_GOLD_NUM = 2;
+  SC_LOCAL_FLAG_IS_SET = 3;
+  SC_NUM_EQUALS_NUM = 4;
+  SC_NUM_LESS_OR_EQUAL_NUM = 5;
+  SC_PC_HAS_QUEST_IN_STATE = 6;
+  SC_QUEST_IN_GLOBAL_STATE = 7;
+  SC_OBJ_HAS_BLESS = 8;
+  SC_OBJ_HAS_CURSE = 9;
+  SC_NPC_OBJ_HAS_MET_PC_OBJ_BEFORE = 10;
+  SC_OBJ_HAS_BAD_ASSOCIATES = 11;
+  SC_OBJ_IS_POLYMORPHED = 12;
+  SC_OBJ_IS_SHRUNK = 13;
+  SC_OBJ_HAS_BODY_SPELL = 14;
+  SC_OBJ_IS_INVISIBLE = 15;
+  SC_OBJ_HAS_MIRROR_IMAGE = 16;
+  SC_OBJ_HAS_ITEM_NAMED_NUM = 17;
+  SC_NPC_IS_A_FOLLOWER_OF_PC = 18;
+  SC_NPC_OBJ_IS_A_MONSTER_OF_SPECIES = 19;
+  SC_OBJ_IS_NAMED_NUM = 20;
+  SC_OBJ_IS_WIELDING_ITEM = 21;
+  SC_OBJ_IS_DEAD = 22;
+  SC_OBJ_HAS_MAXIMUM_FOLLOWERS = 23;
+  SC_OBJ_CAN_OPEN_THE_CONTAINER_OBJ = 24;
+  SC_OBJ_HAS_SURRENDERED = 25;
+  SC_OBJ_IS_IN_DIALOG = 26;
+  SC_OBJ_IS_SWITCHED_OFF = 27;
+  SC_OBJ_CAN_SEE_OBJ = 28;
+  SC_OBJ_CAN_HEAR_OBJ = 29;
+  SC_OBJ_IS_INVULNERABLE = 30;
+  SC_OBJ_IS_IN_COMBAT = 31;
+  SC_OBJ_IS_AT_LOCATION_XY = 32;
+  SC_OBJ_HAS_REPUTATION_NUM = 33;
+  SC_OBJ_IS_WITHIN_NUM_TILES_OF_LOCATION_XY = 34;
+  SC_OBJ_IS_UNDER_THE_INFLUENCE_OF_SPELL_NUM = 35;
+  SC_OBJ_IS_OPEN = 36;
+  SC_OBJ_IS_AN_ANIMAL = 37;
+  SC_OBJ_IS_UNDEAD = 38;
+  SC_OBJ_WAS_JILTED_BY_A_PC = 39;
+  SC_PC_OBJ_KNOWS_RUMOR_NUM = 40;
+  SC_RUMOR_HAS_BEEN_QUELLED = 41;
+  SC_OBJ_IS_BUSTED = 42;
+  SC_GLOBAL_FLAG_NUM_IS_SET = 43;
+  SC_OBJ_CAN_OPEN_THE_PORTAL_OBJ_IN_DIRECTION_NUM = 44;
+  SC_SECTOR_AT_LOCATION_IS_BLOCKED = 45;
+  SC_MONSTER_GENERATOR_IS_DISABLED = 46;
+  SC_OBJ_IS_IDENTIFIED = 47;
+  SC_OBJ_KNOWS_SPELL_NUM = 48;
+  SC_OBJ_HAS_MASTERED_SPELL_COLLEGE_NUM = 49;
+  SC_ITEMS_ARE_BEING_REWIELDED = 50;
+  SC_OBJ_IS_PROWLING = 51;
+  SC_OBJ_IS_WAITING_FOR_LEADERS_RETURN = 52;
+
+const
+  PARAM_TYPE_OBJ = 1;
+  PARAM_TYPE_NUM = 2;
+
+  (*
+
+    1 (0x1)      Nonmagical Trap
+    2 (0x2)      Magical Trap
+    4 (0x4)      Auto Removing
+    8   (0x8)      Death Speech
+    16   (0x10)    Surrender Speech
+    32   (0x20)    Radius Two
+    64  (0x40)    Radius Three
+    128  (0x80)    Radius Five
+    256  (0x100)    Teleport Trigger
+
+
+  *)
+
+  FLAGS_NONMAGICAL_TRAP = 1;
+  FLAGS_MAGICAL_TRAP = 2;
+  FLAGS_AUTO_REMOVING = 4;
+  FLAGS_DEATH_SPEECH = 8;
+  FLAGS_SURRENDER_SPEECH = 16;
+  FLAGS_RADIUS_TWO = 32;
+  FLAGS_RADIUS_THREE = 64;
+  FLAGS_RADIUS_FIVE = 128;
+  FLAGS_TELEPORT_TRIGGER = 256;
+
+const
+  VT_PC_VARIABLE = 5;
+  VT_PC_FLAG = 6;
+  VT_LOCAL_OBJECT = 11;
+  VT_LOCAL_VARIABLE = 2;
+  VT_COUNTER = 0;
+  VT_GLOBAL_FLAG = 4;
+  VT_GLOBAL_VARIABLE = 1;
+  VT_NUMBER = 3;
+
+type
+  PScriptFile = ^ScriptFile;
+
+type
+  ScriptComment = record
+    line: Integer;
+    str: ansiString;
+  end;
+
+var
+
+  ScriptComments: array of ^ScriptComment;
+  ScriptCommentcnt: Integer;
+  scrcmt: textfile;
+  arcanum_is_installed: Boolean;
+  CurrentScript: ^ScriptFile;
+
+  ActionOpcodes: MessageFile;
+  ConditionOpcodes: MessageFile;
+  ScriptFlags: TBit32;
+  FocusData: MessageFile;
+  ValueData: MessageFile;
+  errorlist: TStrings;
+  reg: TRegistry;
+  alt_output: TStrings;
+  scriptdathandle, actiondathandle, dathandle: file;
+  scriptsdat: datfileheader;
+  opcodesdat: datfileheader;
+  actionopcodesdat: datfileheader;
+
+function IsStrANumber(const S: String): Boolean;
+procedure ParseScriptLine(input: String; var binaryoutput: ScriptLine;
+  var parseresult: Boolean; linecounter: Integer);
+procedure InitOpcodes;
+procedure LoadScript(filename: String; var scr: ScriptFile);
+procedure LoadScriptHeaderOnly(filename: String; var scr: ScriptFile);
+function decode_script_line(scrline: ScriptLine): String;
+function decode_script_header(scr: ScriptFile): String;
+procedure ParseTextScript(filename: String; var parseresult: Boolean);
+procedure SaveScript(filename: String; scr: ScriptFile);
+procedure InitScriptData;
+function VerifyOutput(src, dest: TStrings): Boolean;
+procedure ConsoleDebug(thestr: String; outputnormally: Boolean = True);
+procedure DecompileScript(filename: String; scr: ScriptFile);
+function OpcodeActionToString(id: Integer): String;
+function OpcodeConditionToString(id: Integer): String;
+function CommentOnLine(linenum: Integer): String;
+procedure AddScriptComment(line: Integer; str: String);
+function GetOpcodeParamCount(str: String): Integer;
+function GetOpcodeParamType(param: Integer; str: String): Integer;
+
+implementation
+
+uses Math;
+
+(*
+
+  This function returns a corresponding script command from
+  a given condition opcode number.
+
+  example:
+
+  str := OpcodeConditionTostring(6);
+
+  the resulting contents of the string 'str' will be 'PC_HAS_QUEST_IN_STATE'
+  etc etc
+
+*)
+
+function OpcodeConditionToString(id: Integer): String;
+begin
+  case id of
+    1:
+      Result := 'DAYTIME';
+    2:
+      Result := 'OBJ_HAS_GOLD_NUM';
+    3:
+      Result := 'LOCAL_FLAG_IS_SET';
+    4:
+      Result := 'NUM_EQUALS_NUM';
+    5:
+      Result := 'NUM_LESS_OR_EQUAL_NUM';
+    6:
+      Result := 'PC_HAS_QUEST_IN_STATE';
+    7:
+      Result := 'QUEST_IN_GLOBAL_STATE';
+    8:
+      Result := 'OBJ_HAS_BLESS';
+    9:
+      Result := 'OBJ_HAS_CURSE';
+    10:
+      Result := 'NPC_OBJ_HAS_MET_PC_OBJ_BEFORE';
+    11:
+      Result := 'OBJ_HAS_BAD_ASSOCIATES';
+    12:
+      Result := 'OBJ_IS_POLYMORPHED';
+    13:
+      Result := 'OBJ_IS_SHRUNK';
+    14:
+      Result := 'OBJ_HAS_BODY_SPELL';
+    15:
+      Result := 'OBJ_IS_INVISIBLE';
+    16:
+      Result := 'OBJ_HAS_MIRROR_IMAGE';
+    17:
+      Result := 'OBJ_HAS_ITEM_NAMED_NUM';
+    18:
+      Result := 'NPC_IS_A_FOLLOWER_OF_PC';
+    19:
+      Result := 'NPC_OBJ_IS_A_MONSTER_OF_SPECIES';
+    20:
+      Result := 'OBJ_IS_NAMED_NUM';
+    21:
+      Result := 'OBJ_IS_WIELDING_ITEM';
+    22:
+      Result := 'OBJ_IS_DEAD';
+    23:
+      Result := 'OBJ_HAS_MAXIMUM_FOLLOWERS';
+    24:
+      Result := 'OBJ_CAN_OPEN_THE_CONTAINER_OBJ';
+    25:
+      Result := 'OBJ_HAS_SURRENDERED';
+    26:
+      Result := 'OBJ_IS_IN_DIALOG';
+    27:
+      Result := 'OBJ_IS_SWITCHED_OFF';
+    28:
+      Result := 'OBJ_CAN_SEE_OBJ';
+    29:
+      Result := 'OBJ_CAN_HEAR_OBJ';
+    30:
+      Result := 'OBJ_IS_INVULNERABLE';
+    31:
+      Result := 'OBJ_IS_IN_COMBAT';
+    32:
+      Result := 'OBJ_IS_AT_LOCATION_XY';
+    33:
+      Result := 'OBJ_HAS_REPUTATION_NUM';
+    34:
+      Result := 'OBJ_IS_WITHIN_NUM_TILES_OF_LOCATION_XY';
+    35:
+      Result := 'OBJ_IS_UNDER_THE_INFLUENCE_OF_SPELL_NUM';
+    36:
+      Result := 'OBJ_IS_OPEN';
+    37:
+      Result := 'OBJ_IS_AN_ANIMAL';
+    38:
+      Result := 'OBJ_IS_UNDEAD';
+    39:
+      Result := 'OBJ_WAS_JILTED_BY_A_PC';
+    40:
+      Result := 'PC_OBJ_KNOWS_RUMOR_NUM';
+    41:
+      Result := 'RUMOR_HAS_BEEN_QUELLED';
+    42:
+      Result := 'OBJ_IS_BUSTED';
+    43:
+      Result := 'GLOBAL_FLAG_NUM_IS_SET';
+    44:
+      Result := 'OBJ_CAN_OPEN_THE_PORTAL_OBJ_IN_DIRECTION_NUM';
+    45:
+      Result := 'SECTOR_AT_LOCATION_IS_BLOCKED';
+    46:
+      Result := 'MONSTER_GENERATOR_IS_DISABLED';
+    47:
+      Result := 'OBJ_IS_IDENTIFIED';
+    48:
+      Result := 'OBJ_KNOWS_SPELL_NUM';
+    49:
+      Result := 'OBJ_HAS_MASTERED_SPELL_COLLEGE_NUM';
+    50:
+      Result := 'ITEMS_ARE_BEING_REWIELDED';
+    51:
+      Result := 'OBJ_IS_PROWLING';
+    52:
+      Result := 'OBJ_IS_WAITING_FOR_LEADERS_RETURN';
+  end;
+end;
+
+(*
+
+  This function returns a corresponding script command from
+  a given action opcode number.
+
+  example:
+
+  str := OpcodeActionTostring(6);
+
+  the resulting contents of the string 'str' will be 'CHANGE_SCRIPT'
+  etc etc
+
+*)
+
+function OpcodeActionToString(id: Integer): String;
+begin
+  case id of
+    0:
+      Result := 'DO_NOTHING';
+    1:
+      Result := 'RETURN_SKIP_DEFAULT';
+    2:
+      Result := 'RETURN_RUN_DEFAULT';
+    3:
+      Result := 'GOTO';
+    4:
+      Result := 'DIALOG';
+    5:
+      Result := 'REMOVE_SCRIPT';
+    6:
+      Result := 'CHANGE_SCRIPT';
+    7:
+      Result := 'CALL_SCRIPT';
+    8:
+      Result := 'SET_LOCAL_FLAG';
+    9:
+      Result := 'CLEAR_LOCAL_FLAG';
+    10:
+      Result := 'NUM_ASSIGN';
+    11:
+      Result := 'NUM_ADD';
+    12:
+      Result := 'NUM_SUBTRACT';
+    13:
+      Result := 'NUM_MULTIPLY';
+    14:
+      Result := 'NUM_DIVIDE';
+    15:
+      Result := 'OBJ_ASSIGN';
+    16:
+      Result := 'SET_PC_QUEST_STATE';
+    17:
+      Result := 'SET_GLOBAL_QUEST_STATE';
+    18:
+      Result := 'LOOP_FOR';
+    19:
+      Result := 'LOOP_END';
+    20:
+      Result := 'LOOP_BREAK';
+    21:
+      Result := 'CRITTER_PARTY_ADD';
+    22:
+      Result := 'CRITTER_PARTY_REMOVE';
+    23:
+      Result := 'FLOAT_LINE';
+    24:
+      Result := 'PRINT_LINE';
+    25:
+      Result := 'BLESSING_ADD';
+    26:
+      Result := 'BLESSING_REMOVE';
+    27:
+      Result := 'CURSE_ADD';
+    28:
+      Result := 'CURSE_REMOVE';
+    29:
+      Result := 'STORE_REACTION';
+    30:
+      Result := 'SET_REACTION';
+    31:
+      Result := 'ADJUST_REACTION';
+    32:
+      Result := 'STORE_ARMOR';
+    33:
+      Result := 'STORE_STAT';
+    34:
+      Result := 'STORE_OBJECT_TYPE';
+    35:
+      Result := 'ADJUST_GOLD';
+    36:
+      Result := 'CRITTER_ATTACK';
+    37:
+      Result := 'RANDOM_NUMBER';
+    38:
+      Result := 'SOCIAL_CLASS';
+    39:
+      Result := 'NPC_ORIGIN_STORE';
+    40:
+      Result := 'TRANSFORM_TO_BASIC_PROTO';
+    41:
+      Result := 'TRANSFER_NAMED_ITEM';
+    42:
+      Result := 'STORY_STATE_STORE';
+    43:
+      Result := 'STORY_STATE_SET';
+    44:
+      Result := 'TELEPORT_OBJECT';
+    45:
+      Result := 'DAY_STAND_POINT_SET_CURRENT_MAP';
+    46:
+      Result := 'NIGHT_STAND_POINT_SET_CURRENT_MAP';
+    47:
+      Result := 'SKILL_STORE';
+    48:
+      Result := 'CAST_SPELL';
+    49:
+      Result := 'MARK_LOCATION';
+    50:
+      Result := 'SET_RUMOR';
+    51:
+      Result := 'QUELL_RUMOR';
+    52:
+      Result := 'OBJ_CREATE';
+    53:
+      Result := 'LOCK_STATE_SET';
+    54:
+      Result := 'CALL_SCRIPT_IN_SECONDS';
+    55:
+      Result := 'CALL_SCRIPT_AT_SECOND';
+    56:
+      Result := 'OBJ_STATE_TOGGLE';
+    57:
+      Result := 'OBJ_INVULNERABLE_TOGGLE';
+    58:
+      Result := 'OBJ_KILL';
+    59:
+      Result := 'ART_CHANGE';
+    60:
+      Result := 'OBJ_DAMAGE';
+    61:
+      Result := 'CAST_SPELL_GLOBAL';
+    62:
+      Result := 'OBJ_ANIMATE';
+    63:
+      Result := 'GIVE_XP_QUEST_LEVEL';
+    64:
+      Result := 'WRITTEN_UI_START_BOOK';
+    65:
+      Result := 'WRITTEN_UI_START_IMAGE';
+    66:
+      Result := 'CREATE_ITEM_INSIDE_OBJ';
+    67:
+      Result := 'CRITTEr_WAIT_LEADER';
+    68:
+      Result := 'OBJ_DESTROY';
+    69:
+      Result := 'CRITTER_WALk';
+    70:
+      Result := 'STORE_WEAPON';
+    71:
+      Result := 'OBJ_DISTANCE_GET';
+    72:
+      Result := 'OBJ_GIVE_REP';
+    73:
+      Result := 'OBJ_REMOVE_REP';
+    74:
+      Result := 'CRITTER_RUN';
+    75:
+      Result := 'HEAL_POINTS';
+    76:
+      Result := 'HEAL_FATIGUE';
+    77:
+      Result := 'OBJ_EFFECT_GIVE';
+    78:
+      Result := 'OBJ_EFFECT_REMOVE';
+    79:
+      Result := 'USE_OBJ_ON_OBJ_WITH_SKILL_MOD)';
+    80:
+      Result := 'ADJUST_MAGIC_TECH';
+    81:
+      Result := 'CALL_SCRIPT_ATTACHED_TO';
+    82:
+      Result := 'PLAY_SOUND';
+    83:
+      Result := 'PLAY_SOUND_AT';
+    84:
+      Result := 'OBJ_AREA_STORE';
+    85:
+      Result := 'QUEUE_NEWSPAPER';
+    86:
+      Result := 'FLOAT_NEWSPAPER_HEADLINE';
+    87:
+      Result := 'PLAY_SOUND_SCHEME';
+    88:
+      Result := 'OBJ_TOGGLE_OPEN_CLOSED';
+    89:
+      Result := 'STORE_FACTION';
+    90:
+      Result := 'SCROLL_DISTANCE_STORE';
+    91:
+      Result := 'MAGIC_TECH_ADJUST';
+    92:
+      Result := 'OBJ_RENAME';
+    93:
+      Result := 'OBJ_PRONE';
+    94:
+      Result := 'WRITTEN_START_IN_OBJ_SET';
+    95:
+      Result := 'OBJ_LOCATION_STORE';
+    96:
+      Result := 'STORE_DAYS_SINCE_STARTUP';
+    97:
+      Result := 'STORE_GAME_HOUR';
+    98:
+      Result := 'STORE_GAME_MINUTE';
+    99:
+      Result := 'OBJ_CHANGE_SCRIPT_AT_POINT';
+    100:
+      Result := 'SET_GLOBAL_FLAG';
+    101:
+      Result := 'CLEAR_GLOBAL_FLAG';
+    102:
+      Result := 'FADE_TELEPORT_MOVE';
+    103:
+      Result := 'FADE_WAIT_PLAY_SFX_MOVIE';
+    104:
+      Result := 'SPELL_EYECANDY_PLAY';
+    105:
+      Result := 'STORE_HOURS_SINCE_STARTUP';
+    106:
+      Result := 'BLOCKED_STATE_TOGGLE';
+    107:
+      Result := 'HITPOINTS_STORE_CURRENT_MAX';
+    108:
+      Result := 'FATIGUE_STORE_CURRENT_MAX';
+    109:
+      Result := 'COMBAT_OBJ_FORCE_STOP';
+    110:
+      Result := 'MONSTERGEN_TOGGLE';
+    111:
+      Result := 'ARMOR_COVERAGE_STORE';
+    112:
+      Result := 'OBJ_SPELL_MASTERY_GIVE';
+    113:
+      Result := 'TOWNMAP_UNFOG';
+    114:
+      Result := 'WRITTEN_UI_PLAQUE_START';
+    115:
+      Result := 'OBJ_STEAL_100_COINS';
+    116:
+      Result := 'STOP_SPELL_EYECANDY';
+    117:
+      Result := 'GIVE_FATE_POINT';
+    118:
+      Result := 'OBJ_FREE_SPELL_CAST';
+    119:
+      Result := 'PC_QUEST_UNBOTCHED';
+    120:
+      Result := 'PLAY_SCRIPT_EYECANDY';
+    121:
+      Result := 'OBJ_UNRESISTABLE_SPELL_CAST';
+    122:
+      Result := 'OBJ_FREE_UNRESISTABLE_SPELL_CAST';
+    123:
+      Result := 'TOUCH_ART';
+    124:
+      Result := 'STOP_SCRIPT_EYECANDY';
+    125:
+      Result := 'REMOVE_SCRIPT_CALL_FROM_QUEUE';
+    126:
+      Result := 'DESTROY_ITEM';
+    127:
+      Result := 'OBJ_INVENTORY_TOGGLE';
+    128:
+      Result := 'OBJ_POISON_HEAL';
+    129:
+      Result := 'DISPlAY_SCHEMATIC_UI';
+    130:
+      Result := 'STOP_SPELL';
+    131:
+      Result := 'QUEUE_SLIDE';
+    132:
+      Result := 'END_GAME_PLAY_SLIDES';
+    133:
+      Result := 'OBJ_SET_ROTATION';
+    134:
+      Result := 'SET_OBJ_FACTION';
+    135:
+      Result := 'DRAIN_CHARGES';
+    136:
+      Result := 'GLOBAL_CAST_UNRESISTABLE_SPELL';
+    137:
+      Result := 'OBJ_ADJUST_STAT';
+    138:
+      Result := 'DAMAGE_OBJ_UNRESISTABLE';
+    139:
+      Result := 'CHANGE_AUTOLEVEL_SCHEME';
+    140:
+      Result := 'OBJ_SET_DAY_STANDPOINT_ON_MAP';
+    141:
+      Result := 'OBJ_SET_NIGHT_STANDPOINT_ON_MAP';
+  end;
+end;
+
+(*
+
+  This function is called whenever an error occurs
+
+*)
+
+procedure AddError(txt: String; line: Integer);
+begin
+  errorlist.Add('(' + IntToStr(line) + '): ' + txt);
+end;
+
+(*
+  Not used, but verifies the correctness of the output
+
+  compares the original source text to a decompiled source
+  from the previously compiled script
+
+*)
+
+procedure PrintDifferingLines(src, dest: TStrings);
+var
+  i, SrcCount, DestCount: Integer;
+  MaxCount: Integer;
+begin
+  if not Assigned(src) or not Assigned(dest) then
+    raise Exception.Create('Both Src and Dest must be assigned.');
+
+  SrcCount := src.Count;
+  DestCount := dest.Count;
+  MaxCount := Max(SrcCount, DestCount);
+
+  for i := 0 to MaxCount - 1 do
+  begin
+    if (i >= SrcCount) then
+    begin
+      // Lines exist only in Dest
+      Writeln(Format('Line %d in Dest only: %s', [i + 1, dest[i]]));
+    end
+    else if (i >= DestCount) then
+    begin
+      // Lines exist only in Src
+      Writeln(Format('Line %d in Src only: %s', [i + 1, src[i]]));
+    end
+    else if not SameText(src[i], dest[i]) then
+    begin
+      // Lines differ
+      Writeln(Format('Line %d differs:', [i + 1]));
+      Writeln(Format('  Src: %s', [src[i]]));
+      Writeln(Format('  Dest: %s', [dest[i]]));
+    end;
+  end;
+end;
+
+function VerifyOutput(src, dest: TStrings): Boolean;
+var
+  t: Integer;
+begin
+
+  if src.Text = dest.Text then
+    Result := True
+  else
+  begin
+    if src.Count <> dest.Count then
+      ConsoleDebug('Line count mismatch - source=' + IntToStr(src.Count) +
+        ' dest=' + IntToStr(dest.Count));
+
+    if src.Text <> dest.Text then
+    begin
+      ConsoleDebug('Output differs from source.');
+      PrintDifferingLines(src, dest);
+    end;
+
+    src.savetofile('debug_src.txt');
+    dest.savetofile('debug_dest.txt');
+    Result := False;
+  end;
+
+end;
+
+(*
+
+  Adds a comment to the comment list
+
+  Comments are saved to a separate file <scriptname>.cmt
+  which is only used by this unit to place comments into their
+  appropriate places when decompiling the script
+
+*)
+
+procedure AddScriptComment(line: Integer; str: String);
+begin
+  SetLength(ScriptComments, ScriptCommentcnt + 1);
+  new(ScriptComments[ScriptCommentcnt]);
+  ScriptComments[ScriptCommentcnt].line := line;
+  ScriptComments[ScriptCommentcnt].str := str;
+  Inc(ScriptCommentcnt);
+end;
+
+(*
+
+  Outputs a string to the debug output system
+
+  These messages can be redirected to any TStrings class
+  by assigning alt_output to the desired object of your choice
+
+*)
+
+procedure ConsoleDebug(thestr: String; outputnormally: Boolean = True);
+begin
+
+  if IsConsole then
+    Writeln(thestr)
+
+end;
+
+(*
+
+  Initializes script data
+
+*)
+
+procedure InitScriptData;
+begin
+  new(CurrentScript);
+  ScriptFlags := TBit32.Create;
+  ScriptFlags.AsInteger := 0;
+  CurrentScript.LocalFlags := 0;
+  CurrentScript.ScriptFlags := 0;
+  CurrentScript.Counter0 := 0;
+  CurrentScript.Counter1 := 0;
+  CurrentScript.Counter2 := 0;
+  CurrentScript.Counter3 := 0;
+  CurrentScript.Description := '';
+  CurrentScript.LineCount := 0;
+  CurrentScript.MaxLinesAllocated := 0;
+  CurrentScript.Junk := 0;
+  // fillchar(currentscript.ScriptLines, sizeof(CurrentScript.scriptlines), #0);
+end;
+
+(*
+
+  This function retrieves Arcanum install directory
+  from the registry and opens the DAT files containing the
+  script opcodes
+
+*)
+
+procedure InitOpcodes;
+var
+  install_ok: Boolean;
+begin
+  errorlist := TStringList.Create;
+
+  // Arcanum installation path is not set in the config
+  if arcanumpath = '' then
+  begin
+    reg := TRegistry.Create;
+    reg.Access := KEY_READ;
+    reg.RootKey := HKEY_LOCAL_MACHINE;
+
+    if reg.OpenKey('Software\Troika\Arcanum', False) = True then
+    begin
+      arcanumpath := reg.ReadString('installed_to');
+      ConsoleDebug('Arcanum install folder: ' + arcanumpath);
+      arcanum_is_installed := True;
+      install_ok := True;
+    end
+    else
+    begin
+      install_ok := False;
+      ConsoleDebug
+        ('Arcanum not found ... Reverting to ScriptEd-supplied opcodes');
+      arcanum_is_installed := False;
+    end;
+  end
+  else
+  begin
+    ConsoleDebug('Arcanum path set to ' + arcanumpath);
+
+    install_ok := True;
+    ConsoleDebug('Sanity check: ARCANUM.EXE');
+    if fileexists(arcanumpath + '\Arcanum.exe') then
+    begin
+      ConsoleDebug('--> OK');
+      arcanum_is_installed := True;
+    end
+    else
+    begin
+      ConsoleDebug('--> FAILURE - Arcanum.exe does NOT exist in ' +
+        arcanumpath);
+      arcanum_is_installed := False;
+    end;
+
+  end;
+
+  if install_ok = True then
+  begin
+    opendatfile(dathandle, opcodesdat, arcanumpath + '\arcanum3.dat');
+    if fileexists(arcanumpath + '\arcanum4.dat') then
+    begin
+      opendatfile(actiondathandle, actionopcodesdat,
+        arcanumpath + '\arcanum4.dat');
+      openfilefromdat(actiondathandle, actionopcodesdat, 'semes\action.mes',
+        'action.mes');
+
+    end
+    else
+      openfilefromdat(dathandle, opcodesdat, 'semes\action.mes', 'action.mes');
+    // opendatfile(
+    openfilefromdat(dathandle, opcodesdat, 'semes\condition.mes',
+      'condition.mes');
+    openfilefromdat(dathandle, opcodesdat, 'semes\focus.mes', 'focus.mes');
+    openfilefromdat(dathandle, opcodesdat, 'semes\value.mes', 'value.mes');
+    opendatfile(scriptdathandle, scriptsdat, arcanumpath + '\arcanum2.dat');
+
+    ActionOpcodes := parsemes('action.mes');
+    ConditionOpcodes := parsemes('condition.mes');
+    ValueData := parsemes('value.mes');
+    FocusData := parsemes('focus.mes');
+  end
+  else
+  begin
+    ConsoleDebug('Using internal opcodes...');
+    ActionOpcodes := parsemes(extractfiledir(paramstr(0)) + '\data\action.mes');
+    ConditionOpcodes := parsemes(extractfiledir(paramstr(0)) +
+      '\data\condition.mes');
+    ValueData := parsemes(extractfiledir(paramstr(0)) + '\data\value.mes');
+    FocusData := parsemes(extractfiledir(paramstr(0)) + '\data\focus.mes');
+
+  end;
+
+  // since the mes files are loaded into memroy, they aren't needed so let's clean them up
+  cleanuptempfiles(opcodesdat, getcurrentdir + '\');
+  cleanuptempfiles(actionopcodesdat, getcurrentdir + '\');
+
+end;
+
+(*
+
+  This function returns true if a given string is numeric,
+  otherwise False
+
+  Taken from somewhere in the net
+
+*)
+
+function IsStrANumber(const S: String): Boolean;
+var
+  P: PChar;
+begin
+  Result := False;
+  if S = '' then
+    exit;
+  P := PChar(S);
+  if (P^ = '-') then
+  begin
+    Inc(P);
+    if (P^ = #0) then
+      exit;
+  end;
+  while P^ <> #0 do
+  begin
+    if not(P^ in ['0' .. '9']) then
+      exit;
+    Inc(P);
+  end;
+  Result := True;
+end;
+
+(*
+
+  This function is a part of the script compiler
+
+  It parses a string and sets parameters for the script line
+
+  This function call occurs after determining an opcode for a script line
+
+*)
+
+procedure HandlePCVariable(var thescrline: scrline; var paramcounter: Integer;
+  varindex: Integer; pcvarfocus: String);
+begin
+  thescrline.VarTypes[paramcounter] := VT_PC_VARIABLE;
+  thescrline.VarValue[paramcounter] :=
+    Makelong(varindex, GetMesIDByString(pcvarfocus, FocusData));
+  Inc(paramcounter);
+end;
+
+procedure HandlePCFlag(var thescrline: scrline; var paramcounter: Integer;
+  varindex: Integer; pcvarfocus: String);
+begin
+  thescrline.VarTypes[paramcounter] := VT_PC_FLAG;
+  thescrline.VarValue[paramcounter] :=
+    Makelong(varindex, GetMesIDByString(pcvarfocus, FocusData));
+  Inc(paramcounter);
+end;
+
+procedure HandleLocal(var thescrline: scrline; var paramcounter: Integer;
+  currentword: String; localIndex: Integer);
+begin
+  if currentword = 'Local Object' then
+  begin
+    thescrline.VarTypes[paramcounter] := VT_LOCAL_OBJECT;
+    thescrline.VarValue[paramcounter] := localIndex;
+  end
+  else
+  begin
+    thescrline.VarTypes[paramcounter] := VT_LOCAL_VARIABLE;
+    thescrline.VarValue[paramcounter] := localIndex;
+  end;
+  Inc(paramcounter);
+end;
+
+procedure HandleCounter(var thescrline: scrline; var paramcounter: Integer;
+  gIndex: Integer);
+begin
+    thescrline.VarTypes[paramcounter] := VT_COUNTER;
+
+  thescrline.VarValue[paramcounter] := gIndex;
+  Inc(paramcounter);
+end;
+
+procedure HandleGlobal(var thescrline: scrline; var paramcounter: Integer;
+  gType: String; gIndex: Integer);
+begin
+  if gType = 'Flag' then
+    thescrline.VarTypes[paramcounter] := VT_GLOBAL_FLAG
+  else if gType = 'Variable' then
+    thescrline.VarTypes[paramcounter] := VT_GLOBAL_VARIABLE;
+
+  thescrline.VarValue[paramcounter] := gIndex;
+  Inc(paramcounter);
+end;
+
+procedure HandleNumber(var thescrline: scrline; var paramcounter: Integer;
+  numValue: Integer);
+begin
+  thescrline.VarTypes[paramcounter] := VT_NUMBER;
+  thescrline.VarValue[paramcounter] := numValue;
+  Inc(paramcounter);
+end;
+
+procedure SetParams(sourcestring: String; messagedata: MessageFile;
+  var thescrline: scrline);
+var
+  dest, currentword, prevword, lookahead, pcvarfocus: String;
+  paramcounter, wordcnt, t, varindex: Integer;
+  x, ct, tmp1, tmp2: Integer;
+begin
+  try
+    dest := sourcestring;
+    paramcounter := 0;
+    wordcnt := WordCount(dest, [':', ' ', ',']);
+    t := 1;
+    while t <= wordcnt do
+    begin
+      currentword := extractword(t, dest, [':', ' ', ',']);
+      prevword := extractword(t - 1, dest, [':', ' ', ',']);
+      lookahead := extractword(t + 1, dest, [':', ' ', ',']);
+      ct := t; // Save current word#
+
+      // Handle PC Variable
+      if (currentword = 'PC') and (lookahead = 'Variable') then
+      begin
+        varindex := StrToInt(extractword(t + 2, dest, [':', ' ', ',']));
+        pcvarfocus := extractword(t + 4, dest, [':', ' ', ',']);
+        HandlePCVariable(thescrline, paramcounter, varindex, pcvarfocus);
+        Inc(t, 4);
+      end
+      // Handle PC Flag
+      else if (currentword = 'PC') and (lookahead = 'Flag') then
+      begin
+        varindex := StrToInt(extractword(t + 2, dest, [':', ' ', ',']));
+        pcvarfocus := extractword(t + 4, dest, [':', ' ', ',']);
+        HandlePCFlag(thescrline, paramcounter, varindex, pcvarfocus);
+        Inc(t, 4);
+      end
+      // Handle transform Attachee
+      else if (currentword = 'Attachee') and (prevword = 'transform') then
+      begin
+        if paramcounter > 0 then
+          paramcounter := paramcounter - 2; // Special case
+        Inc(t, 2);
+      end
+      // Handle Local Variables
+      else if currentword = 'Local' then
+      begin
+        if lookahead = 'Object' then
+        begin
+          currentword := 'Local Object';
+          HandleLocal(thescrline, paramcounter, currentword,
+            StrToInt(extractword(t + 2, dest, [':', ' ', ','])));
+          Inc(t, 3);
+        end
+        else
+        begin
+          HandleLocal(thescrline, paramcounter, currentword,
+            StrToInt(extractword(t + 1, dest, [':', ' ', ','])));
+          Inc(t, 2);
+        end;
+      end
+      // Handle Global Variables
+      else if currentword = 'Global' then
+      begin
+        HandleGlobal(thescrline, paramcounter, lookahead,
+          StrToInt(extractword(t + 2, dest, [':', ' ', ','])));
+        Inc(t, 3);
+      end else
+      if currentword = 'Counter' then
+      begin
+        HandleCounter(thescrline, paramcounter,
+          StrToInt(extractword(t + 1, dest, [':', ' ', ','])));
+        Inc(t, 2);
+      end // Handle Numbers
+      else if (IsStrANumber(currentword)) and (prevword <> 'steal') then
+      begin
+        HandleNumber(thescrline, paramcounter, StrToInt(currentword));
+      end
+      else if (IsStrANumber(currentword)) and (lookahead = 'coins') and
+        (prevword = 'steal') then
+      begin
+
+        // if paramcounter>0 then dec(paramcounter,1);
+        Inc(t, 3);
+      end;
+      for x := 0 to FocusData.entrycnt - 1 do
+      begin
+        tmp1 := WordPosition(t, dest, [':', ' ', ',']);
+        // postprocessing word position
+        tmp2 := WordPosition(ct, dest, [':', ' ', ',']);
+        // original (preprocessing) word position
+        if ((pos(FocusData.entries[x].messagestr, dest) = tmp1) and (tmp1 > 0)
+          and // make certain current word is one of the focus MES entries and
+          (pos('PC Variable', dest) <> tmp2) and (pos('PC Flag', dest) <> tmp2))
+        then // the original current phrase wasn't PC Variable or PC Flag
+        // if ((pos(focusdata.entries[x].messagestr, dest) = WordPosition(t, dest, [':', ' ', ','])) and
+        // (WordPosition(t, dest, [':', ' ', ',']) > 0) and (pos('PC Variable', dest) = 0) and (pos('PC Flag', dest) = 0)) then
+        begin
+          thescrline.VarTypes[paramcounter] := FocusData.entries[x].index;
+          // if thescrline.VarTypes[paramcounter] = 11 then
+          // begin
+          // thescrline.VarValue[paramcounter] := 0;
+          // end;
+
+          thescrline.VarValue[paramcounter] := 0;
+          Inc(paramcounter);
+          // Inc(t, wordcount(focusdata.entries[t].messagestr, [' ']));
+          dest := StringReplace(dest, FocusData.entries[x].messagestr,
+            '(obj)', []);
+          wordcnt := WordCount(dest, [':', ' ', ',']); // Might have changed.
+          break;
+        end;
+      end;
+
+      Inc(t);
+    end;
+
+  except
+    on e: Exception do
+      ConsoleDebug('Exception occurred in SetParams: ' + e.message + ' Input: '
+        + sourcestring);
+  end;
+end;
+
+(*
+
+  This function performs an opcode lookup for a script line
+
+  It attempts to replace all numeric values and object values with
+  (num) and (obj)
+
+  So far it can handle every possible combination without a hitch.
+
+*)
+
+function ReverseOpcodeLookup(sourcestring: String;
+  messagedata: MessageFile): Integer;
+var
+  dest: String;
+  currentword: String;
+  lookahead: String;
+  wordcnt: Integer;
+  t: Integer;
+begin
+  dest := sourcestring;
+  for t := 0 to FocusData.entrycnt - 1 do
+  begin
+
+    if (pos(FocusData.entries[t].messagestr, dest) <> 0) and (t <> 11) then
+    begin
+      // handle the special script command case "transform Attachee into basic prototype (num)"
+      if (pos('transform Attachee', dest) = 0) then
+        dest := StringReplace(dest, FocusData.entries[t].messagestr, '(obj)',
+          [rfReplaceAll]);
+    end;
+  end;
+
+  wordcnt := WordCount(dest, [':', ' ', ',']);
+  t := 1;
+  while t <= wordcnt do
+  begin
+    currentword := extractword(t, dest, [':', ' ', ',']);
+    lookahead := extractword(t + 1, dest, [':', ' ', ',']);
+
+    if (currentword = 'PC') and (lookahead = 'Variable') then
+    begin
+      currentword := currentword + ' ' + lookahead + ' ' +
+        extractword(t + 2, dest, [':', ' ', ',']) + ' ' +
+        extractword(t + 3, dest, [':', ' ', ',']) + ' ' +
+        extractword(t + 4, dest, [':', ' ', ',']);
+      dest := StringReplace(dest, currentword, '(num)', []);
+      // consoledebug(currentword + ' -> (num), ln now: ' + dest);
+    end
+    else if (currentword = 'PC') and (lookahead = 'Flag') then
+    begin
+      currentword := currentword + ' ' + lookahead + ' ' +
+        extractword(t + 2, dest, [':', ' ', ',']) + ' ' +
+        extractword(t + 3, dest, [':', ' ', ',']) + ' ' +
+        extractword(t + 4, dest, [':', ' ', ',']);
+      dest := StringReplace(dest, currentword, '(num)', []);
+      // consoledebug(currentword + ' -> (num), ln now: ' + dest);
+    end
+    else if currentword = 'Local' then
+    begin
+      lookahead := extractword(t + 1, dest, [':', ' ', ',']);
+      if IsStrANumber(lookahead) = True then
+      begin
+        currentword := currentword + ' ' + lookahead;
+        dest := StringReplace(dest, currentword, '(num)', []);
+        Inc(t);
+      end
+      else if lookahead = 'Object' then
+      begin
+        dest := StringReplace(dest, currentword + ' ' + lookahead + ' ' +
+          extractword(t + 2, dest, [':', ' ', ',']), '(obj)', []);
+      end;
+      if lookahead = 'Flag' then
+      begin
+        dest := StringReplace(dest, currentword + ' ' + lookahead + ' ' +
+          extractword(t + 2, dest, [':', ' ', ',']), '(num)', []);
+      end;
+
+    end
+    else if currentword = 'Counter' then
+    begin
+      currentword := currentword + ' ' + extractword(t + 1, dest,
+        [':', ' ', ',']);
+      dest := StringReplace(dest, currentword, '(num)', []);
+      Inc(t);
+    end
+    else if currentword = 'Global' then
+    begin
+      currentword := currentword + ' ' + extractword(t + 1, dest,
+        [':', ' ', ',']) + ' ' + extractword(t + 2, dest, [':', ' ', ',']);
+      dest := StringReplace(dest, currentword, '(num)', []);
+      Inc(t);
+    end
+    else
+
+      if IsStrANumber(currentword) = True then
+
+    begin
+      if (extractword(t + 1, dest, [':', ' ', ',']) = 'coins') and
+        (extractword(t - 1, dest, [':', ' ', ',']) = 'steal') then
+      begin
+        // consoledebug('reserved opcode parameter');
+      end
+      else
+
+        dest := StringReplace(dest, currentword, '(num)', []);
+
+    end;
+
+    Inc(t);
+  end;
+  Result := GetMesIDByString(dest, messagedata);
+
+  if Result = -1 then
+  begin
+    Result := GetMesIDByStringLowercase(dest, messagedata);
+
+    if Result = -1 then
+      ConsoleDebug('Warning: Opcode lookup failed for line: ' + dest);
+
+  end;
+
+end;
+
+(*
+
+  This function parses a script line passed by ParseTextScript()
+
+  Now works several lines tightly knit together such as
+
+  do nothing
+  do nothing
+  dialog 1
+  do nothing
+
+*)
+
+procedure ParseScriptLine(input: String; var binaryoutput: ScriptLine;
+  var parseresult: Boolean; linecounter: Integer);
+var
+  ifopcode, thenopcode, elseopcode: Integer;
+  strwalkpos: Integer;
+  ifline, thenline, elseline: String;
+begin
+  // Initialize opcodes
+  ifopcode := 0;
+  thenopcode := 0;
+  elseopcode := 0;
+
+  // Clear previous binary outputs
+  FillChar(binaryoutput.ifPart.VarTypes,
+    SizeOf(binaryoutput.ifPart.VarTypes), #0);
+  FillChar(binaryoutput.ifPart.VarValue,
+    SizeOf(binaryoutput.ifPart.VarValue), #0);
+  FillChar(binaryoutput.thenPart.VarTypes,
+    SizeOf(binaryoutput.thenPart.VarTypes), #0);
+  FillChar(binaryoutput.thenPart.VarValue,
+    SizeOf(binaryoutput.thenPart.VarValue), #0);
+  FillChar(binaryoutput.elsePart.VarTypes,
+    SizeOf(binaryoutput.elsePart.VarTypes), #0);
+  FillChar(binaryoutput.elsePart.VarValue,
+    SizeOf(binaryoutput.elsePart.VarValue), #0);
+
+  // Trim input and remove extra newlines or spaces
+  input := Trim(input);
+  input := StringReplace(input, #13#10, ' ', [rfReplaceAll]);
+  // Replace newline with space for easier handling
+
+  // Look for the IF condition part
+  if pos('if ', LowerCase(input)) > 0 then
+  begin
+    // Extract the IF condition part
+    strwalkpos := pos('if', LowerCase(input)) + 2;
+    ifline := Trim(Copy(input, strwalkpos, pos('then', LowerCase(input)) -
+      strwalkpos));
+
+    // Ensure we capture the last character if needed
+    ifline := Trim(ifline); // Ensure no unwanted spaces
+
+    // Perform opcode lookup for the IF condition
+    ifopcode := ReverseOpcodeLookup(ifline, ConditionOpcodes);
+
+    // Extract the THEN action part
+    strwalkpos := pos('then', LowerCase(input)) + 5;
+    if (pos('else', LowerCase(input)) <> 0) then
+    begin
+      thenline := Trim(Copy(input, strwalkpos, pos('else', LowerCase(input)) -
+        strwalkpos));
+    end
+    else
+    begin
+      thenline := Trim(Copy(input, strwalkpos, length(input)));
+
+    end;
+
+    thenline := StringReplace(thenline, 'THEN ', '', [rfReplaceAll]);
+
+    // Ensure the THEN action is fully captured
+    thenline := Trim(thenline);
+
+    // Perform opcode lookup for the THEN action
+    thenopcode := ReverseOpcodeLookup(thenline, ActionOpcodes);
+
+    // Handle the ELSE part (optional)
+    strwalkpos := pos('else', LowerCase(input)) + 5;
+    if strwalkpos > 5 then
+    begin
+      elseline := Trim(Copy(input, strwalkpos, length(input)));
+
+      // do not parse else line if there is nothin
+      if elseline <> '' then
+      begin
+        elseopcode := ReverseOpcodeLookup(elseline, ActionOpcodes);
+      end;
+    end;
+
+    // Ensure the ELSE action is fully captured
+    elseline := Trim(elseline);
+
+    // Store the opcodes in the output structure
+    binaryoutput.ifPart.opcode := ifopcode;
+    binaryoutput.thenPart.opcode := thenopcode;
+    binaryoutput.elsePart.opcode := elseopcode;
+
+    // Perform validation for the opcodes
+    parseresult := True;
+    if ifopcode = -1 then
+    begin
+      AddError('Invalid condition opcode "' + ifline + '"', linecounter);
+      parseresult := False;
+    end;
+
+    if thenopcode = -1 then
+    begin
+      AddError('Invalid action opcode "' + thenline + '"', linecounter);
+      parseresult := False;
+    end;
+
+    if (elseopcode = -1) and (elseline <> '') then
+    begin
+      AddError('Invalid action opcode "' + elseline + '"', linecounter);
+      parseresult := False;
+    end;
+
+    // Set parameters for each part
+    SetParams(ifline, ConditionOpcodes, binaryoutput.ifPart);
+    SetParams(thenline, ActionOpcodes, binaryoutput.thenPart);
+    SetParams(elseline, ActionOpcodes, binaryoutput.elsePart);
+  end
+  else
+  begin
+    // Handle cases without IF/ELSE (only THEN part)
+    ifopcode := 0;
+    elseopcode := 0;
+
+    strwalkpos := 1;
+
+    // Extract the THEN action part
+    thenline := Trim(Copy(input, strwalkpos, length(input)));
+    thenline := StringReplace(thenline, #13#10, '', [rfReplaceAll]);
+
+    // Ensure the THEN action is fully captured
+    thenline := Trim(thenline);
+
+    // Perform opcode lookup for the THEN action
+    thenopcode := ReverseOpcodeLookup(thenline, ActionOpcodes);
+
+    // Store the opcodes in the output structure
+    binaryoutput.ifPart.opcode := ifopcode;
+    binaryoutput.thenPart.opcode := thenopcode;
+    binaryoutput.elsePart.opcode := elseopcode;
+
+    // Perform validation for the opcodes
+    parseresult := True;
+    if thenopcode = -1 then
+    begin
+      parseresult := False;
+      AddError('Invalid action opcode "' + thenline + '"', linecounter);
+    end;
+
+    // Set parameters for THEN part
+    SetParams(thenline, ActionOpcodes, binaryoutput.thenPart);
+  end;
+end;
+
+(*
+
+  This is the main function for parsing a text script and converting
+  it to its binary format
+
+*)
+
+function ExtractFlags(const line: string): Integer;
+var
+  Tokens: TStringList;
+  i: Integer;
+begin
+  Result := 0; // Initialize result to 0 (no flags found)
+
+  Tokens := TStringList.Create;
+  try
+    // Split the line by spaces
+    Tokens.Delimiter := ' ';
+    Tokens.StrictDelimiter := True; // Avoid splitting on spaces and tabs
+    Tokens.DelimitedText := line;
+
+    // Check each token and add the corresponding flag value to the result
+    for i := 0 to Tokens.Count - 1 do
+    begin
+      if SameText(Tokens[i], 'NONMAGICAL_TRAP') then
+        Result := Result or FLAGS_NONMAGICAL_TRAP
+      else if SameText(Tokens[i], 'MAGICAL_TRAP') then
+        Result := Result or FLAGS_MAGICAL_TRAP
+      else if SameText(Tokens[i], 'AUTO_REMOVE') then
+        Result := Result or FLAGS_AUTO_REMOVING
+      else if SameText(Tokens[i], 'DEATH_SPEECH') then
+        Result := Result or FLAGS_DEATH_SPEECH
+      else if SameText(Tokens[i], 'SURRENDER_SPEECH') then
+        Result := Result or FLAGS_SURRENDER_SPEECH
+      else if SameText(Tokens[i], 'RADIUS_TWO') then
+        Result := Result or FLAGS_RADIUS_TWO
+      else if SameText(Tokens[i], 'RADIUS_THREE') then
+        Result := Result or FLAGS_RADIUS_THREE
+      else if SameText(Tokens[i], 'RADIUS_FIVE') then
+        Result := Result or FLAGS_RADIUS_FIVE
+      else if SameText(Tokens[i], 'TELEPORT_TRIGGER') then
+        Result := Result or FLAGS_TELEPORT_TRIGGER;
+    end;
+  finally
+    Tokens.Free;
+  end;
+end;
+
+procedure ParseTextScript(filename: String; var parseresult: Boolean);
+var
+  i: Integer;
+  signal_parseline: Boolean;
+  strwalkpos: Integer;
+  linecounter: Integer;
+  input: TStrings;
+  failedlines: Integer;
+  comment: ansiString;
+  temp_result: Boolean;
+  charcnt: Integer;
+  thestring, line: ansiString;
+begin
+  errorlist.Clear;
+  input := TStringList.Create;
+  signal_parseline := False;
+  input.LoadFromFile(filename);
+  input.Add('');
+
+  linecounter := 0;
+  line := '';
+  failedlines := 0;
+  ScriptCommentcnt := 0;
+  for i := 0 to input.Count - 1 do
+  begin
+    if pos('description', input[i]) <> 0 then
+    begin
+      thestring := input[i];
+      strwalkpos := pos('"', thestring) + 1;
+      charcnt := 0;
+      while thestring[strwalkpos] <> '"' do
+      begin
+        if charcnt > 39 then
+        begin
+          ConsoleDebug
+            ('WARNING! Script description was truncated because it was too long!');
+          ConsoleDebug('Length was ' + IntToStr(charcnt));
+          break;
+        end;
+        CurrentScript.Description[charcnt] := thestring[strwalkpos];
+        Inc(strwalkpos);
+        Inc(charcnt);
+      end;
+    end
+    else if pos('flags', input[i]) <> 0 then
+    begin
+      CurrentScript.ScriptFlags := ExtractFlags(input[i]);
+    end
+    else if pos('MAX_LINES_ALLOCATED', input[i]) <> 0 then
+    begin
+      CurrentScript.MaxLinesAllocated :=
+        StrToInt(extractword(2, input[i], [' ']));
+   
+    end
+    else
+      // Attention!
+
+      // Comments will become a part of the line they were written in
+      // (1., 2., 3. etc)
+      if (input[i] <> '') and (pos('// ', input[i]) <> 0) then
+      begin
+        comment := Copy(input[i], pos('// ', input[i]) + 3, length(input[i]));
+        // consoledebug('parsing comment! text=' + comment);
+        AddScriptComment(linecounter, comment);
+      end
+      else if (input[i] <> '') and (input[i] = '//') then
+      begin
+        comment := '';
+        AddScriptComment(linecounter, comment);
+      end
+      else if (input[i] <> '') and (pos('.', input[i]) >= 2) and
+        (pos('.', input[i]) < 6) then
+      begin
+        line := Copy(input[i], pos('.', input[i]) + 2, length(input[i])
+          ) + #13#10;
+        if pos('if', LowerCase(line)) = 0 then
+        begin
+          SetLength(CurrentScript.ScriptLines, linecounter + 1);
+          new(CurrentScript.ScriptLines[linecounter]);
+          ParseScriptLine(line, CurrentScript.ScriptLines[linecounter]^,
+            temp_result, linecounter);
+          // form1.linescompiledpanel.Caption := 'Lines compiled: ' + IntToStr(linecounter);
+          if temp_result = False then
+          begin
+            Inc(failedlines);
+          end;
+          line := '';
+          Inc(linecounter);
+        end;
+
+      end
+      else if (input[i] <> '') and (pos('.', input[i]) = 0) and (i > 2) and
+        (pos('then', LowerCase(input[i])) = 0) and
+        (pos('else', LowerCase(input[i])) = 0) and
+        (pos('if', LowerCase(input[i])) = 0) then
+      begin
+        // consoledebug('Parsing separate line ' + input[i]);
+        // line := line + input[i] + #13#10;
+        // Actually, here we should TRY to parse the line in
+
+        SetLength(CurrentScript.ScriptLines, linecounter + 1);
+        new(CurrentScript.ScriptLines[linecounter]);
+        ParseScriptLine(input[i], CurrentScript.ScriptLines[linecounter]^,
+          temp_result, linecounter);
+        // form1.linescompiledpanel.Caption := 'Lines compiled: ' + IntToStr(linecounter);
+        if temp_result = False then
+        begin
+          Inc(failedlines);
+        end;
+        line := '';
+        Inc(linecounter);
+
+      end
+      else if (input[i] <> '') and (pos('.', input[i]) = 0) and (i > 2) and
+        ((pos('then', LowerCase(input[i])) <> 0) or
+        (pos('else', LowerCase(input[i])) <> 0) or
+        (pos('if', LowerCase(input[i])) <> 0)) then
+      begin
+        line := line + input[i] + #13#10;
+
+        if (pos('then', LowerCase(line)) <> 0) and
+          (pos('else', LowerCase(input[i + 1])) = 0) then
+        begin
+          SetLength(CurrentScript.ScriptLines, linecounter + 1);
+          new(CurrentScript.ScriptLines[linecounter]);
+          ParseScriptLine(line, CurrentScript.ScriptLines[linecounter]^,
+            temp_result, linecounter);
+          // form1.linescompiledpanel.Caption := 'Lines compiled: ' + IntToStr(linecounter);
+          if temp_result = False then
+          begin
+            Inc(failedlines);
+          end;
+          line := '';
+          Inc(linecounter);
+
+        end
+        else
+
+          if (pos('then', LowerCase(line)) <> 0) and
+          (pos('else', LowerCase(line)) <> 0) then
+        begin
+
+          SetLength(CurrentScript.ScriptLines, linecounter + 1);
+          new(CurrentScript.ScriptLines[linecounter]);
+          ParseScriptLine(line, CurrentScript.ScriptLines[linecounter]^,
+            temp_result, linecounter);
+          // form1.linescmpiledpanel.Caption := 'Lines compiled: ' + IntToStr(linecounter);
+          if temp_result = False then
+          begin
+            Inc(failedlines);
+          end;
+          line := '';
+          Inc(linecounter);
+
+        end;
+
+      end
+      else
+
+        // here lies a problem:
+        // if you have two lines in row like:
+
+        // do nothing
+        // do nothing
+
+        // the last one will disappear because the code
+        // does not parse that line
+
+        if (input[i] <> '') and (signal_parseline = True) then
+        begin
+          // consoledebug('Appending line ' + input[i]);
+          line := line + input[i] + #13#10;
+        end
+        else if (input[i] = '') and (signal_parseline = True) then
+        begin
+          signal_parseline := False;
+          // consoledebug('signaled line parse for ' + line);
+          if line <> '' then
+          begin
+            SetLength(CurrentScript.ScriptLines, linecounter + 1);
+            new(CurrentScript.ScriptLines[linecounter]);
+            ParseScriptLine(line, CurrentScript.ScriptLines[linecounter]^,
+              temp_result, linecounter);
+            // form1.linescompiledpanel.Caption := 'Lines compiled: ' + IntToStr(linecounter);
+            if temp_result = False then
+            begin
+              Inc(failedlines);
+            end;
+            line := '';
+            Inc(linecounter);
+          end
+          else
+          begin
+          end;
+
+        end else
+        begin
+          if line <> '' then
+          begin
+           SetLength(CurrentScript.ScriptLines, linecounter + 1);
+            new(CurrentScript.ScriptLines[linecounter]);
+            ParseScriptLine(line, CurrentScript.ScriptLines[linecounter]^,
+              temp_result, linecounter);
+            // form1.linescompiledpanel.Caption := 'Lines compiled: ' + IntToStr(linecounter);
+            if temp_result = False then
+            begin
+              Inc(failedlines);
+            end;
+            line := '';
+            Inc(linecounter);
+          end;
+        end;
+
+  end;
+  CurrentScript.LineCount := linecounter;
+  if CurrentScript.MaxLinesAllocated = 0 then
+  begin
+    Writeln('overriding max lines allocated');
+    if (CurrentScript.LineCount > 10) and
+      (CurrentScript.LineCount div (CurrentScript.LineCount div 10) = 10) then
+    begin
+      // consoledebug('divisible with ten. rounding with '+inttostr(currentscript.LineCount)+'+4 = '+inttostr(currentscript.LineCount+4));
+      CurrentScript.MaxLinesAllocated :=
+        trunc(SimpleRoundTo(CurrentScript.LineCount + 4, 1));
+    end
+    else
+    begin
+      // consoledebug(format('rounding with = %0.2f * 10', [currentscript.LineCount / 100]));
+      CurrentScript.MaxLinesAllocated :=
+        trunc(SimpleRoundTo(CurrentScript.LineCount + 4, 1));
+    end;
+  end;
+
+  // consoledebug('Max lines allocated = ' + IntToStr(currentscript.MaxLinesAllocated));
+//if (CurrentScript.LineCount < 10)
+//and (CurrentScript.MaxLinesAllocated = 0) then
+ //begin
+ // writeln('Setting max lines allocated to 10');
+ // CurrentScript.MaxLinesAllocated := 10;
+ //end;
+  if failedlines > 0 then
+    parseresult := False
+  else
+    parseresult := True;
+
+  input.Free;
+end;
+
+(*
+
+  This function is for decompiling purposes. It replaces (obj) and (num) with
+  corresponding data from a script line.
+
+*)
+
+procedure ReplaceParamWithData(param: Integer; str: String; var dest: String;
+  Data: String);
+var
+  t: Integer;
+  curword: String;
+  tempcount: Integer;
+  wrdpos, paramnum, wordcnt: Integer;
+begin
+  tempcount := 0;
+  wordcnt := WordCount(str, [':', ' ', ',']);
+  paramnum := 0;
+  for t := 1 to wordcnt do
+  begin
+    curword := extractword(t, str, [':', ' ', ',']);
+    if (curword = '(obj)') or (curword = '(num)') then
+    begin
+      Inc(paramnum);
+    end;
+    if paramnum = param then
+    begin
+      if (curword = '(obj)') or (curword = '(num)') then
+      begin
+        wrdpos := WordPosition(t, dest, [':', ' ', ',']);
+        // Delete(dest, wrdpos, 5);
+        // insert(Data, dest, wrdpos);
+        if curword = '(obj)' then
+          dest := StringReplace(dest, '(obj)', Data, [])
+        else
+          dest := StringReplace(dest, '(num)', Data, []);
+
+        // ConsoleDebug('resulting string: ',dest);
+        exit;
+      end;
+
+    end;
+  end;
+end;
+
+function GetOpcodeParamType(param: Integer; str: String): Integer;
+var
+  t: Integer;
+  tempcount: Integer;
+  paramnum, wordcnt: Integer;
+begin
+  tempcount := 0;
+  wordcnt := WordCount(str, [':', ' ', ',']);
+  paramnum := 0;
+  for t := 1 to wordcnt do
+  begin
+    // ConsoleDebug(ExtractWord(t, str, [':', ' ', ',']));
+    if (extractword(t, str, [':', ' ', ',']) = '(obj)') or
+      (extractword(t, str, [':', ' ', ',']) = '(num)') then
+    begin
+      Inc(paramnum);
+    end;
+    if paramnum = param then
+    begin
+      if (extractword(t, str, [':', ' ', ',']) = '(obj)') then
+      begin
+        Result := PARAM_TYPE_OBJ;
+        exit;
+      end;
+      if (extractword(t, str, [':', ' ', ',']) = '(num)') then
+      begin
+        Result := PARAM_TYPE_NUM;
+        exit;
+      end;
+    end;
+  end;
+  Result := tempcount;
+end;
+
+function GetOpcodeParamCount(str: String): Integer;
+var
+  t: Integer;
+  tempcount: Integer;
+  wordcnt: Integer;
+begin
+  tempcount := 0;
+  wordcnt := WordCount(str, [':', ' ', ',']);
+  for t := 1 to wordcnt do
+  begin
+    // ConsoleDebug(ExtractWord(t, str, [':', ' ', ',']));
+    if (extractword(t, str, [':', ' ', ',']) = '(obj)') or
+      (extractword(t, str, [':', ' ', ',']) = '(num)') then
+    begin
+      Inc(tempcount);
+    end;
+
+  end;
+  Result := tempcount;
+
+end;
+
+function CreateParamPlaceholders(str: String): String;
+var
+  t: Integer;
+  tempstr: String;
+  tempcount: Integer;
+  wordcnt: Integer;
+begin
+  tempcount := 0;
+  tempstr := str;
+  tempstr := StringReplace(tempstr, '(obj)', '%obj_param%', [rfReplaceAll]);
+  tempstr := StringReplace(tempstr, '(num)', '%num_param%', [rfReplaceAll]);
+  Result := tempstr;
+
+end;
+
+function GetFlags(scr: ScriptFile): String;
+begin
+  Result := 'flags ';
+  if (scr.ScriptFlags and FLAGS_MAGICAL_TRAP) <> 0 then
+    Result := Result + 'MAGICAL_TRAP ';
+  if (scr.ScriptFlags and FLAGS_NONMAGICAL_TRAP) <> 0 then
+    Result := Result + 'NONMAGICAL_TRAP ';
+  if (scr.ScriptFlags and FLAGS_AUTO_REMOVING) <> 0 then
+    Result := Result + 'AUTO_REMOVE ';
+  if (scr.ScriptFlags and FLAGS_DEATH_SPEECH) <> 0 then
+    Result := Result + 'DEATH_SPEECH ';
+  if (scr.ScriptFlags and FLAGS_TELEPORT_TRIGGER) <> 0 then
+    Result := Result + 'TELEPORT_TRIGGER ';
+  if (scr.ScriptFlags and FLAGS_RADIUS_TWO) <> 0 then
+    Result := Result + 'RADIUS_TWO ';
+  if (scr.ScriptFlags and FLAGS_RADIUS_THREE) <> 0 then
+    Result := Result + 'RADIUS_THREE ';
+  if (scr.ScriptFlags and FLAGS_RADIUS_FIVE) <> 0 then
+    Result := Result + 'RADIUS_FIVE ';
+  if (scr.ScriptFlags and FLAGS_SURRENDER_SPEECH) <> 0 then
+    Result := Result + 'SURRENDER_SPEECH ';
+
+end;
+
+function decode_script_header(scr: ScriptFile): String;
+begin
+  Result := '';
+  Result := Result + 'description "' + scr.Description + '"' + #13#10;
+  Result := Result + 'MAX_LINES_ALLOCATED ' +
+    IntToStr(scr.MaxLinesAllocated) + #13#10;
+  if scr.ScriptFlags > 0 then
+  begin
+    Result := Result + GetFlags(scr) + #13#10;
+  end;
+end;
+
+function CommentOnLine(linenum: Integer): String;
+var
+  t: Integer;
+begin
+  Result := '';
+  for t := 0 to ScriptCommentcnt - 1 do
+  begin
+    if linenum = ScriptComments[t].line then
+    begin
+      if Result <> '' then
+        Result := Result + #13#10 + '// ' + ScriptComments[t].str
+      else
+        Result := '// ' + ScriptComments[t].str;
+    end;
+  end;
+end;
+
+function decode_script_line(scrline: ScriptLine): String;
+var
+  condlinetemp, thenlinetemp, elselinetemp: String;
+  condlinefinal, thenlinefinal, elselinefinal: String;
+  t: Integer;
+  condparams: Integer;
+  thenparams: Integer;
+  paramtype: Integer;
+  datastr: String;
+  datastr2: String;
+  elseparams: Integer;
+begin
+  Result := '';
+  if scrline.ifPart.opcode > 0 then
+  begin
+    condlinetemp := getMesstringbyid(scrline.ifPart.opcode, ConditionOpcodes);
+    condparams := GetOpcodeParamCount(getMesstringbyid(scrline.ifPart.opcode,
+      ConditionOpcodes));
+    // ConsoleDebug('placeholders: ', condlinetemp);
+    condlinefinal := condlinetemp;
+    for t := 0 to condparams - 1 do
+    begin
+      paramtype := GetOpcodeParamType(t + 1, condlinetemp);
+      if paramtype = PARAM_TYPE_OBJ then
+        datastr := getMesstringbyid(scrline.ifPart.VarTypes[t], FocusData)
+      else if paramtype = PARAM_TYPE_NUM then
+        datastr := getMesstringbyid(scrline.ifPart.VarTypes[t], ValueData);
+
+      if (paramtype = PARAM_TYPE_OBJ) then
+        ReplaceParamWithData(t + 1, condlinetemp, condlinefinal, datastr)
+      else if (paramtype = PARAM_TYPE_NUM) and (scrline.ifPart.VarTypes[t] = 3)
+      then
+      begin
+        ReplaceParamWithData(t + 1, condlinetemp, condlinefinal,
+          IntToStr(scrline.ifPart.VarValue[t]));
+      end
+      else
+      begin
+
+        if (scrline.ifPart.VarTypes[t] = 5) or (scrline.ifPart.VarTypes[t] = 6)
+        then
+        begin
+          datastr2 := getMesstringbyid(hiword(scrline.ifPart.VarValue[t]),
+            FocusData);
+          ReplaceParamWithData(t + 1, condlinetemp, condlinefinal,
+            datastr + ' ' + IntToStr(loword(scrline.ifPart.VarValue[t])) +
+            ' of ' + datastr2);
+        end
+        else
+
+          ReplaceParamWithData(t + 1, condlinetemp, condlinefinal,
+            datastr + ' ' + IntToStr(scrline.ifPart.VarValue[t]));
+      end;
+
+    end;
+    Result := 'IF ' + condlinefinal + #13#10;
+  end;
+  if (scrline.thenPart.opcode >= 0) or (scrline.ifPart.opcode > 0) then
+  begin
+    thenparams := GetOpcodeParamCount(getMesstringbyid(scrline.thenPart.opcode,
+      ActionOpcodes));
+    thenlinetemp := getMesstringbyid(scrline.thenPart.opcode, ActionOpcodes);
+    // ConsoleDebug('placeholders: ', thenparams);
+    thenlinefinal := thenlinetemp;
+    for t := 0 to thenparams - 1 do
+    begin
+      paramtype := GetOpcodeParamType(t + 1, thenlinetemp);
+      if paramtype = PARAM_TYPE_OBJ then
+      begin
+        if scrline.thenPart.VarTypes[t] = 11 then
+          datastr := getMesstringbyid(scrline.thenPart.VarTypes[t], FocusData) +
+            ' ' + IntToStr(scrline.thenPart.VarValue[t])
+        else
+
+          datastr := getMesstringbyid(scrline.thenPart.VarTypes[t], FocusData);
+      end
+      else if paramtype = PARAM_TYPE_NUM then
+        datastr := getMesstringbyid(scrline.thenPart.VarTypes[t], ValueData);
+      if (paramtype = PARAM_TYPE_OBJ) then
+        ReplaceParamWithData(t + 1, thenlinetemp, thenlinefinal, datastr);
+      if (paramtype = PARAM_TYPE_NUM) and (scrline.thenPart.VarTypes[t] = 3)
+      then
+      begin
+        ReplaceParamWithData(t + 1, thenlinetemp, thenlinefinal,
+          IntToStr(scrline.thenPart.VarValue[t]));
+      end
+      else
+      begin
+        if (paramtype = PARAM_TYPE_NUM) and (scrline.thenPart.VarTypes[t] <> 3)
+        then
+        begin
+
+          if (scrline.thenPart.VarTypes[t] = 5) or
+            (scrline.thenPart.VarTypes[t] = 6) then
+          begin
+            datastr2 := getMesstringbyid(hiword(scrline.thenPart.VarValue[t]),
+              FocusData);
+            ReplaceParamWithData(t + 1, thenlinetemp, thenlinefinal,
+              datastr + ' ' + IntToStr(loword(scrline.thenPart.VarValue[t])) +
+              ' of ' + datastr2);
+          end
+          else
+            ReplaceParamWithData(t + 1, thenlinetemp, thenlinefinal,
+              datastr + ' ' + IntToStr(scrline.thenPart.VarValue[t]));
+        end;
+
+      end;
+    end;
+    if scrline.ifPart.opcode = 0 then
+      Result := Result + thenlinefinal + #13#10
+    else
+
+      Result := Result + '    THEN ' + thenlinefinal + #13#10;
+
+  end;
+
+  if (scrline.elsePart.opcode > 0) then
+  begin
+    elseparams := GetOpcodeParamCount(getMesstringbyid(scrline.elsePart.opcode,
+      ActionOpcodes));
+    elselinetemp := getMesstringbyid(scrline.elsePart.opcode, ActionOpcodes);
+    // ConsoleDebug('placeholders: ', thenparams);
+    elselinefinal := elselinetemp;
+    for t := 0 to elseparams - 1 do
+    begin
+      paramtype := GetOpcodeParamType(t + 1, elselinetemp);
+      if paramtype = PARAM_TYPE_OBJ then
+        datastr := getMesstringbyid(scrline.elsePart.VarTypes[t], FocusData)
+      else if paramtype = PARAM_TYPE_NUM then
+        datastr := getMesstringbyid(scrline.elsePart.VarTypes[t], ValueData);
+      if (paramtype = PARAM_TYPE_OBJ) then
+        ReplaceParamWithData(t + 1, elselinetemp, elselinefinal, datastr);
+      if (paramtype = PARAM_TYPE_NUM) and (scrline.elsePart.VarTypes[t] = 3)
+      then
+      begin
+        ReplaceParamWithData(t + 1, elselinetemp, elselinefinal,
+          IntToStr(scrline.elsePart.VarValue[t]));
+      end
+      else
+      begin
+        if (paramtype = PARAM_TYPE_NUM) and (scrline.elsePart.VarTypes[t] <> 3)
+        then
+        begin
+
+          if (scrline.elsePart.VarTypes[t] = 5) or
+            (scrline.elsePart.VarTypes[t] = 6) then
+          begin
+            datastr2 := getMesstringbyid(hiword(scrline.elsePart.VarValue[t]),
+              FocusData);
+            ReplaceParamWithData(t + 1, elselinetemp, elselinefinal,
+              datastr + ' ' + IntToStr(loword(scrline.elsePart.VarValue[t])) +
+              ' of ' + datastr2);
+          end
+          else
+            ReplaceParamWithData(t + 1, elselinetemp, elselinefinal,
+              datastr + ' ' + IntToStr(scrline.elsePart.VarValue[t]));
+        end;
+
+      end;
+
+    end;
+    Result := Result + '    ELSE ' + elselinefinal + #13#10;
+  end;
+
+end;
+
+procedure DecompileScript(filename: String; scr: ScriptFile);
+var
+  t: Integer;
+  output: TStrings;
+begin
+  output := TStringList.Create;
+  output.Add(decode_script_header(scr));
+  for t := 0 to scr.LineCount - 1 do
+  begin
+    if CommentOnLine(t) <> '' then
+    begin
+      output.Add(CommentOnLine(t));
+      output.Add('');
+    end;
+
+    output.Add(IntToStr(t) + '. ' + decode_script_line(scr.ScriptLines[t]^));
+  end;
+  output.savetofile(filename);
+  output.Free;
+end;
+
+procedure SaveScript(filename: String; scr: ScriptFile);
+var
+  f: file;
+  t: Integer;
+begin
+  if ScriptCommentcnt > 0 then
+  begin
+    assignfile(scrcmt, changefileext(filename, '.cmt'));
+    rewrite(scrcmt);
+    Writeln(scrcmt, ScriptCommentcnt);
+    for t := 0 to ScriptCommentcnt - 1 do
+    begin
+      Writeln(scrcmt, ScriptComments[t].str);
+      Writeln(scrcmt, ScriptComments[t].line);
+    end;
+    closefile(scrcmt);
+  end
+  else
+  begin
+    if fileexists(changefileext(filename, '.cmt')) then
+      deletefile(changefileext(filename, '.cmt'));
+  end;
+
+  assignfile(f, filename);
+  rewrite(f, 1);
+  scr.LocalFlags := ScriptFlags.AsInteger;
+  BlockWrite(f, scr.LocalFlags, 4);
+  BlockWrite(f, scr.Counter0, 1);
+  BlockWrite(f, scr.Counter1, 1);
+  BlockWrite(f, scr.Counter2, 1);
+  BlockWrite(f, scr.Counter3, 1);
+  BlockWrite(f, scr.Description, 40);
+  BlockWrite(f, scr.ScriptFlags, 4);
+  BlockWrite(f, scr.LineCount, 4);
+  BlockWrite(f, scr.MaxLinesAllocated, 4);
+  BlockWrite(f, scr.Junk, 4);
+  for t := 0 to scr.LineCount - 1 do
+  begin
+    BlockWrite(f, scr.ScriptLines[t].ifPart, SizeOf(scrline));
+    BlockWrite(f, scr.ScriptLines[t].thenPart, SizeOf(scrline));
+    BlockWrite(f, scr.ScriptLines[t].elsePart, SizeOf(scrline));
+  end;
+
+  closefile(f);
+end;
+
+procedure LoadScriptHeaderOnly(filename: String; var scr: ScriptFile);
+var
+  f: file;
+  scrid: String;
+  t: Integer;
+begin
+  ScriptFlags := TBit32.Create;
+  assignfile(f, filename);
+  reset(f, 1);
+  scr.filename := filename;
+  scrid := Copy(extractfilename(filename), 1, 5);
+  if IsStrANumber(scrid) then
+  begin
+    scr.script_id := StrToInt(scrid);
+  end
+  else
+  begin
+    scr.script_id := -1;
+  end;
+
+  BlockRead(f, scr.LocalFlags, 4);
+  BlockRead(f, scr.Counter0, 1);
+  BlockRead(f, scr.Counter1, 1);
+  BlockRead(f, scr.Counter2, 1);
+  BlockRead(f, scr.Counter3, 1);
+  BlockRead(f, scr.Description, 40);
+  BlockRead(f, scr.ScriptFlags, 4);
+  BlockRead(f, scr.LineCount, 4);
+  BlockRead(f, scr.MaxLinesAllocated, 4);
+  BlockRead(f, scr.Junk, 4);
+  ScriptFlags.AsInteger := scr.LocalFlags;
+  closefile(f);
+end;
+
+procedure LoadScript(filename: String; var scr: ScriptFile);
+var
+  f: file;
+  scrid: String;
+  t: Integer;
+begin
+  ScriptCommentcnt := 0;
+  ConsoleDebug('Loading script: ' + filename);
+  if fileexists(changefileext(filename, '.cmt')) then
+  begin
+    assignfile(scrcmt, changefileext(filename, '.cmt'));
+    reset(scrcmt);
+    readln(scrcmt, ScriptCommentcnt);
+    for t := 0 to ScriptCommentcnt - 1 do
+    begin
+      SetLength(ScriptComments, t + 1);
+      new(ScriptComments[t]);
+      readln(scrcmt, ScriptComments[t].str);
+      readln(scrcmt, ScriptComments[t].line);
+    end;
+    closefile(scrcmt);
+  end;
+
+  ScriptFlags := TBit32.Create;
+  assignfile(f, filename);
+  reset(f, 1);
+  scr.filename := filename;
+
+  scrid := Copy(extractfilename(filename), 1, 5);
+  if IsStrANumber(scrid) then
+  begin
+    scr.script_id := StrToInt(scrid);
+    ConsoleDebug('Script ID for ' + extractfilename(filename) + ': ' +
+      IntToStr(scr.script_id));
+  end
+  else
+  begin
+    scr.script_id := -1;
+    ConsoleDebug('No valid script id for ' + extractfilename(filename) +
+      ', set to -1');
+  end;
+  BlockRead(f, scr.LocalFlags, 4);
+  BlockRead(f, scr.Counter0, 1);
+  BlockRead(f, scr.Counter1, 1);
+  BlockRead(f, scr.Counter2, 1);
+  BlockRead(f, scr.Counter3, 1);
+  BlockRead(f, scr.Description, 40);
+  BlockRead(f, scr.ScriptFlags, 4);
+  BlockRead(f, scr.LineCount, 4);
+  BlockRead(f, scr.MaxLinesAllocated, 4);
+  BlockRead(f, scr.Junk, 4);
+  ScriptFlags.AsInteger := scr.LocalFlags;
+
+  for t := 0 to scr.LineCount - 1 do
+  begin
+    SetLength(scr.ScriptLines, t + 1);
+    new(scr.ScriptLines[t]);
+    BlockRead(f, scr.ScriptLines[t].ifPart, SizeOf(scrline));
+    BlockRead(f, scr.ScriptLines[t].thenPart, SizeOf(scrline));
+    BlockRead(f, scr.ScriptLines[t].elsePart, SizeOf(scrline));
+  end;
+  closefile(f);
+end;
+
+end.

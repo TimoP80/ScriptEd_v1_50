@@ -1,0 +1,31 @@
+object Form31: TForm31
+  Left = 0
+  Top = 0
+  BorderStyle = bsToolWindow
+  Caption = 'Generating'
+  ClientHeight = 63
+  ClientWidth = 185
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 16
+    Top = 24
+    Width = 149
+    Height = 13
+    Caption = 'Generating text... Please wait.'
+  end
+  object JvWaitingGradient1: TJvWaitingGradient
+    Left = 8
+    Top = 45
+    Width = 169
+    Active = True
+    GradientWidth = 50
+  end
+end

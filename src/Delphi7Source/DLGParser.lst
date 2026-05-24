@@ -1,0 +1,237 @@
+
+================================================================================
+Grammar Tests:
+  Deletable symbols:        -- none --
+  Undefined nonterminals:   -- none --
+  Unreachable nonterminals: -- none --
+  Circular derivations:     -- none --
+  Underivable nonterminals: -- none --
+  LL(1) conditions:         --  ok  --
+
+================================================================================
+Time Compiled: 24. kesäkuuta 2008 @ 14:05:01
+
+Statistics:
+  number of terminals:        10 (limit   513)
+  number of non-terminals:     2 (limit   503)
+  number of pragmas:           0 (limit   503)
+  number of symbolnodes:      12 (limit   513)
+  number of graphnodes:       20 (limit  3001)
+  number of conditionsets:     1 (limit   101)
+  number of charactersets:    18 (limit   501)
+
+================================================================================
+Options:
+  Generate console app
+  Generate version information
+  Generate comment events
+  Use Hash functions to lookup literals
+  Force source listing
+
+
+
+================================================================================
+Listing
+
+    1  COMPILER DLGParser
+    2  (*
+    3  
+    4  Attempt to create DLG parser
+    5    
+    6  *)
+    7  
+    8  DELPHI
+    9    PRIVATE
+   10      fOutputStream : TMemoryStream;
+   11      fSubSelectDepth : integer;
+   12      fInNaturalJoin : boolean;
+   13              
+   14      procedure Init;
+   15      procedure Final;
+   16      property OutputStream : TMemoryStream read fOutputStream write fOutputStream;
+   17    PUBLISHED
+   18      CREATE 
+   19        fOutputStream := TMemoryStream.Create;
+   20   
+   21    DESTROY                     
+   22      fOutputStream.Free;
+   23    ERRORS
+   24   
+   25  END_DELPHI
+   26  
+   27  (* Arbitrary Code *)
+   28  
+   29  type
+   30    DLGEntry = record
+   31      beforeline_comments: TCommentList;
+   32      index:      Integer;
+   33      field1,
+   34      field2,
+   35      field3,
+   36      field4,
+   37      field5,
+   38      field6: string;
+   39      messagestr: String;
+   40    end;
+   41  
+   42  type
+   43    DialogueFile = record
+   44      msgfilename: String;
+   45      entries:     array of ^MSGEntry;
+   46      entrycnt:    Integer;
+   47    end;
+   48  
+   49  var
+   50    CurrentDialogue: Dialoguefile;
+   51  
+   52  
+   53  const
+   54    PadLen = 20;
+   55  
+   56  
+   57                          
+   58  function PadR(S : string; Ch : char; L : integer) : string;
+   59  var
+   60    i : integer;
+   61  begin
+   62    for i := 1 to L - (Length(s)) do
+   63      s := s + Ch;
+   64    Result := s;
+   65  end;
+   66  
+   67  
+   68  procedure T-->Grammar<--.Init;
+   69  begin
+   70    OutputStream.Clear;
+   71  
+   72   end;
+   73  
+   74  procedure T-->Grammar<--.Final;
+   75  begin
+   76     OutputStream.Position := 0;
+   77    OutputStream.SaveToStream(ListStream);
+   78    OutputStream.Clear;
+   79  end;
+   80                                   
+   81  function parse_string(zstr: string): string;
+   82  var t:    integer;
+   83  var temp: string;
+   84  var len:  integer;
+   85  begin;
+   86  result:='';
+   87    len := 0;
+   88  temp:='';
+   89    //writeln ('Parsing string: ',zstr);
+   90    t   := pos('{', zstr) + 1;
+   91    len := length(zstr);
+   92    while (zstr[t] <> '}') do
+   93    begin;
+   94      //writeln (zstr[t]);
+   95  
+   96        temp := temp + zstr[t];
+   97  
+   98      Inc(t);
+   99    end;
+  100    Result := temp;
+  101  end;
+  102  
+  103  
+  104  
+  105  (* End of Arbitrary Code *)
+  106  
+  107  IGNORE CASE
+  108  
+  109  CHARACTERS
+  110    letter   = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" .
+  111    digit    = "0123456789" .
+  112    hexdigit = digit + "ABCDEFabcdef" .
+  113    tab      = CHR(9) .
+  114    lf       = CHR(10) .
+  115    eol      = CHR(13) .
+  116    files    = letter + digit + ":\." .
+  117    chars    = CHR(32) .. CHR(255) - "'" .
+  118    strings  = CHR(32) .. CHR(255) - '"'.
+  119    mesentrys  = CHR(13) + CHR (10) +  CHR(32) .. CHR(255) - '{' - '}'.
+  120    macros   = ANY - eol .
+  121  
+  122  COMMENTS FROM "//" TO eol
+  123  
+  124  IGNORE
+  125    tab + eol + lf
+  126  
+  127  TOKENS
+  128    identifier = ( "_" | letter) { "_" | letter | digit } .
+  129    number     = digit { digit } [ "." { digit }] [ "U" | "u" | "L" | "l" ] .
+  130    hexnumber  = "0" ( "x" | "X" ) hexdigit { hexdigit } [ "U" | "u" | "L" | "l" ] .
+  131    _string     = '"' { strings } '"' .
+  132    _mesentry = "{" { ["#"] mesentrys } "}" .
+  133    char       = "'" [ "\" ] chars "'" .
+  134    library    = "<" files { files } ">" .
+  135    endofline = eol.
+  136  
+  137  IGNORE CHR(1)..CHR(32)
+  138  
+  139  PRODUCTIONS
+  140  
+  141  DLGEntry = (. 
+  142   setlength(CurrentDialogue.entries, CurrentDialogue.entrycnt + 1);
+  143    new(CurrentDialogue.entries[CurrentDialogue.entrycnt]);
+  144    CurrentDialogue.entries[CurrentDialogue.entrycnt].beforeline_comments := TCommentList.create;
+  145  
+  146      if GetScanner.fLastCommentList.Count > 0 then
+  147    begin
+  148      //    writeln('before line comments: ', GetScanner.fLastCommentList.Text);
+  149      for i:=0 to GetScanner.fLastCommentList.Count -1 do
+  150      begin
+  151       CurrentDialogue.entries[CurrentDialogue.entrycnt].beforeline_comments.Add(GetScanner.fLastCommentList.Comments[i],GetScanner.fLastCommentList.Line[i],GetScanner.fLastCommentList.Column[i]);
+  152     end;
+  153  
+  154  
+  155        if Assigned(fInternalGrammarComment) then
+  156        fInternalGrammarComment(Self, GetScanner.fLastCommentList);
+  157        GetScanner.fLastCommentList.Clear;
+  158    end;
+  159  
+  160    
+  161  .) _mesentry (. 
+  162  
+  163    CurrentDialogue.entries[CurrentDialogue.entrycnt].index := StrToInt(parse_string(lexstring));
+  164  
+  165  
+  166  
+  167   .) _mesentry  (.
+  168    CurrentDialogue.entries[CurrentDialogue.entrycnt].field1 := parse_string(lexstring);
+  169   
+  170    .)
+  171    _mesentry  (.
+  172    CurrentDialogue.entries[CurrentDialogue.entrycnt].field2 := parse_string(lexstring);
+  173   
+  174    .) 
+  175    
+  176    _mesentry  (.
+  177    CurrentDialogue.entries[CurrentDialogue.entrycnt].field3 := parse_string(lexstring);
+  178   
+  179    .)
+  180    
+  181    _mesentry  (.
+  182    CurrentDialogue.entries[CurrentDialogue.entrycnt].field4 := parse_string(lexstring);
+  183   
+  184   
+  185    .)
+  186  
+  187  _mesentry  (.
+  188    CurrentDialogue.entries[CurrentDialogue.entrycnt].field5 := parse_string(lexstring);
+  189   
+  190    .)
+  191  
+  192  _mesentry  (.
+  193    CurrentDialogue.entries[CurrentDialogue.entrycnt].field6 := parse_string(lexstring);
+  194  inc(CurrentDialogue.entrycnt); 
+  195    .)
+  196  
+  197     .
+  198  
+  199  DLGParser = DLGEntry {DLGEntry}.
+  200                                                                  
+  201  END DLGParser.
+No errors.

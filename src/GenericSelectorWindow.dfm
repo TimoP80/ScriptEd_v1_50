@@ -1,0 +1,60 @@
+object Form16: TForm16
+  Left = 858
+  Top = 272
+  Caption = '<Caption filled in by Script>'
+  ClientHeight = 351
+  ClientWidth = 474
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 8
+    Width = 72
+    Height = 13
+    Caption = '<List of what>'
+  end
+  object JvHTListBox1: TJvHTListBox
+    Left = 8
+    Top = 24
+    Width = 465
+    Height = 281
+    HideSel = False
+    ColorHighlight = clHighlight
+    ColorHighlightText = clHighlightText
+    ColorDisabledText = clGrayText
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Lucida Console'
+    Font.Style = []
+    ParentFont = False
+    SuperSubScriptRatio = 0.666666666666666600
+    TabOrder = 0
+    OnDblClick = JvHTListBox1DblClick
+  end
+  object Button1: TButton
+    Left = 144
+    Top = 312
+    Width = 97
+    Height = 33
+    Caption = 'OK'
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object Button2: TButton
+    Left = 256
+    Top = 312
+    Width = 97
+    Height = 33
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 2
+  end
+end

@@ -1,0 +1,139 @@
+object Form9: TForm9
+  Left = 447
+  Top = 217
+  Width = 868
+  Height = 462
+  Caption = 'Journal Entry editor'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 16
+    Top = 8
+    Width = 84
+    Height = 13
+    Caption = 'Journal entry list:'
+  end
+  object Label2: TLabel
+    Left = 264
+    Top = 48
+    Width = 60
+    Height = 13
+    Caption = 'Normal text:'
+  end
+  object Label3: TLabel
+    Left = 264
+    Top = 192
+    Width = 87
+    Height = 13
+    Caption = 'Dumb player text:'
+  end
+  object Label4: TLabel
+    Left = 264
+    Top = 24
+    Width = 100
+    Height = 13
+    Caption = 'Entry ID (scripts):'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object entryidScript: TLabel
+    Left = 368
+    Top = 24
+    Width = 73
+    Height = 13
+    AutoSize = False
+  end
+  object Label6: TLabel
+    Left = 448
+    Top = 24
+    Width = 133
+    Height = 13
+    Caption = 'Entry ID (message file):'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object entryIDMES: TLabel
+    Left = 592
+    Top = 24
+    Width = 73
+    Height = 13
+    AutoSize = False
+  end
+  object ListBox1: TListBox
+    Left = 16
+    Top = 24
+    Width = 233
+    Height = 353
+    ItemHeight = 13
+    TabOrder = 0
+    OnClick = ListBox1Click
+  end
+  object pcnormaltext: TMemo
+    Left = 264
+    Top = 64
+    Width = 577
+    Height = 121
+    TabOrder = 1
+    OnKeyUp = pcnormaltextKeyUp
+  end
+  object pcdumbtext: TMemo
+    Left = 264
+    Top = 208
+    Width = 577
+    Height = 169
+    TabOrder = 2
+    OnKeyUp = pcdumbtextKeyUp
+  end
+  object Button1: TButton
+    Left = 16
+    Top = 384
+    Width = 65
+    Height = 33
+    Caption = 'Add'
+    TabOrder = 3
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 88
+    Top = 384
+    Width = 65
+    Height = 33
+    Caption = 'Delete'
+    TabOrder = 4
+    OnClick = Button2Click
+  end
+  object Button3: TButton
+    Left = 672
+    Top = 384
+    Width = 81
+    Height = 33
+    Caption = 'OK'
+    ModalResult = 1
+    TabOrder = 5
+  end
+  object Button4: TButton
+    Left = 760
+    Top = 384
+    Width = 81
+    Height = 33
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 6
+  end
+end

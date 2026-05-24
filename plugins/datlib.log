@@ -1,0 +1,55 @@
+ArcDATLib event log - Started on 18.4.2018 22:45:30
+-----------------------------------------------------------
+
+18.4.2018 22:45:30 - DAT_LOAD: Opening database "H:\Games\Arcanum\arcanum3.dat".. 
+
+18.4.2018 22:45:30 - DAT_LOAD: Got 1097 files.
+Size: 9605011 bytes.
+18.4.2018 22:45:30 - DAT_LOAD: Opening database "H:\Games\Arcanum\arcanum4.dat".. 
+
+18.4.2018 22:45:30 - DAT_LOAD: Got 134 files.
+Size: 447614 bytes.
+18.4.2018 22:45:30 - LoadFile semes\action.mes: index=127
+18.4.2018 22:45:30 - File is compressed
+18.4.2018 22:45:30 - FILENAME_OVERRIDE: action.mes
+18.4.2018 22:45:30 - LoadFile semes\condition.mes: index=1094
+18.4.2018 22:45:30 - File is compressed
+18.4.2018 22:45:30 - FILENAME_OVERRIDE: condition.mes
+18.4.2018 22:45:30 - LoadFile semes\focus.mes: index=1095
+18.4.2018 22:45:30 - File is compressed
+18.4.2018 22:45:30 - FILENAME_OVERRIDE: focus.mes
+18.4.2018 22:45:30 - LoadFile semes\value.mes: index=1096
+18.4.2018 22:45:30 - File is compressed
+18.4.2018 22:45:30 - FILENAME_OVERRIDE: value.mes
+18.4.2018 22:45:30 - DAT_LOAD: Opening database "H:\Games\Arcanum\arcanum2.dat".. 
+
+18.4.2018 22:45:30 - DAT_LOAD: Got 12365 files.
+Size: 147991122 bytes.
+18.4.2018 22:45:30 - Cleaning temp files in C:\CodeProjects\ScriptEd_v1_50\plugins\ extracted from H:\Games\Arcanum\arcanum3.dat... 
+semes\condition.mes
+semes\focus.mes
+semes\value.mes
+Clean up complete: 3 temp files removed.
+18.4.2018 22:45:30 - Cleaning temp files in C:\CodeProjects\ScriptEd_v1_50\plugins\ extracted from H:\Games\Arcanum\arcanum4.dat... 
+semes\action.mes
+Clean up complete: 1 temp files removed.
+18.4.2018 22:45:30 - DAT_LOAD: Opening database "H:\Games\Arcanum\Arcanum3.dat".. 
+
+18.4.2018 22:45:30 - DAT_LOAD: Got 1097 files.
+Size: 9605011 bytes.
+18.4.2018 22:45:30 - LoadFile rules\xp_quest.mes: index=1092
+18.4.2018 22:45:30 - File is compressed
+18.4.2018 22:45:30 - FILENAME_OVERRIDE: C:\Users\Timo\AppData\Local\Temp\xp_quest.mes
+18.4.2018 22:45:31 - Cleaning temp files in C:\Users\Timo\AppData\Local\Temp\ extracted from H:\Games\Arcanum\Arcanum3.dat... 
+rules\xp_quest.mes
+Clean up complete: 1 temp files removed.
+18.4.2018 22:45:31 - DAT_LOAD: Opening database "H:\Games\Arcanum\Arcanum3.dat".. 
+
+18.4.2018 22:45:31 - DAT_LOAD: Got 1097 files.
+Size: 9605011 bytes.
+18.4.2018 22:45:31 - LoadFile mes\description.mes: index=711
+18.4.2018 22:45:31 - File is compressed
+18.4.2018 22:45:31 - FILENAME_OVERRIDE: C:\Users\Timo\AppData\Local\Temp\description.mes
+18.4.2018 22:45:32 - Cleaning temp files in C:\Users\Timo\AppData\Local\Temp\ extracted from H:\Games\Arcanum\Arcanum3.dat... 
+mes\description.mes
+Clean up complete: 1 temp files removed.

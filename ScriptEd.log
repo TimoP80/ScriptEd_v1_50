@@ -1,0 +1,167 @@
+Loaded configuration from C:\CodeProjects\ScriptEd_v1_50\ScriptEd.ini
+Loaded mes file AttachmentPoint.mes (36 entries)
+Loaded mes file AttachmentPointDesc.mes (36 entries)
+Loaded mes file Stats.mes (28 entries)
+Loaded mes file ScriptCallType.mes (4 entries)
+Initializing opcodes...
+Arcanum path set to E:\Games\Arcanum
+Sanity check: ARCANUM.EXE
+--> OK
+Loaded mes file action.mes (142 entries)
+Loaded mes file condition.mes (52 entries)
+Loaded mes file value.mes (7 entries)
+Loaded mes file focus.mes (24 entries)
+Initializing script data...
+Scanning for standard ScriptEd Plugins
+ --> Script Dependency Checker
+ --> Compiled Data Viewer
+Scanning for Development tool Plugins
+ --> ScriptEd Plugin Creator
+Scanning for Dialogue Editor Plugins
+ --> SAPI5 Speech Generator Plugin
+DAT_ParseMES src=E:\Games\Arcanum\Arcanum3.dat => rules\xp_quest.mes
+success - got 50 entries.
+DAT_ParseMES src=E:\Games\Arcanum\Arcanum3.dat => mes\description.mes
+Skipping string data outside brackets: "Red" at line 1000
+Skipping string data outside brackets: "Brick" at line 1000
+Skipping string data outside brackets: "Wall" at line 1000
+Skipping string data outside brackets: "Grey" at line 1001
+Skipping string data outside brackets: "Brick" at line 1001
+Skipping string data outside brackets: "Wall" at line 1001
+Skipping string data outside brackets: "Solid" at line 1002
+Skipping string data outside brackets: "Rock" at line 1002
+Skipping string data outside brackets: "Wall" at line 1002
+Skipping string data outside brackets: "Light" at line 1003
+Skipping string data outside brackets: "Wood" at line 1003
+Skipping string data outside brackets: "Wall" at line 1003
+Skipping string data outside brackets: "Heavy" at line 1004
+Skipping string data outside brackets: "Wood" at line 1004
+Skipping string data outside brackets: "Wall" at line 1004
+Skipping string data outside brackets: "Wood" at line 1005
+Skipping string data outside brackets: "Fence" at line 1005
+Skipping string data outside brackets: "Metal" at line 1006
+Skipping string data outside brackets: "Fence" at line 1006
+Skipping string data outside brackets: "Facade" at line 1007
+Skipping string data outside brackets: "Wall" at line 1007
+Skipping string data outside brackets: "Small" at line 8134
+Skipping string data outside brackets: "Ladies" at line 8134
+Skipping string data outside brackets: "City" at line 8134
+Skipping string data outside brackets: "Dweller" at line 8134
+Skipping string data outside brackets: "Clothes" at line 8134
+Skipping string data outside brackets: "Small" at line 8135
+Skipping string data outside brackets: "Ladies" at line 8135
+Skipping string data outside brackets: "City" at line 8135
+Skipping string data outside brackets: "Dweller" at line 8135
+Skipping string data outside brackets: "Clothes" at line 8135
+Skipping string data outside brackets: "Ladies" at line 8136
+Skipping string data outside brackets: "Smoking" at line 8136
+Skipping string data outside brackets: "Jacket" at line 8136
+Skipping string data outside brackets: "Small" at line 8137
+Skipping string data outside brackets: "Ladies" at line 8137
+Skipping string data outside brackets: "Smoking" at line 8137
+Skipping string data outside brackets: "Jacket" at line 8137
+Skipping string data outside brackets: "Large" at line 8138
+Skipping string data outside brackets: "Ladies" at line 8138
+Skipping string data outside brackets: "Smoking" at line 8138
+Skipping string data outside brackets: "Jacket" at line 8138
+Skipping string data outside brackets: "FEMALE" at line 8139
+Skipping string data outside brackets: "Small" at line 8140
+Skipping string data outside brackets: "Ladyservants" at line 8140
+Skipping string data outside brackets: "Clothes" at line 8140
+Skipping string data outside brackets: "Large" at line 8141
+Skipping string data outside brackets: "Ladyservants" at line 8141
+Skipping string data outside brackets: "Clothes" at line 8141
+Skipping string data outside brackets: "FEMALE" at line 8142
+Skipping string data outside brackets: "Small" at line 8143
+Skipping string data outside brackets: "Ladies" at line 8143
+Skipping string data outside brackets: "Rustic" at line 8143
+Skipping string data outside brackets: "Finery" at line 8143
+Skipping string data outside brackets: "Large" at line 8144
+Skipping string data outside brackets: "Ladies" at line 8144
+Skipping string data outside brackets: "Rustic" at line 8144
+Skipping string data outside brackets: "Finery" at line 8144
+success - got 1448 entries.
+Loading module data from E:\Games\Arcanum\Modules\Payback_Time
+Loaded mes file QuestState.mes (7 entries)
+Loaded mes file globalflags.mes (12 entries)
+Loaded mes file globalvars.mes (5 entries)
+Loaded mes file pcflags.mes (1 entries)
+Loaded mes file pcvars.mes (1 entries)
+Loaded mes file GameQuest.mes (4 entries)
+Loaded mes file GameQuestLog.mes (4 entries)
+Loaded mes file GameQuestLogDumb.mes (4 entries)
+Loaded mes file gamereplog.mes (1 entries)
+Loaded mes file gamefaction.mes (1 entries)
+Loaded mes file gameoname.mes (30 entries)
+Loaded mes file game_rd_npc_f2f.mes (1 entries)
+Loaded mes file game_rd_npc_f2m.mes (1 entries)
+Loaded mes file game_rd_npc_m2f.mes (1 entries)
+Loaded mes file game_rd_npc_m2m.mes (6 entries)
+Loaded mes file game_rd_npc_m2m_dumb.mes (6 entries)
+Loaded mes file GameRep.mes (1 entries)
+Skipping string data outside brackets: "ARSE" at line 1000
+Loaded mes file gamebook.mes (2 entries)
+Skipping string data outside brackets: "Next" at line 1010
+Skipping string data outside brackets: "Note" at line 1010
+Loaded mes file gamenote.mes (2 entries)
+Loaded mes file gamenewspaper.mes (25 entries)
+Loaded mes file gamedesc.mes (16 entries)
+Loaded mes file gamekey.mes (1 entries)
+Loaded mes file gametelegram.mes (16 entries)
+Loaded mes file storystate.mes (1 entries)
+Loading module took in 0,0135423 seconds
+Bass Version: 2.4
+ ... Init successful!
+Initializing SAPI5 plugin - "SAPI5 Speech Generator Plugin"
+Getting voices from API
+2 voices loaded
+Done.
+ () is not centered to Main Form!
+Form24 (Edit MES file header) is not centered to Main Form!
+Form25 (Select Action) is not centered to Main Form!
+Form26 (Select Condition) is not centered to Main Form!
+Form27 (Add condition + statement) is not centered to Main Form!
+MessageList (Float messages from list) is not centered to Main Form!
+Form28 (Dialogue Actions Editor) is not centered to Main Form!
+Form29 (Inter NPC dialogue call) is not centered to Main Form!
+Form30 (Ollama Text Generator) is not centered to Main Form!
+Form31 (Generating) is not centered to Main Form!
+Form4 (Script Properties) is not centered to Main Form!
+Form8 (Quest Editor) is not centered to Main Form!
+Form10 (Load module script) is not centered to Main Form!
+Form11 (Remap line numbers) is not centered to Main Form!
+Form16 (<Caption filled in by Script>) is not centered to Main Form!
+Form17 (Info pop-up) is not centered to Main Form!
+Form18 (<Caption filled in by Script>) is not centered to Main Form!
+Form19 (Choose script line from another script) is not centered to Main Form!
+Form20 (Uncompressing module) is not centered to Main Form!
+Form21 (Script Information) is not centered to Main Form!
+Form22 (Advanced DAT creation - Split media into patch files) is not centered to Main Form!
+Form23 (Generate Speech for dialogue line) is not centered to Main Form!
+Skipping string data outside brackets: "ARSE" at line 1000
+Loaded mes file gamebook.mes (2 entries)
+Loading script: 00001ShadowFaxInit.scr
+Script ID for 00001ShadowFaxInit.scr: 1
+Successfully loaded dialogue file "dlg\00001ShadowFaxInit.dlg" with 13 nodes.
+Script ID = 1
+VoiceOverFolder "E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001" exists - disable create button
+E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v1_m.mp3 found.
+Playing sound E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v1_m.mp3
+E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v1_m.mp3 found.
+E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v1_m.mp3 found.
+E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v1_m.mp3 found.
+E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v1_m.mp3 found.
+E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v1_m.mp3 found.
+E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v1_m.mp3 found.
+E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v1_m.mp3 found.
+E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v1_m.mp3 found.
+E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v1_m.mp3 found.
+E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v2_m.mp3 found.
+Playing sound E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v2_m.mp3
+E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v3_m.mp3 found.
+Playing sound E:\Games\Arcanum\Modules\Payback_Time\Sound\Speech\00001\v3_m.mp3
+returned module dir as E:\Games\Arcanum\Modules\Payback_Time modulefolder is Payback_Time
+module path: E:\Games\Arcanum\Modules\Payback_Time
+Closing plugin plugins\PLG_CheckRefs.dll
+Closing plugin plugins\DLG_SpeechApi.dll
+Closed plugins! quitting!

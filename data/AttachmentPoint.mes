@@ -1,0 +1,44 @@
+// ScriptEd 1.50 data file
+// 
+// -- do not modify! --
+// 
+// List of script attachment points mapped
+// to string values
+// 
+// Used for informational purposes only
+{0}{Examine}
+{1}{Use}
+{2}{Destroy}
+{3}{Unlock}
+{4}{Get}
+{5}{Drop}
+{6}{Throw}
+{7}{Hit}
+{8}{Miss}
+{9}{Dialog}
+{10}{First heartbeat}
+{11}{Catching Thief PC}
+{12}{Dying}
+{13}{Enter Combat}
+{14}{Exit Combat}
+{15}{Start Combat}
+{16}{End Combat}
+{17}{Buy Object}
+{18}{Resurrect}
+{19}{Heartbeat}
+{20}{Leader Killing}
+{21}{Insert Item}
+{22}{Will Kill On Sight}
+{23}{Taking Damage}
+{24}{Wield On}
+{25}{Wield Off}
+{26}{Critter Hits}
+{27}{New Sector}
+{28}{Remove Item}
+{29}{Leader Sleeping}
+{30}{Bust}
+{31}{Dialogue Override}
+{32}{Transfer}
+{33}{Caught Thief}
+{34}{Critical Hit}
+{35}{Critical Miss}

@@ -1,0 +1,15 @@
+// add global messages starting at 0. You can go up to 999
+
+{0}{cmoore - 1 = This is a test}
+{1}{cmoore - 1 = One PC has already accepted the quest from Shackleford.}
+{2}{cmoore - 1 = One PC has already received the key from Shackleford.}
+{3}{cmoore - 1 = One PC has already finished the Qin'ar quest}
+{4}{cmoore - 1 = One PC has already finished the Veryk Quest}
+{5}{cmoore - 1 = One PC has already accepted the Qin'ar quest}
+{6}{cmoore - 1 = One PC has already accepted the Veryk quest}
+{7}{cmoore - 1 = Someone has told Qin'ar that his son is dead}
+{8}{cmoore - 1 = Someone has told Veryk that Ivalde is dead}
+{9}{cmoore - 1 = Someone has spoken with Ser'ta about what has happened}
+{10}{cmoore - 1 = Someone has spoken with Ivalde about what has happened}
+{11}{cmoore - 1 = Someone has opened the door to Mr. Vorman's secret chambers}
+{12}{cmoore - 1 = Someone has already spoken to Merton K. Vorman}

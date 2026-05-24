@@ -1,0 +1,153 @@
+(*
+
+About box for ScriptEd
+
+Code reused from FMF Dialogue Tool
+
+*)
+
+unit aboutbox;
+
+interface
+
+uses
+  Classes, Controls, Dialogs, ExtCtrls, Forms,
+  Graphics, pluginapi, Messages, JclPeImage, StdCtrls, SysUtils, Variants,
+  Windows, JvExControls,
+  JvComponent, JvGradient, ComCtrls, JvExStdCtrls, JvHtControls, jpeg;
+
+type
+  TForm5 = class(TForm)
+    Bevel1:       TBevel;
+    Label1:       TLabel;
+    Button1:      TButton;
+    ListBox1:     TListBOx;
+    Button2:      TButton;
+    JvHTLabel1:   TJvHTLabel;
+    Bevel2:       TBevel;
+    JvHTListBox1: TJvHTListBox;
+    Bevel4:       TBevel;
+    Bevel5:       TBevel;
+    Bevel3:       TBevel;
+    Label2:       TLabel;
+    Label3:       TLabel;
+    Label4:       TLabel;
+    Image1: TImage;
+    noplugins: TPanel;
+    procedure Button1Click(Sender: TObject);
+    procedure ListBox1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure JvHTLabel1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure JvHTLabel1Click(Sender: TObject);
+    procedure JvHTListBox1HyperLinkClick(Sender: TObject; LinkName: String);
+  Private
+    { Private declarations }
+  Public
+    { Public declarations }
+  end;
+
+
+
+var
+  Form5:           TForm5;
+  plugin_info:     TJclPeImage;
+  selected_plugin: String;
+
+implementation
+
+uses scriptedwindow;
+
+{$R *.dfm}
+
+procedure TForm5.Button1Click(Sender: TObject);
+begin
+  form5.hide;
+end;
+
+procedure GetPluginInfo(ind: Integer);
+var
+  x: TListItem;
+var
+  i: Integer;
+begin
+  selected_plugin := dllplugins[ind].filename;
+  Form5.JvHTListBox1.Clear;
+  plugin_info := TJclPeImage.Create;
+  plugin_info.FileName := dllplugins[ind].filename;
+  Form5.JvHTListBox1.Items.Add('<b>Filename:</b> ' + dllplugins[ind].filename);
+  Form5.JvHTListBox1.Items.Add('<b>Display name:</b> ' + dllplugins[ind].displayname);
+  Form5.JvHTListBox1.Items.Add('<b>Created on:</b> ' + datetimetostr(dllplugins[ind].creationdate));
+  Form5.JvHTListBox1.Items.Add('<b>Compiled on:</b> ' + datetimetostr(dllplugins[ind].builddate));
+  Form5.JvHTListBox1.Items.Add('<b>Description:</b> ' + wraptext(dllplugins[ind].longdesc, '<br>', [',', ' '], 48));
+  Form5.JvHTListBox1.Items.Add('<b>Interface Version:</b> ' + dllplugins[ind].interfaceversion);
+  Form5.JvHTListBox1.Items.Add('<b>Exported functions: </b> <a href="DoLink_ShowExports(''' + dllplugins[ind].filename +
+    ''')">Show</a> [' + IntToStr(plugin_info.ExportList.Count) + ' total]');
+
+  Form5.Button2.Visible := dllplugins[ind].hasconfig;
+end;
+
+procedure TForm5.ListBox1Click(Sender: TObject);
+
+begin
+  if listbox1.ItemIndex <> -1 then
+  begin
+    GetPluginInfo(listbox1.ItemIndex);
+  end else
+  begin
+    jvhtlistbox1.Clear;
+    button2.Visible := False;
+  end;
+
+end;
+
+procedure TForm5.Button2Click(Sender: TObject);
+begin
+  if ListBox1.ItemIndex <> -1 then
+  begin
+    ;
+    ExecutePluginConfig(dllplugins[listbox1.ItemIndex].filename);
+  end;
+
+end;
+
+procedure TForm5.JvHTLabel1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+begin
+  TJvHTLabel(Sender).Canvas.Brush.Style := bsClear;
+end;
+
+procedure TForm5.JvHTLabel1Click(Sender: TObject);
+begin
+  TJVHTLabel(Sender).Canvas.Brush.Style := bsClear;
+end;
+
+procedure ShowExports;
+var
+  i: Integer;
+  str: String;
+  the_message: String;
+begin
+  str := selected_plugin;
+  plugin_info.filename := str;
+  the_message := 'Plugin exports ' + IntToStr(plugin_info.exportlist.Count) + ' functions:';
+  for i := 0 to plugin_info.exportlist.Count - 1 do
+  begin
+    the_message := the_message + #13#10 + plugin_info.exportlist[i].Name;
+  end;
+  ShowMessage(the_message);
+
+end;
+
+
+procedure TForm5.JvHTListBox1HyperLinkClick(Sender: TObject; LinkName: String);
+begin
+  if (pos('DoLink_', linkname) <> 0) then
+  begin
+    //   Form1.ExecuteScriptConsole(linkname);
+    ShowExports;
+
+  end;
+
+end;
+
+end.
+

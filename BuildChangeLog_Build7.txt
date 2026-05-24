@@ -1,0 +1,29 @@
+ScriptEd 1.50-beta Build 7
+
+- Added a button to add float lines from a listbox. Each line represents one float message. 
+Useful for message lists generated with AI (ChatGPT, for example)
+
+- Added a button for clearing the dialogue, with a confirmation dialog that you actually want to do this.
+This could be useful when you want to completely rework the dialogue from scratch.
+
+- Added a button to dialogue editor for linking to another dialogue. This requires a global variable 
+for both dialogue entry point and the script line to call. This is very useful for inter-NPC dialogues 
+that require complex scripting to implement. Both scripts need to be set up with the following:
+
+dialog Global Variable <x> (where x is the number of the global variable you want to use for 
+the dialog entry point)
+
+and
+
+loop for Everyone in Group (PC and NPC, single player)
+
+IF Current Looped Object is named <internal_name>
+    THEN call script attached to Current Looped Object at point 9 at line Global Variable <y> with triggerer Player
+
+loop end
+
+where internal_name is the internal name of the npc to link the dialog to, also <y> is 
+the global variable of the script line to call.
+
+- Added a new option for player option editor to directly create a new node 
+for the dialogue. Should speed up dialogue creation a little bit.

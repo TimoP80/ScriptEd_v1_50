@@ -1,0 +1,48 @@
+object MessageList: TMessageList
+  Left = 0
+  Top = 0
+  Caption = 'Float messages from list'
+  ClientHeight = 411
+  ClientWidth = 852
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 8
+    Width = 83
+    Height = 13
+    Caption = 'List of messages:'
+  end
+  object Memo1: TMemo
+    Left = 8
+    Top = 32
+    Width = 836
+    Height = 321
+    TabOrder = 0
+  end
+  object Button1: TButton
+    Left = 320
+    Top = 359
+    Width = 97
+    Height = 44
+    Caption = 'OK'
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object Button2: TButton
+    Left = 423
+    Top = 359
+    Width = 98
+    Height = 44
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 2
+  end
+end

@@ -1,0 +1,80 @@
+description "Snugglelumpton HB 2 (permanent follower)"
+MAX_LINES_ALLOCATED 30
+
+0. IF global flag 67 is set
+    THEN return and RUN default
+
+1. IF Player is in dialog
+    THEN return and RUN default
+
+2. IF Anyone in Group (PC and NPC, single player) is named 8022
+    THEN goto line 3
+
+3. random number 0 to 11: store in Local 0
+
+4. random number 0 to 450: store in Local 1
+
+5. IF Local 1 == 225
+    THEN float line Local 0 above Attachee
+
+6. IF Local 1 == 225
+    THEN goto line 8
+
+7. IF Local 1 <= 34
+    THEN goto line 18
+    ELSE goto line 11
+
+8. loop for Everyone in Vicinity
+
+9. IF Current Looped Object is named 8022
+    THEN call script 52 at line 18 with triggerer Triggerer and attachee Current Looped Object in 3 seconds
+
+10. loop end
+
+11. return and RUN default
+
+12. random number 12 to 21: store in Local 0
+
+13. float line Local 0 above Attachee
+
+14. loop for Everyone in Vicinity
+
+15. IF Current Looped Object is named 8022
+    THEN call script 52 at line 18 with triggerer Triggerer and attachee Current Looped Object in 3 seconds
+
+16. loop end
+
+17. return and RUN default
+
+18. get location of Attachee and store X in Local 0 and Y in Local 1
+
+19. random number -12 to 13: store in Local 2
+
+20. random number -11 to 14: store in Local 3
+
+21. random number 0 to 1: store in Local 7
+
+22. random number 0 to 1: store in Local 8
+
+23. IF Local 7 == 1
+    THEN set local flag 1 to true
+    ELSE clear local flag 1
+
+24. IF Local 8 == 1
+    THEN set local flag 2 to true
+    ELSE clear local flag 2
+
+25. IF local flag 1 is set
+    THEN Local 0 = Local 0 + Local 2
+
+26. IF local flag 2 is set
+    THEN Local 1 = Local 1 + Local 3
+
+27. random number 0 to 120: store in Local 5
+
+28. IF Local 5 <= 35
+    THEN have critter Attachee run to X:Local 0 Y:Local 1
+    ELSE goto line 29
+
+29. return and RUN default
+

@@ -1,0 +1,91 @@
+program ScriptDumper;
+
+{$APPTYPE CONSOLE}
+
+uses
+  SysUtils,
+  masks,
+  arcdatlib,
+  Classes,
+  ArcanumSCRLib in 'ArcanumSCRLib.pas',
+  MESFileIO in 'MESFileIO.pas',
+  MahBit32 in 'MahBit32.pas';
+
+var
+  t: Integer;
+  arcanumdat: datfileheader;
+  arcanumdathandle: file;
+  x: Integer;
+  res: Boolean;
+  src: TStrings;
+  dest: TStrings;
+begin
+  writeln('Arcanum SCR Lib Redux - script loader (c) 2008 T. Pitkänen');
+  writeln;
+  if paramcount = 0 then
+  begin
+    writeln('Usage: ScriptDumper.exe [-m] <filename> [-d] [-c]');
+    writeln;
+    writeln('     -d        Decode script lines to text');
+    writeln('     -c        Compile text script to binary');
+    writeln('     -m        Mass decompile all official scripts');
+
+    halt;
+  end;
+  init_dat_logger(getcurrentdir);
+  InitOpcodes;
+  Initscriptdata;
+
+  if ParamStr(1) = '-m' then
+  begin
+    writeln('MASS Decompiling all scripts...');
+    opendatfile(arcanumdathandle, arcanumdat, arcanumpath + 'arcanum2.dat');
+    writeln('Arcanum2.dat opened with ', arcanumdat.filecount, ' files.');
+    for x := 0 to arcanumdat.filecount - 1 do
+    begin
+      if MatchesMask(arcanumdat.files[x].filename, 'scr\*.scr') then
+      begin
+        writeln('Decompiling ' + arcanumdat.files[x].filename);
+        openfilefromdat(arcanumdathandle, arcanumdat, arcanumdat.files[x].filename, extractfilename(arcanumdat.files[x].filename));
+        LoadScript(extractfilename(arcanumdat.files[x].filename), Currentscript^);
+        DecompileScript(changefileext(extractfilename(arcanumdat.files[x].filename), '.txt'), currentscript^);
+      end;
+
+    end;
+
+    halt;
+  end;
+  if ParamStr(2) = '-c' then
+  begin
+    writeln('Parsing script');
+    ParseTextScript(ParamStr(1), res);
+    src  := TStringList.Create;
+    dest := TStringList.Create;
+    SaveScript(changefileext(ParamStr(1), '.scr'), Currentscript^);
+    // compare output
+    src.LoadFromFile(ParamStr(1));
+    dest.add(decode_script_header(currentscript^));
+    for t := 0 to CurrentScript.LineCount - 1 do
+    begin
+      if CommentOnLine(t) <> '' then
+      begin
+        dest.add(commentonline(t));
+        dest.add('');
+      end;
+      dest.add(IntToStr(t) + '. ' + decode_script_line(currentscript.scriptlines[t]^));
+    end;
+    res := verifyoutput(src, dest);
+    if res = True then
+      writeln('Script OK!');
+    writeln('Script compiled - size ', sizeof(currentscript^) + (currentscript^.LineCount * sizeof(scriptline)) - 4);
+  end else
+    LoadScript(ParamStr(1), currentscript^);
+  if ParamStr(2) = '-d' then
+  begin
+    DecompileScript(changefileext(ParamStr(1), '.txt'), currentscript^);
+  end;
+  cleanuptempfiles(opcodesdat, getcurrentdir + '\');
+  cleanuptempfiles(actionopcodesdat, getcurrentdir + '\');
+
+  { TODO -oUser -cConsole Main : Insert code here }
+end.

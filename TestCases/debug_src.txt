@@ -1,0 +1,509 @@
+description "2017 Pub Maidens Script"
+MAX_LINES_ALLOCATED 220
+
+0. skill 8 of Triggerer: store in Local 0
+
+1. skill 8 of Attachee: store in Local 1
+
+2. do nothing
+
+3. goto line 80
+
+4. goto line 176
+
+5. return and SKIP default
+
+6. random number 1 to 100: store in Local 7
+
+7. IF Local 7 <= Counter 3
+    THEN goto line 66
+
+8. IF Local 7 <= Counter 2
+    THEN goto line 91
+
+9. random number 1 to 6: store in Global Variable 1020
+
+10. random number 1 to 6: store in Global Variable 1021
+
+11. IF local flag 2 is set
+    THEN goto line 14
+
+12. Global Variable 1022 = Global Variable 1020 + Global Variable 1021
+
+13. set local flag 2 to true
+
+14. IF Global Variable 1021 <= Global Variable 1020
+    THEN goto line 18
+
+15. Local 0 = Global Variable 1020
+
+16. Global Variable 1020 = Global Variable 1021
+
+17. Global Variable 1021 = Local 0
+
+18. IF Global Variable 1020 == 1
+    THEN goto line 50
+
+19. IF Global Variable 1020 == 2
+    THEN goto line 47
+
+20. IF Global Variable 1020 == 3
+    THEN goto line 43
+
+21. IF Global Variable 1020 == 4
+    THEN goto line 38
+
+22. IF Global Variable 1020 == 5
+    THEN goto line 32
+
+23. IF Global Variable 1020 == 6
+    THEN goto line 25
+
+24. return and SKIP default
+
+25. IF Global Variable 1021 == 6
+    THEN dialog 37
+
+26. IF Global Variable 1021 == 5
+    THEN dialog 44
+
+27. IF Global Variable 1021 == 4
+    THEN dialog 51
+
+28. IF Global Variable 1021 == 3
+    THEN dialog 58
+
+29. IF Global Variable 1021 == 2
+    THEN dialog 65
+
+30. IF Global Variable 1021 == 1
+    THEN dialog 72
+
+31. return and SKIP default
+
+32. IF Global Variable 1021 == 5
+    THEN dialog 79
+
+33. IF Global Variable 1021 == 4
+    THEN dialog 86
+
+34. IF Global Variable 1021 == 3
+    THEN dialog 93
+
+35. IF Global Variable 1021 == 2
+    THEN dialog 100
+
+36. IF Global Variable 1021 == 1
+    THEN dialog 107
+
+37. return and SKIP default
+
+38. IF Global Variable 1021 == 4
+    THEN dialog 114
+
+39. IF Global Variable 1021 == 3
+    THEN dialog 121
+
+40. IF Global Variable 1021 == 2
+    THEN dialog 128
+
+41. IF Global Variable 1021 == 1
+    THEN dialog 135
+
+42. return and SKIP default
+
+43. IF Global Variable 1021 == 3
+    THEN dialog 142
+
+44. IF Global Variable 1021 == 2
+    THEN dialog 149
+
+45. IF Global Variable 1021 == 1
+    THEN dialog 156
+
+46. return and SKIP default
+
+47. IF Global Variable 1021 == 2
+    THEN dialog 163
+
+48. IF Global Variable 1021 == 1
+    THEN dialog 170
+
+49. return and SKIP default
+
+50. dialog 177
+
+51. return and SKIP default
+
+52. do nothing
+
+53. Counter 0 = Counter 0 + 1
+
+54. dialog 185
+
+55. return and SKIP default
+
+56. Counter 0 = Counter 0 - 1
+
+57. dialog 196
+
+58. return and SKIP default
+
+59. do nothing
+
+60. IF 13 <= Counter 0
+    THEN dialog 17
+    ELSE goto line 62
+
+61. return and SKIP default
+
+62. IF Counter 0 <= 7
+    THEN dialog 9
+    ELSE goto line 64
+
+63. return and SKIP default
+
+64. dialog 216
+
+65. return and SKIP default
+
+66. random number 1 to 4: store in Local 7
+
+67. Local 7 = Local 7 * 2
+
+68. Local 7 = Local 7 + 70
+
+69. goto line Local 7
+
+70. return and SKIP default
+
+71. do nothing
+
+72. dialog 177
+
+73. return and SKIP default
+
+74. dialog 72
+
+75. return and SKIP default
+
+76. dialog 100
+
+77. return and SKIP default
+
+78. dialog 121
+
+79. return and SKIP default
+
+80. do nothing
+
+81. IF Local 0 <= Local 1
+    THEN Counter 3 = Local 1 - Local 0
+    ELSE goto line 85
+
+82. Counter 3 = Counter 3 * 5
+
+83. Counter 2 = 0
+
+84. goto line 160
+
+85. Counter 3 = 0
+
+86. Counter 2 = Local 0 - Local 1
+
+87. Counter 2 = Counter 2 * 5
+
+88. goto line 160
+
+89. Counter 0 = 0
+
+90. return and SKIP default
+
+91. do nothing
+
+92. IF local flag 12 is set
+    THEN goto line 104
+
+93. IF local flag 10 is set
+    THEN goto line 106
+
+94. IF local flag 9 is set
+    THEN goto line 114
+
+95. IF local flag 8 is set
+    THEN goto line 122
+
+96. IF local flag 6 is set
+    THEN goto line 132
+
+97. IF local flag 5 is set
+    THEN goto line 142
+
+98. IF local flag 4 is set
+    THEN goto line 145
+
+99. IF local flag 3 is set
+    THEN goto line 148
+
+100. do nothing
+
+101. do nothing
+
+102. float line 1 above Attachee
+
+103. return and SKIP default
+
+104. dialog 37
+
+105. return and SKIP default
+
+106. random number 0 to 1: store in Local 6
+
+107. Local 6 = Local 6 * 2
+
+108. Local 6 = Local 6 + 110
+
+109. goto line Local 6
+
+110. dialog 51
+
+111. return and SKIP default
+
+112. dialog 79
+
+113. return and SKIP default
+
+114. random number 0 to 1: store in Local 6
+
+115. Local 6 = Local 6 * 2
+
+116. Local 6 = Local 6 + 118
+
+117. goto line Local 6
+
+118. dialog 58
+
+119. return and SKIP default
+
+120. dialog 86
+
+121. return and SKIP default
+
+122. random number 0 to 2: store in Local 6
+
+123. Local 6 = Local 6 * 2
+
+124. Local 6 = Local 6 + 126
+
+125. goto line Local 6
+
+126. dialog 65
+
+127. return and SKIP default
+
+128. dialog 93
+
+129. return and SKIP default
+
+130. dialog 114
+
+131. return and SKIP default
+
+132. random number 0 to 2: store in Local 6
+
+133. Local 6 = Local 6 * 2
+
+134. Local 6 = Local 6 + 136
+
+135. goto line Local 6
+
+136. dialog 107
+
+137. return and SKIP default
+
+138. dialog 128
+
+139. return and SKIP default
+
+140. dialog 142
+
+141. return and SKIP default
+
+142. random number 0 to 1: store in Local 6
+
+143. IF Local 6 == 0
+    THEN dialog 135
+    ELSE dialog 149
+
+144. return and SKIP default
+
+145. random number 0 to 1: store in Local 6
+
+146. IF Local 6 == 0
+    THEN dialog 156
+    ELSE dialog 163
+
+147. return and SKIP default
+
+148. dialog 170
+
+149. return and SKIP default
+
+150. do nothing
+
+151. do nothing
+
+152. do nothing
+
+153. return and SKIP default
+
+154. do nothing
+
+155. do nothing
+
+156. do nothing
+
+157. do nothing
+
+158. do nothing
+
+159. do nothing
+
+160. do nothing
+
+161. do nothing
+
+162. do nothing
+
+163. do nothing
+
+164. do nothing
+
+165. do nothing
+
+166. do nothing
+
+167. do nothing
+
+168. do nothing
+
+169. do nothing
+
+170. do nothing
+
+171. do nothing
+
+172. do nothing
+
+173. do nothing
+
+174. do nothing
+
+175. goto line 4
+
+176. IF local flag 17 is set
+    THEN float line 332 above Attachee
+    ELSE dialog 241
+
+177. do nothing
+
+178. return and SKIP default
+
+179. random number 1 to 255: store in Local 0
+
+180. IF Local 0 <= Counter 1
+    THEN goto line 181
+    ELSE goto line 183
+
+181. IF Global Flag 2030 == 1
+    THEN dialog 277
+    ELSE dialog 257
+
+182. return and SKIP default
+
+183. do nothing
+
+184. random number 1 to 3: store in Local 1
+
+185. IF Local 1 == 1
+    THEN goto line 188
+
+186. IF Local 1 == 2
+    THEN goto line 190
+
+187. IF Local 1 == 3
+    THEN goto line 193
+
+188. dialog 245
+
+189. return and SKIP default
+
+190. IF Global Flag 2094 == 1
+    THEN do nothing
+    ELSE goto line 184
+
+191. dialog 317
+
+192. return and SKIP default
+
+193. dialog 329
+
+194. return and SKIP default
+
+195. spells: cast spell 181 on Triggerer
+
+196. dialog 306
+
+197. return and SKIP default
+
+198. random number 1 to 3: store in Local 2
+
+199. IF Local 2 == 1
+    THEN goto line 202
+
+200. IF Local 2 == 2
+    THEN goto line 204
+
+201. IF Local 2 == 3
+    THEN goto line 206
+
+202. dialog 297
+
+203. return and SKIP default
+
+204. dialog 309
+
+205. return and SKIP default
+
+206. dialog 313
+
+207. return and SKIP default
+
+208. change script attached to Attachee at point 9 to script 1957
+
+209. call script 1957 at line 2 with triggerer Player and attachee Attachee
+
+210. return and SKIP default
+
+211. clear local flag 17
+
+212. return and SKIP default
+
+213. call script 1959 at line 0 with triggerer Triggerer and attachee Attachee in 10800 seconds
+
+214. return and SKIP default
+
+215. set local flag 17 to true
+
+216. goto line 213
+
+217. return and SKIP default
+
+218. stat 3 of Triggerer: store in Local 0
+
+219. IF Local 0 <= 13
+    THEN dialog 337
+    ELSE dialog 340
+
+220. return and SKIP default
+

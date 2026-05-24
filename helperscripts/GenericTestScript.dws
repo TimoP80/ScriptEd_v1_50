@@ -1,0 +1,14 @@
+procedure ImportScript;
+begin
+AddHelperScript('helperscripts\GenericTestScript.dws','Generic Test script','Testing');
+end;
+
+
+var
+value: integer;
+ 
+value := SelectBasicPrototype;
+if value=-1 then
+debugmessage('You canceled the dialog window.') else
+
+debugmessage('You chose: '+inttostr(value));

@@ -1,0 +1,22 @@
+rets	return and SKIP default
+retr	return and RUN default
+atc	Attachee
+plr	Player
+trg	Triggerer
+dlg	dialog
+lv	Local
+pc variable	PC Variable
+lp	loop for
+lend	loop end
+lb	loop break
+gv	Global Variable
+gf	Global Flag
+pcv	PC Variable
+pcf	PC Flag
+flt	float line
+abv	above
+goto	goto line
+isn	is named
+dn	do nothing
+clo	Current Looped Object
+eiv	Everyone in Vicinity

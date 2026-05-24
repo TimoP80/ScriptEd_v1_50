@@ -1,0 +1,27 @@
+unit SelectCondition;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls;
+
+type
+  TForm26 = class(TForm)
+    Button1: TButton;
+    CMDList: TListView;
+    Button2: TButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form26: TForm26;
+
+implementation
+
+{$R *.dfm}
+
+end.

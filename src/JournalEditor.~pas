@@ -1,0 +1,142 @@
+unit JournalEditor;
+
+interface
+
+uses
+  Windows, ModuleLoader, mesfileio, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  arcanumscrlib, Dialogs, StdCtrls;
+
+type
+  TForm9 = class(TForm)
+    Label1:        TLabel;
+    ListBox1:      TListBOx;
+    Label2:        TLabel;
+    pcnormaltext:  TMemo;
+    Label3:        TLabel;
+    pcdumbtext:    TMemo;
+    Button1:       TButton;
+    Button2:       TButton;
+    Label4:        TLabel;
+    entryidScript: TLabel;
+    Label6:        TLabel;
+    entryIDMES:    TLabel;
+    Button3:       TButton;
+    Button4:       TButton;
+    procedure ListBox1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure pcnormaltextKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure pcdumbtextKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure Button2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form9:                     TForm9;
+  dumbdataind, smartdataind: Integer;
+  selindex:                  Integer;
+
+procedure UpdateJournalData;
+
+implementation
+
+uses MESParser;
+
+{$R *.dfm}
+
+procedure UpdateJournalListItem(ind: Integer);
+var
+  snippet: String;
+begin
+  if length(GameRD_npc_m2m.entries[ind].messagestr) > 35 then
+    snippet := copy(GameRD_npc_m2m.entries[ind].messagestr, 1, 35) + '...'
+  else
+    snippet := GameRD_npc_m2m.entries[ind].messagestr;
+  form9.ListBox1.Items[ind] := IntToStr(GameRD_npc_m2m.entries[ind].index div 20) + ' [' + snippet + ']';
+end;
+
+
+procedure UpdateJournalData;
+var
+  snippet: String;
+  t: Integer;
+begin
+  form9.ListBox1.Clear;
+  for t := 0 to GameRD_npc_m2m.entrycnt - 1 do
+  begin
+    if length(GameRD_npc_m2m.entries[t].messagestr) > 35 then
+      snippet := copy(GameRD_npc_m2m.entries[t].messagestr, 1, 35) + '...'
+    else
+      snippet := GameRD_npc_m2m.entries[t].messagestr;
+    form9.ListBox1.Items.Add(IntToStr(GameRD_npc_m2m.entries[t].index div 20) + ' [' + snippet + ']');
+  end;
+end;
+
+
+procedure TForm9.ListBox1Click(Sender: TObject);
+begin
+  if listbox1.ItemIndex <> -1 then
+  begin
+    selindex := listbox1.ItemIndex;
+
+    smartdataind := getmesindexbyid(gamerd_npc_m2m.entries[selindex].index, GameRD_npc_m2m);
+    dumbdataind  := getmesindexbyid(gamerd_npc_m2m.entries[selindex].index, GameRD_npc_m2m_dumb);
+
+    pcnormaltext.Text := GameRD_npc_m2m.entries[smartdataind].messagestr;
+    if dumbdataind <> -1 then
+    begin
+      pcdumbtext.Text := GameRD_npc_m2m_dumb.entries[dumbdataind].messagestr;
+      pcdumbtext.Enabled := True;
+    end else
+    begin
+      pcdumbtext.Text := '<NO DATA FOR DUMB PLAYER!>';
+      pcdumbtext.Enabled := False;
+    end;
+    entryidscript.Caption := IntToStr(GameRD_npc_m2m.entries[selindex].index div 20);
+    entryidmes.Caption := IntToStr(GameRD_npc_m2m.entries[selindex].index);
+  end;
+
+end;
+
+procedure TForm9.Button1Click(Sender: TObject);
+var
+  lastindex: Integer;
+begin
+  //  consoledebug('LASTMESENTRY: ' + IntToStr(GameRD_npc_m2m.entries[GameRD_npc_m2m.entrycnt - 1].index));
+  lastindex := GameRD_npc_m2m.entries[GameRD_npc_m2m.entrycnt - 1].index;
+  AddMesEntry(lastindex + 20, 'New journal entry (normal)', GameRD_npc_m2m);
+  AddMesEntry(lastindex + 20, 'New journal entry (dumb)', GameRD_npc_m2m_dumb);
+  UpdateJournalData;
+  ListBox1.ItemIndex := gamerd_npc_m2m.entrycnt - 1;
+  listbox1.SetFocus;
+end;
+
+procedure TForm9.pcnormaltextKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  GameRD_npc_m2m.entries[smartdataind].messagestr := pcnormaltext.Text;
+  UpdateJournalListItem(listbox1.ItemIndex);
+end;
+
+procedure TForm9.pcdumbtextKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  GameRD_npc_m2m_dumb.entries[dumbdataind].messagestr := pcdumbtext.Text;
+end;
+
+procedure TForm9.Button2Click(Sender: TObject);
+var
+  selindex: Integer;
+begin
+  selindex := listbox1.ItemIndex;
+  if selindex <> -1 then
+  begin
+    DeleteMesEntry(selindex, GameRD_npc_m2m);
+    DeleteMesEntry(selindex, GameRD_npc_m2m_dumb);
+    UpdateJournalData;
+    listbox1.ItemIndex := selindex - 1;
+  end;
+
+end;
+
+end.

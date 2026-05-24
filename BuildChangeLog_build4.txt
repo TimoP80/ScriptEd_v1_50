@@ -1,0 +1,23 @@
+ScriptEd 1.50-beta Build 4
+
+Changes made in this release:
+
+- Added script creation date and modification date columns to the module script loader
+
+- fixed MES editor entry deletion: deleting the last entry would cause an access violation (only related to updating the listview)
+
+- added a fancy splash screen on startup
+
+- Ported code to work with Delphi 10 Seattle
+
+- Fancy VCL style now applied to the editor
+
+- Fixes made to the script compiler code incorporated. Thanks to Anthony Bailey for the fixes. Some lines would not compile, for example such as this one: "stat 4 of Triggerer: adjust by PC Variable 1001 of Triggerer"
+
+- Added plugin for creating speech files using the Windows SAPI5 Text to Speech Engine
+
+- MRU menu was not working properly in the new Delphi 10 Seattle build, functionality restored.
+
+TODO:
+
+-in upcoming builds I will work more on the dialogue editor

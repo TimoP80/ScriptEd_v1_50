@@ -1,0 +1,270 @@
+description "Praetor, King of Cumbria"
+MAX_LINES_ALLOCATED 110
+
+0. IF Global Variable 1004 == 1
+    THEN goto line 5
+
+1. loop for Everyone in Vicinity
+
+2. IF Current Looped Object is named 6408
+    THEN do nothing
+    ELSE goto line 4
+
+3. IF npc Current Looped Object is a follower of pc Player
+    THEN goto line 97
+    ELSE goto line 5
+
+4. loop end
+
+5. IF Triggerer has bad associates
+    THEN goto line 28
+
+6. IF Triggerer is polymorphed
+    THEN goto line 31
+
+7. IF Triggerer is shrunk
+    THEN goto line 34
+
+8. IF Triggerer has a body spell
+    THEN goto line 34
+
+9. IF Triggerer is invisible
+    THEN goto line 34
+
+10. IF Triggerer has mirror image
+    THEN goto line 34
+
+11. armor of Triggerer: get in Local 0
+
+12. IF Local 0 == 0
+    THEN goto line 37
+
+13. stat 4 of Triggerer: store in Local 0
+
+14. IF Local 0 <= 4
+    THEN goto line 40
+
+15. reaction of npc Attachee to pc Triggerer: store in Local 1
+
+16. IF Local 1 <= 40
+    THEN do nothing
+    ELSE goto line 26
+
+17. IF npc Attachee has met pc Triggerer before
+    THEN dialog 260
+    ELSE dialog 244
+
+18. return and SKIP default
+
+19. IF PC Triggerer has quest 1000 in state 4
+    THEN goto line 107
+
+20. IF PC Triggerer has quest 1002 in state 4
+    THEN goto line 46
+
+21. IF PC Triggerer has quest 1002 in state 3
+    THEN goto line 48
+
+22. IF PC Triggerer has quest 1002 in state 2
+    THEN goto line 50
+
+23. IF Local 1 <= 60
+    THEN goto line 26
+
+24. IF npc Attachee has met pc Triggerer before
+    THEN dialog 283
+    ELSE dialog 279
+
+25. return and SKIP default
+
+26. IF npc Attachee has met pc Triggerer before
+    THEN dialog 93
+    ELSE dialog 1
+
+27. return and SKIP default
+
+28. reaction of npc Attachee to pc Triggerer: adjust by -5
+
+29. float line 163 above Attachee
+
+30. return and SKIP default
+
+31. reaction of npc Attachee to pc Triggerer: adjust by -5
+
+32. float line 164 above Attachee
+
+33. return and SKIP default
+
+34. reaction of npc Attachee to pc Triggerer: adjust by -5
+
+35. float line 165 above Attachee
+
+36. return and SKIP default
+
+37. reaction of npc Attachee to pc Triggerer: adjust by -5
+
+38. float line 166 above Attachee
+
+39. return and SKIP default
+
+40. IF npc Attachee has met pc Triggerer before
+    THEN dialog 230
+    ELSE dialog 217
+
+41. return and SKIP default
+
+42. IF PC Triggerer has quest 1001 in state 4
+    THEN do nothing
+    ELSE goto line 20
+
+43. IF Global Variable 1002 == 1
+    THEN goto line 52
+
+44. float line 168 above Attachee
+
+45. return and SKIP default
+
+46. float line 169 above Attachee
+
+47. return and SKIP default
+
+48. dialog 212
+
+49. return and SKIP default
+
+50. dialog 207
+
+51. return and SKIP default
+
+52. IF PC Triggerer has quest 1002 in state 0
+    THEN goto line 55
+
+53. IF PC Triggerer has quest 1002 in state 1
+    THEN goto line 55
+
+54. goto line 46
+
+55. IF local flag 0 is set
+    THEN goto line 46
+    ELSE dialog 89
+
+56. set local flag 0 to true
+
+57. return and SKIP default
+
+58. IF Global Variable 1001 == 1
+    THEN dialog 179
+    ELSE dialog 177
+
+59. return and SKIP default
+
+60. IF Triggerer has item named 5601
+    THEN goto line 61
+    ELSE goto line 66
+
+61. transfer item named 5601 from Triggerer to Attachee
+
+62. reaction of npc Attachee to pc Triggerer: store in Local 2
+
+63. IF Local 2 <= 49
+    THEN reaction of npc Attachee to pc Triggerer: set to 50
+    ELSE reaction of npc Attachee to pc Triggerer: adjust by 15
+
+64. dialog 109
+
+65. return and SKIP default
+
+66. reaction of npc Attachee to pc Triggerer: store in Local 2
+
+67. Local 2 = Local 2 - 20
+
+68. reaction of npc Attachee to pc Triggerer: set to Local 2
+
+69. IF Local 2 <= 64
+    THEN goto line 72
+    ELSE goto line 70
+
+70. dialog 285
+
+71. return and SKIP default
+
+72. float line 156 above Attachee
+
+73. combat: Attachee attacks Triggerer
+
+74. return and SKIP default
+
+75. IF Triggerer has at least 500 gold
+    THEN do nothing
+    ELSE goto line 72
+
+76. gold of Triggerer: adjust by -500
+
+77. reaction of npc Attachee to pc Triggerer: store in Local 2
+
+78. IF Local 2 <= 49
+    THEN reaction of npc Attachee to pc Triggerer: set to 50
+
+79. dialog 109
+
+80. return and SKIP default
+
+81. Global Variable 1004 = 1
+
+82. return and SKIP default
+
+83. loop for Everyone in Vicinity
+
+84. IF Current Looped Object is named 6610
+    THEN do nothing
+    ELSE goto line 87
+
+85. float line 173 above Attachee
+
+86. combat: Current Looped Object attacks Triggerer
+
+87. loop end
+
+88. return and SKIP default
+
+89. loop for Everyone in Vicinity
+
+90. IF Current Looped Object is named 6408
+    THEN do nothing
+    ELSE goto line 93
+
+91. float line 360 above Current Looped Object
+
+92. call script 1000 at line 95 with triggerer Triggerer and attachee Attachee in 3 seconds
+
+93. loop end
+
+94. return and SKIP default
+
+95. dialog 370
+
+96. return and SKIP default
+
+97. dialog 350
+
+98. return and SKIP default
+
+99. loop for Everyone in Vicinity
+
+100. IF Current Looped Object is named 6408
+    THEN Local 5 = 1
+    ELSE goto line 102
+
+101. call script attached to Current Looped Object at point 9 at line 14 with triggerer Player
+
+102. loop end
+
+103. IF Local 5 == 0
+    THEN dialog 400
+
+104. return and SKIP default
+
+105. dialog 400
+
+106. return and SKIP default
+

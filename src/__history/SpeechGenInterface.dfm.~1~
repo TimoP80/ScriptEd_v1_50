@@ -1,0 +1,224 @@
+object Form23: TForm23
+  Left = 450
+  Top = 269
+  Width = 947
+  Height = 355
+  Caption = 'Generate Speech for dialogue line'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 24
+    Width = 78
+    Height = 13
+    Caption = 'Output folder:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object outputpath: TLabel
+    Left = 96
+    Top = 24
+    Width = 441
+    Height = 13
+    AutoSize = False
+    Caption = '<automatically filled in>'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 8
+    Top = 72
+    Width = 82
+    Height = 13
+    Caption = 'NPC text male:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 8
+    Top = 168
+    Width = 93
+    Height = 13
+    Caption = 'NPC text female:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label5: TLabel
+    Left = 8
+    Top = 48
+    Width = 33
+    Height = 13
+    Caption = 'Voice:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 552
+    Top = 24
+    Width = 68
+    Height = 13
+    Caption = 'Output files:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object file_female: TLabel
+    Left = 632
+    Top = 48
+    Width = 193
+    Height = 13
+    AutoSize = False
+    Caption = '<automatically filled in>'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object file_male: TLabel
+    Left = 632
+    Top = 24
+    Width = 193
+    Height = 13
+    AutoSize = False
+    Caption = '<automatically filled in>'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object AdvSmoothStatusIndicator1: TAdvSmoothStatusIndicator
+    Left = 832
+    Top = 24
+    Width = 81
+    Height = 17
+    Caption = 'Not recorded'
+    Version = '1.0.1.0'
+    Appearance.Fill.Color = clLime
+    Appearance.Fill.ColorTo = 13056
+    Appearance.Fill.ColorMirror = clNone
+    Appearance.Fill.ColorMirrorTo = clNone
+    Appearance.Fill.GradientMirrorType = gtVertical
+    Appearance.Fill.BorderColor = clGray
+    Appearance.Fill.Rounding = 8
+    Appearance.Fill.ShadowOffset = 0
+    Appearance.Fill.Glow = gmRadial
+    Appearance.Fill.GlowGradientColor = clLime
+    Appearance.Font.Charset = DEFAULT_CHARSET
+    Appearance.Font.Color = clBlack
+    Appearance.Font.Height = -11
+    Appearance.Font.Name = 'Tahoma'
+    Appearance.Font.Style = [fsBold]
+  end
+  object AdvSmoothStatusIndicator2: TAdvSmoothStatusIndicator
+    Left = 832
+    Top = 48
+    Width = 81
+    Height = 17
+    Caption = 'Not recorded'
+    Version = '1.0.1.0'
+    Appearance.Fill.Color = clLime
+    Appearance.Fill.ColorTo = 13056
+    Appearance.Fill.ColorMirror = clNone
+    Appearance.Fill.ColorMirrorTo = clNone
+    Appearance.Fill.BorderColor = clGray
+    Appearance.Fill.Rounding = 8
+    Appearance.Fill.ShadowOffset = 0
+    Appearance.Fill.Glow = gmRadial
+    Appearance.Fill.GlowGradientColor = clLime
+    Appearance.Font.Charset = DEFAULT_CHARSET
+    Appearance.Font.Color = clBlack
+    Appearance.Font.Height = -11
+    Appearance.Font.Name = 'Tahoma'
+    Appearance.Font.Style = [fsBold]
+  end
+  object maletext: TMemo
+    Left = 8
+    Top = 88
+    Width = 905
+    Height = 73
+    TabOrder = 0
+  end
+  object femaletext: TMemo
+    Left = 8
+    Top = 184
+    Width = 905
+    Height = 73
+    TabOrder = 1
+  end
+  object VoiceList: TComboBox
+    Left = 96
+    Top = 48
+    Width = 449
+    Height = 21
+    ItemHeight = 13
+    TabOrder = 2
+  end
+  object Button1: TButton
+    Left = 728
+    Top = 272
+    Width = 89
+    Height = 33
+    Caption = 'Generate'
+    TabOrder = 3
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 824
+    Top = 272
+    Width = 89
+    Height = 33
+    Caption = 'Close'
+    ModalResult = 1
+    TabOrder = 4
+  end
+  object WaveIn1: TWaveIn
+    EndSample = -1
+    Loop = False
+    StartSample = 0
+    Left = 432
+    Top = 96
+  end
+  object MP3Out1: TMP3Out
+    Input = WaveIn1
+    SuspendWhenIdle = True
+    FileMode = foRewrite
+    BitRate = br96
+    Left = 520
+    Top = 120
+  end
+end

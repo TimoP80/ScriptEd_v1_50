@@ -1,0 +1,39 @@
+ArcDATLib event log - Started on 25.6.2008 18:00:46
+-----------------------------------------------------------
+
+25.6.2008 18:00:46 - DAT_LOAD: Opening database "M:\Sierra\Arcanum\\arcanum3.dat".. 
+
+25.6.2008 18:00:46 - DAT_LOAD: Got 1097 files.
+Size: 9605011 bytes.
+25.6.2008 18:00:46 - DAT_LOAD: Opening database "M:\Sierra\Arcanum\\arcanum4.dat".. 
+
+25.6.2008 18:00:46 - DAT_LOAD: Got 134 files.
+Size: 447614 bytes.
+25.6.2008 18:00:46 - LoadFile semes\action.mes: index=127
+25.6.2008 18:00:46 - File is compressed
+25.6.2008 18:00:46 - FILENAME_OVERRIDE: action.mes
+25.6.2008 18:00:46 - LoadFile semes\condition.mes: index=1094
+25.6.2008 18:00:46 - File is compressed
+25.6.2008 18:00:46 - FILENAME_OVERRIDE: condition.mes
+25.6.2008 18:00:46 - LoadFile semes\focus.mes: index=1095
+25.6.2008 18:00:46 - File is compressed
+25.6.2008 18:00:46 - FILENAME_OVERRIDE: focus.mes
+25.6.2008 18:00:46 - LoadFile semes\value.mes: index=1096
+25.6.2008 18:00:46 - File is compressed
+25.6.2008 18:00:46 - FILENAME_OVERRIDE: value.mes
+25.6.2008 18:00:46 - DAT_LOAD: Opening database "M:\Sierra\Arcanum\\arcanum2.dat".. 
+
+25.6.2008 18:00:46 - DAT_LOAD: Got 12365 files.
+Size: 147991122 bytes.
+25.6.2008 18:00:46 - Cleaning temp files in C:\CODEPR~1\SCRIPT~1\TESTCA~1\ extracted from M:\Sierra\Arcanum\\arcanum3.dat... 
+semes\condition.mes
+semes\focus.mes
+semes\value.mes
+Clean up complete: 3 temp files removed.
+25.6.2008 18:00:46 - Cleaning temp files in C:\CODEPR~1\SCRIPT~1\TESTCA~1\ extracted from M:\Sierra\Arcanum\\arcanum4.dat... 
+semes\action.mes
+Clean up complete: 1 temp files removed.
+25.6.2008 18:00:46 - Cleaning temp files in C:\CODEPR~1\SCRIPT~1\TESTCA~1\ extracted from M:\Sierra\Arcanum\\arcanum3.dat... 
+No files cleaned.
+25.6.2008 18:00:46 - Cleaning temp files in C:\CODEPR~1\SCRIPT~1\TESTCA~1\ extracted from M:\Sierra\Arcanum\\arcanum4.dat... 
+No files cleaned.

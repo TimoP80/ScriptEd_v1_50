@@ -1,0 +1,21 @@
+//
+// ScriptEd 1.50
+// Helper Scripts master file
+//
+// --- note: this file is maintained by ScriptEd preferences --- 
+//
+// This file contains the list of helper scripts
+// to be added to the "Helper Scripts"-menu
+//
+
+InitializeHelperScriptMenu;
+AddHelperScript('helperscripts\AddScriptCall.dws','Call Script','Commands');
+AddHelperScript('helperscripts\CreateItem.dws','Create Item inside Object','Commands');
+AddHelperScript('helperscripts\npcdialog.dws','NPC Initiated dialogue (heartbeat)','Script Templates');
+AddHelperScript('helperscripts\perftest.dws','Performance Test','Utilities');
+AddHelperScript('helperscripts\Example1.dws','Example Script 1','Testing');
+
+// end of scripts list
+//
+// File last updated 30.4.2026 22.05.52
+

@@ -1,0 +1,22 @@
+// This is a script for creating a huge amount of
+// statements to test the compile speed of the 
+// text script parser. 
+
+
+
+var i: integer;
+var count: integer;
+
+count:=strtoint(InputBox('Enter line count','Line count:','0'));
+
+DebugMessage('Starting performance test script...');
+for I:=0 to count-1 do
+begin
+EditorAddLine(inttostr(i)+'. IF Local 0 == 3');
+EditorAddLine(' THEN dialog 1');
+EditorAddLine(' ELSE dialog 21');
+EditorAddLine('');
+end;
+
+CompileScript;
+DebugMessage('Test ended');

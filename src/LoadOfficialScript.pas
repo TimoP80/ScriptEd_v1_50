@@ -1,0 +1,151 @@
+unit LoadOfficialScript;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls;
+
+type
+  TForm2 = class(TForm)
+    ListView1: TListView;
+    Button1: TButton;
+    Button2: TButton;
+    Label1: TLabel;
+    searchterm: TEdit;
+    Button3: TButton;
+    VOOnly: TCheckBox;
+    procedure ListView1DblClick(Sender: TObject);
+    procedure ListView1Click(Sender: TObject);
+    procedure searchtermKeyPress(Sender: TObject; var Key: Char);
+    procedure Button3Click(Sender: TObject);
+    procedure VOOnlyClick(Sender: TObject);
+  Private
+    { Private declarations }
+  Public
+    procedure UpdateScriptList;
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2;
+  selectedfile: String;
+
+implementation
+
+uses scriptedconfig,moduleloader,arcanumscrlib, Masks;
+
+procedure TForm2.UpdateScriptList;
+var
+  t: Integer;
+  x: TLIstItem;
+voicefolder: string;
+begin
+  ListView1.Items.Clear;
+  ListView1.Items.BeginUpdate;
+  for t := 0 to scriptsdat.filecount - 1 do
+  begin
+   if (MatchesMask(scriptsdat.files[t].filename, '*.scr'))
+   then
+   begin
+   voicefolder :=  arcanumpath + '\Modules\' + modulefolder + '\Sound\Speech\' +
+    copy(extractfilename(scriptsdat.files[t].filename), 1, 5);
+
+  end;
+  if searchterm.Text<>'' then
+  begin
+
+
+  if VOOnly.checked then
+  begin
+      if (MatchesMask(scriptsdat.files[t].filename, '*.scr')) and (pos(lowercase(searchterm.Text), scriptsdat.files[t].filename)<>0)
+      and (directoryexists(voicefolder)=true) then
+    begin
+      x := ListView1.Items.Add;
+      x.Caption := copy(extractfilename(scriptsdat.files[t].filename), 1, 5);
+      x.subitems.Add(copy(extractfilename(scriptsdat.files[t].filename), 6,
+        length(extractfilename(scriptsdat.files[t].filename))));
+      x.subitems.Add(extractfiledir(scriptsdat.files[t].filename));
+      x.subitems.Add(IntToStr(scriptsdat.files[t].realsize));
+      application.ProcessMessages;
+    end;
+  end else
+  begin
+     if (MatchesMask(scriptsdat.files[t].filename, '*.scr')) and (pos(lowercase(searchterm.Text), scriptsdat.files[t].filename)<>0) then
+    begin
+      x := ListView1.Items.Add;
+      x.Caption := copy(extractfilename(scriptsdat.files[t].filename), 1, 5);
+      x.subitems.Add(copy(extractfilename(scriptsdat.files[t].filename), 6,
+        length(extractfilename(scriptsdat.files[t].filename))));
+      x.subitems.Add(extractfiledir(scriptsdat.files[t].filename));
+      x.subitems.Add(IntToStr(scriptsdat.files[t].realsize));
+      application.ProcessMessages;
+    end;
+  end;
+  end else
+  begin
+     if VOOnly.checked then
+  begin
+      if (MatchesMask(scriptsdat.files[t].filename, '*.scr'))
+      and (directoryexists(voicefolder)=true) then
+    begin
+      x := ListView1.Items.Add;
+      x.Caption := copy(extractfilename(scriptsdat.files[t].filename), 1, 5);
+      x.subitems.Add(copy(extractfilename(scriptsdat.files[t].filename), 6,
+        length(extractfilename(scriptsdat.files[t].filename))));
+      x.subitems.Add(extractfiledir(scriptsdat.files[t].filename));
+      x.subitems.Add(IntToStr(scriptsdat.files[t].realsize));
+      application.ProcessMessages;
+    end;
+  end else
+  begin
+    if MatchesMask(scriptsdat.files[t].filename, '*.scr') then
+    begin
+      x := ListView1.Items.Add;
+      x.Caption := copy(extractfilename(scriptsdat.files[t].filename), 1, 5);
+      x.subitems.Add(copy(extractfilename(scriptsdat.files[t].filename), 6,
+        length(extractfilename(scriptsdat.files[t].filename))));
+      x.subitems.Add(extractfiledir(scriptsdat.files[t].filename));
+      x.subitems.Add(IntToStr(scriptsdat.files[t].realsize));
+      application.ProcessMessages;
+    end;
+  end;
+  end;
+end;
+  ListView1.Items.EndUpdate;
+end;
+
+procedure TForm2.VOOnlyClick(Sender: TObject);
+begin
+updatescriptlist;
+end;
+
+{$R *.dfm}
+
+procedure TForm2.ListView1DblClick(Sender: TObject);
+begin
+  selectedfile := ListView1.Selected.subitems[1] + '\' +
+    ListView1.Selected.Caption + ListView1.Selected.subitems[0];
+  modalresult := mrOk;
+end;
+
+procedure TForm2.searchtermKeyPress(Sender: TObject; var Key: Char);
+begin
+if key=#13  then
+UpdateScriptList;
+end;
+
+procedure TForm2.Button3Click(Sender: TObject);
+begin
+searchterm.Text:='';
+UpdateScriptList;
+end;
+
+procedure TForm2.ListView1Click(Sender: TObject);
+begin
+  selectedfile := ListView1.Selected.subitems[1] + '\' +
+    ListView1.Selected.Caption + ListView1.Selected.subitems[0];
+
+end;
+
+end.

@@ -1,0 +1,26 @@
+ScriptEd+ 1.50-beta Build 6
+
+[Improvement] Script compiler now supports comments that have no space between // and a comment, they will be automatically formatted as // <comment>
+
+[Improvement] Added option to automatically insert new VO number for each new node, great for voiced dialogues. If the dialogue has no voiceover, this
+  option will not increment the voiceover number
+
+[Improvement] Added search options to script loader windows (both load official script and module script loader) Main campaign voiced dialogues can now also be filtered.
+
+[Fix] Fixed dialogue not being reset after loading a script with no dialogue, and a dialogue file was previously loaded.
+
+[Improvement] Added a field for voiceovers in module script loader. This can help you find dialogues that have voiceover.
+
+[Fix] Fixed script name not being updated properly (it updated without the script id)
+
+[Improvement] Editor code completion enhancements: Now certain opcodes will invoke a specific selector window, for example "set global flag (num) to true"  invokes the global
+  flag selector.
+
+[Fix] Added code to add line 1 to a newly created dialogue if there are no dialog entry points in the script. Previously this would result in a .dlg parse error since there were
+  no dialog lines to read.
+
+[Improvement] Added MES file header editor
+
+[New Feature] Added condition and action command wizards like in the old ScriptEd (finally) Also a command wizard for a complete IF..THEN..ELSE statement is available.
+
+[Improvement] Build number displayed in the main form caption

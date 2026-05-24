@@ -1,0 +1,27 @@
+unit SelectAction;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls;
+
+type
+  TForm25 = class(TForm)
+    Button1: TButton;
+    ListView1: TListView;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form25: TForm25;
+  selectedcommand: string;
+
+implementation
+
+{$R *.dfm}
+
+end.

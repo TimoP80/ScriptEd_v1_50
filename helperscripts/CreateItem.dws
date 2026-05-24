@@ -1,0 +1,38 @@
+
+procedure ImportScript;
+begin
+AddHelperScript('helperscripts\CreateItem.dws','Create Item inside Object','Commands');
+end;
+
+
+// Create Item wizard
+var itemproto: integer;
+var wheretocreate: integer;
+var insert: boolean;
+var line: integer;
+
+
+insert := QuestionDlg('Insert the line to the current cursor position?');
+
+if insert=true then DebugMessage('line goes to current position')
+else DebugMessage('line goes to end of script');
+
+itemproto := SelectBasicProtoType;
+
+if itemproto<>-1 then
+begin
+DebugMessage('Adding command for basic prototype '+inttostr(itemproto));
+wheretocreate := ChooseFocus_Integer;
+
+
+if insert=true then 
+begin
+line := GetEditorCursorposition;
+AddScriptCommand(SA_CREATE_ITEM_INSIDE_OBJ, itemproto, wheretocreate,0,0,0,0,0,0,line);
+end else
+AddScriptCommand(SA_CREATE_ITEM_INSIDE_OBJ, itemproto, wheretocreate);
+
+CompileScript;
+
+end;
+

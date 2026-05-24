@@ -1,0 +1,42 @@
+unit OllamaGenericDialog;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+ScriptEdConfig,  Vcl.Controls, Vcl.Forms, ScriptEdWindow, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TForm30 = class(TForm)
+    Label1: TLabel;
+    ollamaprompt: TMemo;
+    Label2: TLabel;
+    ollamaresult: TMemo;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    procedure Button3Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form30: TForm30;
+
+implementation
+
+{$R *.dfm}
+
+uses ProgressDialogOllama;
+
+procedure TForm30.Button3Click(Sender: TObject);
+begin
+form31.Show;
+application.ProcessMessages;
+ollamaresult.Text :=  ollamarequest.GenerateText(ollamamodel, ollamaprompt.text);
+form31.Hide;
+end;
+
+end.

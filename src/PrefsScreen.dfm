@@ -1,0 +1,465 @@
+object Form15: TForm15
+  Left = 843
+  Top = 237
+  Caption = 'ScriptEd preferences'
+  ClientHeight = 488
+  ClientWidth = 550
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Button1: TButton
+    Left = 200
+    Top = 448
+    Width = 97
+    Height = 33
+    Caption = 'Save config'
+    ModalResult = 1
+    TabOrder = 0
+  end
+  object PageControl1: TPageControl
+    Left = 8
+    Top = 8
+    Width = 545
+    Height = 434
+    ActivePage = TabSheet1
+    TabOrder = 1
+    object TabSheet1: TTabSheet
+      Caption = 'General Preferences'
+      ExplicitLeft = 0
+      ExplicitTop = 27
+      object Label1: TLabel
+        Left = 12
+        Top = 360
+        Width = 381
+        Height = 13
+        Caption = 
+          'Arcanum install path (this is initially read from the registry b' +
+          'ut can be changed):'
+      end
+      object Label2: TLabel
+        Left = 12
+        Top = 336
+        Width = 197
+        Height = 13
+        Caption = 'Line number step on each dialogue node:'
+      end
+      object scriptrenumber: TCheckBox
+        Left = 12
+        Top = 18
+        Width = 337
+        Height = 17
+        Caption = 'Automatically renumber script lines when changes are detected'
+        TabOrder = 0
+      end
+      object arcanumpath: TJvDirectoryEdit
+        Left = 12
+        Top = 376
+        Width = 513
+        Height = 21
+        TabOrder = 1
+        Text = ''
+      end
+      object playeroptioncommentstyle: TCheckBox
+        Left = 12
+        Top = 41
+        Width = 505
+        Height = 25
+        Caption = 
+          'Place player option comments at the end of a player line. If thi' +
+          's is unchecked the comment goes to the top of the player option ' +
+          'line'
+        TabOrder = 2
+        WordWrap = True
+      end
+      object showcmpmodules: TCheckBox
+        Left = 12
+        Top = 72
+        Width = 385
+        Height = 25
+        Caption = 'Show compressed modules in the module selector'
+        TabOrder = 3
+      end
+      object newdlgnodestep: TJvSpinEdit
+        Left = 212
+        Top = 328
+        Width = 57
+        Height = 21
+        TabOrder = 4
+      end
+      object EnterCompileTrigger: TCheckBox
+        Left = 12
+        Top = 95
+        Width = 385
+        Height = 25
+        Caption = 'Pressing enter after script line compiles the script'
+        TabOrder = 5
+      end
+      object debugverbose: TCheckBox
+        Left = 12
+        Top = 122
+        Width = 385
+        Height = 25
+        Caption = 'Verbose message output'
+        TabOrder = 6
+      end
+      object IncludeEntryPoints: TCheckBox
+        Left = 12
+        Top = 184
+        Width = 513
+        Height = 25
+        Caption = 
+          'Dialogue header: '#39'Insert variable info'#39' includes dialogue entry ' +
+          'point information.'
+        TabOrder = 7
+        WordWrap = True
+      end
+      object AutoUpdateFemaleLine: TCheckBox
+        Left = 12
+        Top = 153
+        Width = 505
+        Height = 25
+        Caption = 
+          'Checking the '#39'Use text from male npc line'#39' option causes the fem' +
+          'ale npc line to be updated with text from the male line.'
+        TabOrder = 8
+        WordWrap = True
+      end
+      object confirmplayeroptiondelete: TCheckBox
+        Left = 12
+        Top = 207
+        Width = 513
+        Height = 25
+        Caption = 'Confirm player option delete operations'
+        TabOrder = 9
+        WordWrap = True
+      end
+      object dbmaker: TCheckBox
+        Left = 12
+        Top = 232
+        Width = 513
+        Height = 25
+        Caption = 
+          'Use DBMAKER for compressing modules, instead of the internal DAT' +
+          ' routines'
+        TabOrder = 10
+        WordWrap = True
+      end
+      object AutoIncrementVONumber: TCheckBox
+        Left = 12
+        Top = 263
+        Width = 381
+        Height = 17
+        Caption = 'Automatically increment dialogue voice number on new node'
+        TabOrder = 11
+      end
+      object AutoExpand: TCheckBox
+        Left = 12
+        Top = 286
+        Width = 273
+        Height = 17
+        Caption = 'Auto expand dialogue treeview'
+        TabOrder = 12
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Gender-specific strings'
+      ImageIndex = 1
+      ExplicitHeight = 381
+      object Label3: TLabel
+        Left = 8
+        Top = 32
+        Width = 120
+        Height = 13
+        Caption = 'Gender specific word list:'
+      end
+      object Label4: TLabel
+        Left = 16
+        Top = 336
+        Width = 26
+        Height = 13
+        Caption = 'Male:'
+      end
+      object Label5: TLabel
+        Left = 16
+        Top = 360
+        Width = 38
+        Height = 13
+        Caption = 'Female:'
+      end
+      object genderspecificreplace: TCheckBox
+        Left = 8
+        Top = 8
+        Width = 369
+        Height = 17
+        Caption = 'Enable gender-specific word replacement'
+        TabOrder = 0
+      end
+      object ListView1: TListView
+        Left = 8
+        Top = 48
+        Width = 513
+        Height = 273
+        Columns = <
+          item
+            AutoSize = True
+            Caption = 'Male'
+          end
+          item
+            AutoSize = True
+            Caption = 'Female'
+          end>
+        GridLines = True
+        RowSelect = True
+        TabOrder = 1
+        ViewStyle = vsReport
+        OnClick = ListView1Click
+      end
+      object maledata: TEdit
+        Left = 64
+        Top = 328
+        Width = 265
+        Height = 21
+        TabOrder = 2
+        OnKeyUp = maledataKeyUp
+      end
+      object femaledata: TEdit
+        Left = 64
+        Top = 352
+        Width = 265
+        Height = 21
+        TabOrder = 3
+        OnKeyUp = femaledataKeyUp
+      end
+      object Button3: TButton
+        Left = 384
+        Top = 344
+        Width = 65
+        Height = 25
+        Caption = 'Add'
+        TabOrder = 4
+        OnClick = Button3Click
+      end
+      object Button4: TButton
+        Left = 456
+        Top = 344
+        Width = 65
+        Height = 25
+        Caption = 'Delete'
+        TabOrder = 5
+        OnClick = Button4Click
+      end
+    end
+    object TabSheet4: TTabSheet
+      Caption = 'Helper scripts'
+      ImageIndex = 3
+      ExplicitHeight = 381
+      object Label6: TLabel
+        Left = 8
+        Top = 8
+        Width = 96
+        Height = 13
+        Caption = 'List of helper scripts'
+      end
+      object Label7: TLabel
+        Left = 8
+        Top = 288
+        Width = 48
+        Height = 13
+        Caption = 'Script file:'
+      end
+      object Label8: TLabel
+        Left = 8
+        Top = 320
+        Width = 57
+        Height = 13
+        Caption = 'Description:'
+      end
+      object Label9: TLabel
+        Left = 8
+        Top = 352
+        Width = 49
+        Height = 13
+        Caption = 'Category:'
+      end
+      object HelperScriptList: TListView
+        Left = 8
+        Top = 24
+        Width = 521
+        Height = 233
+        Columns = <
+          item
+            AutoSize = True
+            Caption = 'Filename'
+          end
+          item
+            AutoSize = True
+            Caption = 'Description'
+          end
+          item
+            AutoSize = True
+            Caption = 'Category'
+          end>
+        GridLines = True
+        RowSelect = True
+        TabOrder = 0
+        ViewStyle = vsReport
+        OnClick = HelperScriptListClick
+      end
+      object scriptfilename: TJvFilenameEdit
+        Left = 72
+        Top = 280
+        Width = 441
+        Height = 21
+        OnAfterDialog = scriptfilenameAfterDialog
+        Filter = 'DelphiWebScript (*.dws)|*.dws'
+        TabOrder = 1
+        Text = ''
+      end
+      object description: TEdit
+        Left = 72
+        Top = 312
+        Width = 441
+        Height = 21
+        TabOrder = 2
+        OnKeyUp = descriptionKeyUp
+      end
+      object categorycombo: TComboBox
+        Left = 72
+        Top = 344
+        Width = 289
+        Height = 21
+        TabOrder = 3
+        OnClick = categorycomboClick
+        Items.Strings = (
+          'Testing'
+          'Script Templates'
+          'Commands'
+          'Miscellaneous Scripts'
+          'Utilities')
+      end
+      object Button5: TButton
+        Left = 384
+        Top = 344
+        Width = 65
+        Height = 25
+        Caption = 'Add'
+        TabOrder = 4
+        OnClick = Button5Click
+      end
+      object Button6: TButton
+        Left = 456
+        Top = 344
+        Width = 65
+        Height = 25
+        Caption = 'Delete'
+        TabOrder = 5
+        OnClick = Button6Click
+      end
+    end
+     object TabSheet3: TTabSheet
+       Caption = 'Ollama'
+       ImageIndex = 3
+       ExplicitHeight = 381
+       object Label10: TLabel
+         Left = 24
+         Top = 56
+         Width = 32
+         Height = 13
+         Caption = 'Model:'
+       end
+       object ollamamodellist: TComboBox
+         Left = 62
+         Top = 53
+         Width = 455
+         Height = 21
+         TabOrder = 0
+       end
+       object enableollama: TCheckBox
+         Left = 24
+         Top = 3
+         Width = 97
+         Height = 17
+         Caption = 'Ollama enabled'
+         TabOrder = 1
+         OnClick = enableollamaClick
+       end
+       object Label11: TLabel
+         Left = 24
+         Top = 80
+         Width = 49
+         Height = 13
+         Caption = 'Provider:'
+       end
+       object ProviderComboBox: TComboBox
+         Left = 79
+         Top = 77
+         Width = 200
+         Height = 21
+         Style = csDropDownList
+         TabOrder = 2
+         OnChange = ProviderComboBoxChange
+       end
+       object LabelCloudApiKey: TLabel
+         Left = 24
+         Top = 110
+         Width = 49
+         Height = 13
+         Caption = 'API Key:'
+         Visible = False
+       end
+       object EditCloudApiKey: TEdit
+         Left = 79
+         Top = 107
+         Width = 250
+         Height = 21
+         PasswordChar = '*'
+         TabOrder = 3
+         Visible = False
+       end
+       object LabelCloudUrl: TLabel
+         Left = 24
+         Top = 140
+         Width = 57
+         Height = 13
+         Caption = 'API URL:'
+         Visible = False
+       end
+       object EditCloudUrl: TEdit
+         Left = 87
+         Top = 137
+         Width = 300
+         Height = 21
+         TabOrder = 4
+         Text = 'https://api.ollama.cloud/v1'
+         Visible = False
+       end
+       object ButtonTestCloud: TButton
+         Left = 340
+         Top = 105
+         Width = 97
+         Height = 25
+         Caption = 'Test Connection'
+         TabOrder = 5
+         OnClick = ButtonTestCloudClick
+         Visible = False
+       end
+     end
+  end
+  object Button2: TButton
+    Left = 304
+    Top = 447
+    Width = 97
+    Height = 33
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 2
+  end
+end

@@ -1,0 +1,8 @@
+- Debug script compiler to perfection. Needs to pass a complete mass compilation of official scripts. 
+  Narrowed down to 2 failing scripts, all the other ones work fine. 
+
+- Debug have (obj) use (obj) on (obj) using skill (num) with modifier (num), the line just vanishes
+  when the script compiles.
+
+- Add import voiceover for importing voice files to v*_m/f.mp3, this should save some time when saving
+from the replica studios web app

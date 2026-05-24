@@ -1,0 +1,509 @@
+ScriptEd Helper Script Functions Reference
+------------------------------------------
+
+Constants:
+
+// it is daytime
+const SC_DAYTIME: Integer = 1;
+// (obj) has at least (num) gold
+const SC_OBJ_HAS_GOLD_NUM: Integer = 2;
+// local flag (num) is set
+const SC_LOCAL_FLAG_IS_SET: Integer = 3;
+// (num) == (num)
+const SC_NUM_EQUALS_NUM: Integer = 4;
+// (num) <= (num)
+const SC_NUM_LESS_OR_EQUAL_NUM: Integer = 5;
+// PC (obj) has quest (num) in state (num)
+const SC_PC_HAS_QUEST_IN_STATE: Integer = 6;
+// quest (num) in global state (num)
+const SC_QUEST_IN_GLOBAL_STATE: Integer = 7;
+// (obj) has bless (num)
+const SC_OBJ_HAS_BLESS: Integer = 8;
+// (obj) has curse (num)
+const SC_OBJ_HAS_CURSE: Integer = 9;
+// npc (obj) has met pc (obj) before
+const SC_NPC_OBJ_HAS_MET_PC_OBJ_BEFORE: Integer = 10;
+// (obj) has bad associates
+const SC_OBJ_HAS_BAD_ASSOCIATES: Integer = 11;
+// (obj) is polymorphed
+const SC_OBJ_IS_POLYMORPHED: Integer = 12;
+// (obj) is shrunk
+const SC_OBJ_IS_SHRUNK: Integer = 13;
+// (obj) has a body spell
+const SC_OBJ_HAS_BODY_SPELL: Integer = 14;
+// (obj) is invisible
+const SC_OBJ_IS_INVISIBLE: Integer = 15;
+// (obj) has mirror image
+const SC_OBJ_HAS_MIRROR_IMAGE: Integer = 16;
+// (obj) has item named (num)
+const SC_OBJ_HAS_ITEM_NAMED_OBJ: Integer = 17;
+// npc (obj) is a follower of pc (obj)
+const SC_NPC_IS_A_FOLLOWER_OF_PC: Integer = 18;
+// npc (obj) is a monster of specie (num)
+const SC_NPC_OBJ_IS_A_MONSTER_OF_SPECIES: Integer = 19;
+// (obj) is named (num)
+const SC_OBJ_IS_NAMED_NUM: Integer = 20;
+// (obj) is wielding item named (num)
+const SC_OBJ_IS_WIELDING_ITEM: Integer = 21;
+// (obj) is dead
+const SC_OBJ_IS_DEAD: Integer = 22;
+// (obj) has maximum followers
+const SC_OBJ_HAS_MAXIMUM_FOLLOWERS: Integer = 23;
+// (obj) can open the container (obj)
+const SC_OBJ_CAN_OPEN_THE_CONTAINER_OBJ: Integer = 24;
+// (obj) has surrendered
+const SC_OBJ_HAS_SURRENDERED: Integer = 25;
+// (obj) is in dialog
+const SC_OBJ_IS_IN_DIALOG: Integer = 26;
+// (obj) is switched off
+const SC_OBJ_IS_SWITCHED_OFF: Integer = 27;
+// (obj) can see (obj)
+const SC_OBJ_CAN_SEE_OBJ: Integer = 28;
+// (obj) can hear (obj)
+const SC_OBJ_CAN_HEAR_OBJ: Integer = 29;
+// (obj) is invulnerable
+const SC_OBJ_IS_INVULNERABLE: Integer = 30;
+// (obj) is in combat
+const SC_OBJ_IS_IN_COMBAT: Integer = 31;
+// (obj) is at location X:(num) Y:(num)
+const SC_OBJ_IS_AT_LOCATION_XY: Integer = 32;
+// (obj) has reputation (num)
+const SC_OBJ_HAS_REPUTATION_NUM: Integer = 33;
+// (obj) is within (num) tiles of location X:(num) Y:(num)
+const SC_OBJ_IS_WITHIN_NUM_TILES_OF_LOCATION_XY: Integer = 34;
+// (obj) is under the influence of spell (num)
+const SC_OBJ_IS_UNDER_THE_INFLUENCE_OF_SPELL_NUM: Integer = 35;
+// (obj) is open
+const SC_OBJ_IS_OPEN: Integer = 36;
+// (obj) is an animal
+const SC_OBJ_IS_AN_ANIMAL: Integer = 37;
+// (obj) is undead
+const SC_OBJ_IS_UNDEAD: Integer = 38;
+// (obj) was jilted by a PC
+const SC_OBJ_WAS_JILTED_BY_A_PC: Integer = 39;
+// pc (obj) knows rumor (num)
+const SC_PC_OBJ_KNOWS_RUMOR_NUM: Integer = 40;
+// rumor (num) has been quelled
+const SC_RUMOR_HAS_BEEN_QUELLED: Integer = 41;
+// (obj) is busted
+const SC_OBJ_IS_BUSTED: Integer = 42;
+// global flag (num) is set
+const SC_GLOBAL_FLAG_NUM_IS_SET: Integer = 43;
+// (obj) can open the portal (obj) in direction (num)
+const SC_OBJ_CAN_OPEN_THE_PORTAL_OBJ_IN_DIRECTION_NUM: Integer = 44;
+// sector at location X:(num) and Y:(num) is blocked
+const SC_SECTOR_AT_LOCATION_IS_BLOCKED: Integer = 45;
+// monster generator (num) is disabled
+const SC_MONSTER_GENERATOR_IS_DISABLED: Integer = 46;
+// (obj) is identified
+const SC_OBJ_IS_IDENTIFIED: Integer = 47;
+// (obj) knows spell (num)
+const SC_OBJ_KNOWS_SPELL_NUM: Integer = 48;
+// (obj) has mastered spell college (num)
+const SC_OBJ_HAS_MASTERED_SPELL_COLLEGE_NUM: Integer = 49;
+// items are being rewielded
+const SC_ITEMS_ARE_BEING_REWIELDED: Integer = 50;
+// (obj) is prowling
+const SC_OBJ_IS_PROWLING: Integer = 51;
+// (obj) is waiting for leader's return
+const SC_OBJ_IS_WAITING_FOR_LEADERS_RETURN: Integer = 52;
+// do nothing
+const SA_DO_NOTHING: Integer = 0;
+// return and SKIP default
+const SA_RETURN_SKIP: Integer = 1;
+// return and RUN default
+const SA_RETURN_RUN: Integer = 2;
+// goto line (num)
+const SA_GO_TO_LINE: Integer = 3;
+// dialog (num)
+const SA_DIALOG: Integer = 4;
+// remove this script
+const SA_REMOVE_SCRIPT: Integer = 5;
+// change this script to script (num)
+const SA_CHANGE_SCRIPT: Integer = 6;
+// call script (num) at line (num) with triggerer (obj) and attachee (obj)
+const SA_CALL_SCRIPT: Integer = 7;
+// set local flag (num) to true
+const SA_SET_LOCAL_FLAG: Integer = 8;
+// clear local flag (num)
+const SA_CLEAR_LOCAL_FLAG: Integer = 9;
+// (num) = (num)
+const SA_NUM_ASSIGN: Integer = 10;
+// (num) = (num) + (num)
+const SA_NUM_ADD: Integer = 11;
+// (num) = (num) - (num)
+const SA_NUM_SUBTRACT: Integer = 12;
+// (num) = (num) * (num)
+const SA_NUM_MULTIPLY: Integer = 13;
+// (num) = (num) / (num)
+const SA_NUM_DIVIDE: Integer = 14;
+// (obj) = (obj)
+const SA_OBJ_ASSIGN: Integer = 15;
+// set PC (obj) quest (num) to state (num)
+const SA_SET_PC_QUEST_STATE: Integer = 16;
+// set quest (num) to global state (num)
+const SA_SET_GLOBAL_QUEST_STATE: Integer = 17;
+// loop for (obj)
+const SA_LOOP_FOR: Integer = 18;
+// loop end
+const SA_LOOP_END: Integer = 19;
+// loop break
+const SA_LOOP_BREAK: Integer = 20;
+// have critter (obj) become a follower of (obj)
+const SA_CRITTER_PARTY_ADD: Integer = 21;
+// have critter (obj) stop following his leader
+const SA_CRITTER_PARTY_REMOVE: Integer = 22;
+// float line (num) above (obj)
+const SA_FLOAT_LINE: Integer = 23;
+// print line (num) with a message class of (num)
+const SA_PRINT_LINE: Integer = 24;
+// add blessing (num) to (obj)
+const SA_BLESSING_ADD: Integer = 25;
+// remove blessing (num) from (obj)
+const SA_BLESSING_REMOVE: Integer = 26;
+// add curse (num) to (obj)
+const SA_CURSE_ADD: Integer = 27;
+// remove curse (num) from (obj)
+const SA_CURSE_REMOVE: Integer = 28;
+// reaction of npc (obj) to pc (obj): store in (num)
+const SA_STORE_REACTION: Integer = 29;
+// reaction of npc (obj) to pc (obj): set to (num)
+const SA_SET_REACTION: Integer = 30;
+// reaction of npc (obj) to pc (obj): adjust by (num)
+const SA_ADJUST_REACTION: Integer = 31;
+// armor of (obj): get in (num)
+const SA_STORE_ARMOR: Integer = 32;
+// stat (num) of (obj): store in (num)
+const SA_STORE_STAT: Integer = 33;
+// object type of (obj): store in (num)
+const SA_STORE_OBJECT_TYPE: Integer = 34;
+// gold of (obj): adjust by (num)
+const SA_ADJUST_GOLD: Integer = 35;
+// combat: (obj) attacks (obj)
+const SA_CRITTER_ATTACK: Integer = 36;
+// random number (num) to (num): store in (num)
+const SA_RANDOM_NUMBER: Integer = 37;
+// social class of npc (obj): store in (num)
+const SA_SOCIAL_CLASS: Integer = 38;
+// origin of npc (obj): store in (num)
+const SA_NPC_ORIGIN_STORE: Integer = 39;
+// transform Attachee into basic prototype (num)
+const SA_TRANSFORM_TO_BASIC_PROTO: Integer = 40;
+// transfer item named (num) from (obj) to (obj)
+const SA_TRANSFER_NAMED_ITEM: Integer = 41;
+// story state: store in (num)
+const SA_STORY_STATE_STORE: Integer = 42;
+// story state: set to (num)
+const SA_STORY_STATE_SET: Integer = 43;
+// teleport (obj) to map (num) at X:(num) Y:(num)
+const SA_TELEPORT_OBJECT: Integer = 44;
+// set day standpoint of critter (obj) to X:(num) Y:(num) on this map
+const SA_DAY_STAND_POINT_SET_CURRENT_MAP: Integer = 45;
+// set night standpoint of critter (obj) to X:(num) Y:(num) on this map
+const SA_NIGHT_STAND_POINT_SET_CURRENT_MAP: Integer = 46;
+// skill (num) of (obj): store in (num)
+const SA_SKILL_STORE: Integer = 47;
+// spells: have (obj) cast spell (num) on (obj)
+const SA_CAST_SPELL: Integer = 48;
+// mark map location (num) of pc (obj) as known
+const SA_MARK_LOCATION: Integer = 49;
+// rumor: set rumor (num) for pc (obj)
+const SA_SET_RUMOR: Integer = 50;
+// rumor: quell rumor (num) for pc (obj)
+const SA_QUELL_RUMOR: Integer = 51;
+// create object with basic prototype (num) near (obj)
+const SA_OBJ_CREATE: Integer = 52;
+// lock state of (obj): set to (num)
+const SA_LOCK_STATE_SET: Integer = 53;
+// call script (num) at line (num) with triggerer (obj) and attachee (obj) in (num) seconds
+const SA_CALL_SCRIPT_IN_SECONDS: Integer = 54;
+// call script (num) at line (num) with triggerer (obj) and attachee (obj) at second (num)
+const SA_CALL_SCRIPT_AT_SECOND: Integer = 55;
+// toggle (obj) state on/off
+const SA_OBJ_STATE_TOGGLE: Integer = 56;
+// toggle (obj) invulnerability
+const SA_OBJ_INVULNERABLE_TOGGLE: Integer = 57;
+// kill (obj)
+const SA_OBJ_KILL: Integer = 58;
+// change art num of (obj) to (num)
+const SA_ART_CHANGE: Integer = 59;
+// damage (obj) for (num) points of type (num) damage
+const SA_OBJ_DAMAGE: Integer = 60;
+// spells: cast spell (num) on (obj)
+const SA_CAST_SPELL_GLOBAL: Integer = 61;
+// have (obj) perform animation (num)
+const SA_OBJ_ANIMATE: Integer = 62;
+// give (obj) xps for a quest level (num)
+const SA_GIVE_XP_QUEST_LEVEL: Integer = 63;
+// written UI start: book (num) for reader (obj)
+const SA_WRITTEN_UI_START_BOOK: Integer = 64;
+// written UI start: image (num) for reader (obj)
+const SA_WRITTEN_UI_START_IMAGE: Integer = 65;
+// create item with basic prototype (num) inside (obj)
+const SA_CREATE_ITEM_INSIDE_OBJ: Integer = 66;
+// have critter (obj) wait for his leader
+const SA_CRITTEr_WAIT_LEADER: Integer = 67;
+// destroy (obj)
+const SA_OBJ_DESTROY: Integer = 68;
+// have critter (obj) walk to X:(num) Y:(num)
+const SA_CRITTER_WALk: Integer = 69;
+// weapon of (obj): get in (num)
+const SA_STORE_WEAPON: Integer = 70;
+// distance between (obj) and (obj): get in (num)
+const SA_OBJ_DISTANCE_GET: Integer = 71;
+// reputation: give (obj) the reputation (num)
+const SA_OBJ_GIVE_REP: Integer = 72;
+// reputation: remove from (obj) the reputation (num)
+const SA_OBJ_REMOVE_REP: Integer = 73;
+// have critter (obj) run to X:(num) Y:(num)
+const SA_CRITTER_RUN: Integer = 74;
+// heal (obj) for (num) points
+const SA_HEAL_POINTS: Integer = 75;
+// heal (obj) for (num) fatigue points
+const SA_HEAL_FATIGUE: Integer = 76;
+// give (obj) the effect (num) with cause (num)
+const SA_OBJ_EFFECT_GIVE: Integer = 77;
+// remove from (obj) the effect (num)
+const SA_OBJ_EFFECT_REMOVE: Integer = 78;
+// have (obj) use (obj) on (obj) using skill (num) with modifier (num)
+const SA_USE_OBJ_ON_OBJ_WITH_SKILL_MOD: Integer = 79;
+// magic/tech: adjust (num) by item (obj) used by (obj) on (obj): store in (num)
+const SA_ADJUST_MAGIC_TECH: Integer = 80;
+// call script attached to (obj) at point (num) at line (num) with triggerer (obj)
+const SA_CALL_SCRIPT_ATTACHED_TO: Integer = 81;
+// play sound (num)
+const SA_PLAY_SOUND: Integer = 82;
+// play sound (num) at (obj)
+const SA_PLAY_SOUND_AT: Integer = 83;
+// area of (obj): store in (num)
+const SA_OBJ_AREA_STORE: Integer = 84;
+// newspaper: queue (num) with priority (num)
+const SA_QUEUE_NEWSPAPER: Integer = 85;
+// newspaper: float current headline over (obj)
+const SA_FLOAT_NEWSPAPER_HEADLINE: Integer = 86;
+// play sound scheme (num) and (num)
+const SA_PLAY_SOUND_SCHEME: Integer = 87;
+// toggle (obj) open/closed
+const SA_OBJ_TOGGLE_OPEN_CLOSED: Integer = 88;
+// faction of npc (obj): store in (num)
+const SA_STORE_FACTION: Integer = 89;
+// scroll distance: store in (num)
+const SA_SCROLL_DISTANCE_STORE: Integer = 90;
+// magic/tech: adjust (num) by item (obj) used by (obj): store in (num)
+const SA_MAGIC_TECH_ADJUST: Integer = 91;
+// rename (obj) as (num)
+const SA_OBJ_RENAME: Integer = 92;
+// have (obj) instantly become prone
+const SA_OBJ_PRONE: Integer = 93;
+// written start in (obj) set to (num)
+const SA_WRITTEN_START_IN_OBJ_SET: Integer = 94;
+// get location of (obj) and store X in (num) and Y in (num)
+const SA_OBJ_LOCATION_STORE: Integer = 95;
+// day: store days since startup in (num)
+const SA_STORE_DAYS_SINCE_STARTUP: Integer = 96;
+// hour: store current game hour in (num)
+const SA_STORE_GAME_HOUR: Integer = 97;
+// minute: store current game minute in (num)
+const SA_STORE_GAME_MINUTE: Integer = 98;
+// change script attached to (obj) at point (num) to script (num)
+const SA_OBJ_CHANGE_SCRIPT_AT_POINT: Integer = 99;
+// set global flag (num) to true
+const SA_SET_GLOBAL_FLAG: Integer = 100;
+// clear global flag (num)
+const SA_CLEAR_GLOBAL_FLAG: Integer = 101;
+// fade and teleport: pass (num) seconds, play (num) sound, play (num) movie, and teleport (obj) to map (num) at X:(num) Y:(num)
+const SA_FADE_TELEPORT_MOVE: Integer = 102;
+// fade: pass (num) seconds, play (num) sound, and play (num) movie, with (num) seconds during fade
+const SA_FADE_WAIT_PLAY_SFX_MOVIE: Integer = 103;
+// spell eye candy: play (num) on (obj)
+const SA_SPELL_EYECANDY_PLAY: Integer = 104;
+// hour: store hours since startup in (num)
+const SA_STORE_HOURS_SINCE_STARTUP: Integer = 105;
+// toggle the blocked state of sector at location X:(num) and Y:(num)
+const SA_BLOCKED_STATE_TOGGLE: Integer = 106;
+// hit points of (obj): store current in (num) and maximum in (num)
+const SA_HITPOINTS_STORE_CURRENT_MAX: Integer = 107;
+// fatigue of critter (obj): store current in (num) and maximum in (num)
+const SA_FATIGUE_STORE_CURRENT_MAX: Integer = 108;
+// combat: force (obj) to stop attacking
+const SA_COMBAT_OBJ_FORCE_STOP: Integer = 109;
+// toggle monster generator (num) on/off
+const SA_MONSTERGEN_TOGGLE: Integer = 110;
+// armor coverage of item (obj): store in (num)
+const SA_ARMOR_COVERAGE_STORE: Integer = 111;
+// give (obj) spell mastery in college (num)
+const SA_OBJ_SPELL_MASTERY_GIVE: Integer = 112;
+// unfog townmap (num)
+const SA_TOWNMAP_UNFOG: Integer = 113;
+// written UI start: plaque (num) for reader (obj)
+const SA_WRITTEN_UI_PLAQUE_START: Integer = 114;
+// have (obj) try to steal 100 coins from (obj)
+const SA_OBJ_STEAL_100_COINS: Integer = 115;
+// spell eye candy: stop (num) on (obj)
+const SA_STOP_SPELL_EYECANDY: Integer = 116;
+// grant one fate point to (obj)
+const SA_GIVE_FATE_POINT: Integer = 117;
+// spells: have (obj) cast free spell (num) on (obj)
+const SA_OBJ_FREE_SPELL_CAST: Integer = 118;
+// set PC (obj) quest (num) to state unbotched
+const SA_PC_QUEST_UNBOTCHED: Integer = 119;
+// script eye candy: play (num) on (obj)
+const SA_PLAY_SCRIPT_EYECANDY: Integer = 120;
+// spells: have (obj) cast unresistable spell (num) on (obj)
+const SA_OBJ_UNRESISTABLE_SPELL_CAST: Integer = 121;
+// spells: have (obj) cast free and unresistable spell (num) on (obj)
+const SA_OBJ_FREE_UNRESISTABLE_SPELL_CAST: Integer = 122;
+// touch art (num)
+const SA_TOUCH_ART: Integer = 123;
+// script eye candy: stop (num) on (obj)
+const SA_STOP_SCRIPT_EYECANDY: Integer = 124;
+// remove from time queue the call to script (num) with attachee (obj)
+const SA_REMOVE_SCRIPT_CALL_FROM_QUEUE: Integer = 125;
+// destroy item named (num) in inventory of (obj)
+const SA_DESTROY_ITEM: Integer = 126;
+// toggle item (obj) inventory display on/off
+const SA_OBJ_INVENTORY_TOGGLE: Integer = 127;
+// heal (obj) for (num) poison points
+const SA_OBJ_POISON_HEAL: Integer = 128;
+// schematic UI start: display for (obj)
+const SA_DISPlAY_SCHEMATIC_UI: Integer = 129;
+// spells: stop spell (num) on (obj)
+const SA_STOP_SPELL: Integer = 130;
+// slideshow: queue slide (num)
+const SA_QUEUE_SLIDE: Integer = 131;
+// end game and play slides
+const SA_END_GAME_PLAY_SLIDES: Integer = 132;
+// rotation of (obj): set to (num)
+const SA_OBJ_SET_ROTATION: Integer = 133;
+// faction of npc (obj): set to (num)
+const SA_SET_OBJ_FACTION: Integer = 134;
+// drain (num) charges from (obj)
+const SA_DRAIN_CHARGES: Integer = 135;
+// spells: cast unresistable spell (num) on (obj)
+const SA_GLOBAL_CAST_UNRESISTABLE_SPELL: Integer = 136;
+// stat (num) of (obj): adjust by (num)
+const SA_OBJ_ADJUST_STAT: Integer = 137;
+// damage (obj) unresistably for (num) points of type (num) damage
+const SA_DAMAGE_OBJ_UNRESISTABLE: Integer = 138;
+// autolevel scheme for (obj): change to (num)
+const SA_CHANGE_AUTOLEVEL_SCHEME: Integer = 139;
+// set day standpoint of critter (obj) to X:(num) Y:(num) on map (num)
+const SA_OBJ_SET_DAY_STANDPOINT_ON_MAP: Integer = 140;
+// set night standpoint of critter (obj) to X:(num) Y:(num) on map (num)
+const SA_OBJ_SET_NIGHT_STANDPOINT_ON_MAP: Integer = 141;
+
+Global Variables from ScriptEd.exe
+
+ModuleFolder : String
+
+ArcanumPath : String
+
+EditorYPosition : Integer
+
+
+Functions:
+
+procedure EditorAddLine(linedata : String);
+
+<description here>
+
+procedure CompileScript;
+
+<description here>
+
+procedure DebugMessage(data : String);
+
+<description here>
+
+procedure AddHelperScript(Filename : String; Description : String; Category : String);
+
+<description here>
+
+procedure AddScriptCommand(opcode : Integer; param1 : Integer = 0; param2 : Integer = 0; param3 : Integer = 0; param4 : Integer = 0; param5 : Integer = 0; param6 : Integer = 0; param7 : Integer = 0; param8 : Integer = 0; pos : Integer = -1);
+
+<description here>
+
+function SelectGlobalFlag : Integer;
+
+<description here>
+
+function SelectGlobalVar : Integer;
+
+<description here>
+
+function SelectPCFlag : Integer;
+
+<description here>
+
+function SelectPCVar : Integer;
+
+<description here>
+
+function SelectQuest : Integer;
+
+<description here>
+
+function SelectRumor : Integer;
+
+<description here>
+
+function SelectInternalName : Integer;
+
+<description here>
+
+function ChooseScript(var FilenameStorage : String) : Integer;
+
+<description here>
+
+function ChooseFocus : String;
+
+<description here>
+
+function ChooseValue : String;
+
+<description here>
+
+function SelectScriptLine(srcfile : String) : Integer;
+
+<description here>
+
+function SelectLineFromCurrentScript : Integer;
+
+<description here>
+
+function SelectBasicPrototype : Integer;
+
+<description here>
+
+procedure InitializeHelperScriptMenu;
+
+<description here>
+
+function GetEditorCursorPosition : Integer;
+
+<description here>
+
+procedure InsertScriptLine(pos : Integer; line : String);
+
+<description here>
+
+function SelectScriptCallType : Integer;
+
+<description here>
+
+procedure ShowScriptInfo(name : String; description : String; author : String; infotext : String);
+
+<description here>
+
+function ChooseFocus_Integer(Caption : String = 'Choose focus type') : Integer;
+
+<description here>
+
+function SelectAttachmentPoint : Integer;
+
+<description here>
+
+function QuestionDlg(Question : String) : Boolean;
+
+<description here>
+

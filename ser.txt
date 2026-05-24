@@ -1,0 +1,5 @@
+description "Tricky statement not compile!"
+MAX_LINES_ALLOCATED 10
+
+0. have Attachee use Attachee on Player using skill 4 with modifier 5
+

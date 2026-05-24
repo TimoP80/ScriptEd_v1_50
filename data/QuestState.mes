@@ -1,0 +1,9 @@
+// Quest states
+// ---------------
+{0}{Unknown}
+{1}{Mentioned}
+{2}{Accepted}
+{3}{Achieved}
+{4}{Completed}
+{5}{Other}
+{6}{Botched}

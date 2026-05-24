@@ -1,0 +1,162 @@
+library DLG_SpeechApi;
+
+{
+
+ScriptEd plugin
+
+Plugin Name: SAPI5 Speech Generator Plugin
+Author: T. Pitkänen
+
+Description:
+
+This is a plugin for generating text-to-speech audio for dialogue. Currently only for internal use.
+
+}
+
+uses
+  SysUtils,
+  Classes,
+lame,  pluginfunc,
+ACS_Classes,  Dialogs,
+  SpeechLib_TLB,
+  OleServer,
+  SAPIContainerUnit in 'SAPIContainerUnit.pas' {SAPIContainer: TDataModule};
+
+{$R *.res}
+
+ // This function should return the name of the plugin to be
+ // displayed in the menu of the host application
+  function GetPluginName: ShortString; stdcall;
+  begin
+    Result := 'SAPI5 Speech Generator Plugin';
+  end;
+
+  // This function should return a more detailed description of the plugin
+  function GetPluginDescription: ShortString; stdcall;
+  begin
+    Result := 'SAPI5 Speech Generator for generating character voiceovers';
+  end;
+
+  function CanAddToMenu: boolean; stdcall;
+  begin
+    Result := True;
+  end;
+
+  procedure PluginClose; stdcall;
+  begin
+  end;
+
+
+
+  // This function should return a key shortcut to be used in the menu
+  // format is:
+  // CTRL|ALT|SHIFT+<key> [A-Z]
+  // examples: CTRL+B, ALT+A, CTRL+ALT+H
+
+  function GetKeyShortCut: shortstring; stdcall;
+  begin
+    ;
+    Result := '';
+  end;
+
+  // This function is automatically set to return the interface version
+  // that is defined in the pluginfunc unit.
+  function GetInterfaceVersion: shortstring; stdcall;
+  begin
+    Result := interface_version;
+  end;
+
+  // This is the main procedure for the plugin.
+
+  // If you want the plugin to display a non-modal dialog
+  // you should make a while..do loop
+  // such as:
+
+  // while Form1.visible do
+  // begin;
+  // application.processmessages
+  // end;
+
+  // This will allow the plugin to run in the background
+  // and it will return from this procedure after the window is closed
+  // either by a button or the exit callback function PluginClose
+
+  // The basepath parameter contains the current path (the root
+  // of the host application)
+
+
+  procedure GenerateSpeech(text_male, text_female: PChar; voicename: PChar;
+    outputpath: PChar; linenum: integer); stdcall;
+  var
+    theoutputfile: string;
+    ispeechflags: integer;
+    voiceindex: integer;
+  begin
+    theoutputfile := 'v' + IntToStr(linenum) + '_m.wav';
+     loadlame;
+    debugmessage(PChar('MaleGenerateSpeech: ' + voicename + ' => ' + theoutputfile));
+    SAPIContainer.SpFileStream1.Format.type_ := SAFT44kHz16BitMono;
+    SAPIContainer.SpFileStream1.Open(outputpath + '\' + theoutputfile,
+      SSFMCreateForWrite, False);
+    iSpeechFlags := SVSFlagsAsync;
+    voiceindex := FindVoice(voicename);
+    zthevoice  := zvoices.Item(voiceindex);
+    SAPIContainer.SpVoice1.Voice := zthevoice;
+    SAPIContainer.SpVoice1.AudioOutputStream :=
+      SAPIContainer.SpFileStream1.DefaultInterface;
+    SAPIContainer.SpVoice1.Speak(text_male, iSpeechFlags);
+    SAPIContainer.SpVoice1.WaitUntilDone(-1);
+    SAPIContainer.SpFileStream1.Close;
+
+
+
+    if text_female <> nil then
+    begin
+      theoutputfile := 'v' + IntToStr(linenum) + '_f.wav';
+      debugmessage(PChar('FemaleGenerateSpeech: ' + voicename + ' => ' + theoutputfile));
+
+      SAPIContainer.SpFileStream1.Format.type_ := SAFT44kHz16BitMono;
+      SAPIContainer.SpFileStream1.Open(outputpath + '\' + theoutputfile,
+        SSFMCreateForWrite, False);
+      iSpeechFlags := SVSFlagsAsync;
+      voiceindex := FindVoice(voicename);
+      zthevoice  := zvoices.Item(voiceindex);
+      SAPIContainer.SpVoice1.Voice := zthevoice;
+      SAPIContainer.SpVoice1.AudioOutputStream :=
+        SAPIContainer.SpFileStream1.DefaultInterface;
+      SAPIContainer.SpVoice1.Speak(text_female, iSpeechFlags);
+      SAPIContainer.SpVoice1.WaitUntilDone(-1);
+      SAPIContainer.SpFileStream1.Close;
+    end;
+
+  end;
+
+  procedure RunPlugin(basepath: shortstring); stdcall;
+  var
+    u: integer;
+    str: PChar;
+  begin
+    SAPIContainer := TSapicontainer.Create(nil);
+    clearvoicecomboitems;
+    for u := 0 to zvoices.Count - 1 do
+    begin
+      //str := pchar(zvoices.Item(u).getdescription(0));
+      StrPCopy(str, zvoices.Item(u).getdescription(0));
+      AddVoiceComboItem(str);
+    end;
+
+  end;
+
+exports
+  GetPluginName,
+  GetPluginDescription,
+  GenerateSpeech,
+  CanAddToMenu,
+  RunPlugin,
+  PluginClose,
+  GetKeyShortCut,
+  GetInterfaceVersion;
+
+begin
+
+end.

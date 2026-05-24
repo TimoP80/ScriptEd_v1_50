@@ -1,0 +1,783 @@
+(*
+
+ScriptEd 1.50 - script editor for Arcanum modules
+
+*)
+
+{ This is the plugin SDK unit which contains the EXE imports
+  and structure definitions.                                 }
+
+unit pluginfunc;
+
+
+interface
+
+uses
+  Classes,
+  Controls,
+  Forms,
+  StdCtrls,
+  SysUtils,
+  Windows;
+
+const
+
+  Interface_Version = '1.50';
+
+
+
+// Script file structures
+
+
+type
+  scrline = record
+    opcode:   Integer;
+    VarTypes: array [0..7] of Byte;
+    VarValue: array [0..7] of Integer;
+
+  end;
+
+  ScriptLine = record
+    ifPart:   scrline;
+    thenPart: scrline;
+    elsePart: scrline;
+  end;
+
+  ScriptFile = record
+    filename:          String;
+    script_id:         Integer; // -1 if no valid id is found
+    LocalFlags:        Integer;
+    Counter0:          Byte;
+    Counter1:          Byte;
+    Counter2:          Byte;
+    Counter3:          Byte;
+    Description:       array [0..39] of Char;
+    ScriptFlags:       Integer;
+    ScriptLines:       array of ^ScriptLine;
+    LineCount:         Integer;
+    MaxLinesAllocated: Integer;
+    Junk:              Integer;
+  end;
+
+const
+
+  SA_DO_NOTHING                        = 0;
+  SA_RETURN_SKIP                       = 1;
+  SA_RETURN_RUN                        = 2;
+  SA_GOTO                              = 3;
+  SA_DIALOG                            = 4;
+  SA_REMOVE_SCRIPT                     = 5;
+  SA_CHANGE_SCRIPT                     = 6;
+  SA_CALL_SCRIPT                       = 7;
+  SA_SET_LOCAL_FLAG                    = 8;
+  SA_CLEAR_LOCAL_FLAG                  = 9;
+  SA_NUM_ASSIGN                        = 10;
+  SA_NUM_ADD                           = 11;
+  SA_NUM_SUBTRACT                      = 12;
+  SA_NUM_MULTIPLY                      = 13;
+  SA_NUM_DIVIDE                        = 14;
+  SA_OBJ_ASSIGN                        = 15;
+  SA_SET_PC_QUEST_STATE                = 16;
+  SA_SET_GLOBAL_QUEST_STATE            = 17;
+  SA_LOOP_FOR                          = 18;
+  SA_LOOP_END                          = 19;
+  SA_LOOP_BREAK                        = 20;
+  SA_CRITTER_PARTY_ADD                 = 21;
+  SA_CRITTER_PARTY_REMOVE              = 22;
+  SA_FLOAT_LINE                        = 23;
+  SA_PRINT_LINE                        = 24;
+  SA_BLESSING_ADD                      = 25;
+  SA_BLESSING_REMOVE                   = 26;
+  SA_CURSE_ADD                         = 27;
+  SA_CURSE_REMOVE                      = 28;
+  SA_STORE_REACTION                    = 29;
+  SA_SET_REACTION                      = 30;
+  SA_ADJUST_REACTION                   = 31;
+  SA_STORE_ARMOR                       = 32;
+  SA_STORE_STAT                        = 33;
+  SA_STORE_OBJECT_TYPE                 = 34;
+  SA_ADJUST_GOLD                       = 35;
+  SA_CRITTER_ATTACK                    = 36;
+  SA_RANDOM_NUMBER                     = 37;
+  SA_SOCIAL_CLASS                      = 38;
+  SA_NPC_ORIGIN_STORE                  = 39;
+  SA_TRANSFORM_TO_BASIC_PROTO          = 40;
+  SA_TRANSFER_NAMED_ITEM               = 41;
+  SA_STORY_STATE_STORE                 = 42;
+  SA_STORY_STATE_SET                   = 43;
+  SA_TELEPORT_OBJECT                   = 44;
+  SA_DAY_STAND_POINT_SET_CURRENT_MAP   = 45;
+  SA_NIGHT_STAND_POINT_SET_CURRENT_MAP = 46;
+  SA_SKILL_STORE                       = 47;
+  SA_CAST_SPELL                        = 48;
+  SA_MARK_LOCATION                     = 49;
+  SA_SET_RUMOR                         = 50;
+  SA_QUELL_RUMOR                       = 51;
+  SA_OBJ_CREATE                        = 52;
+  SA_LOCK_STATE_SET                    = 53;
+  SA_CALL_SCRIPT_IN_SECONDS            = 54;
+  SA_CALL_SCRIPT_AT_SECOND             = 55;
+  SA_OBJ_STATE_TOGGLE                  = 56;
+  SA_OBJ_INVULNERABLE_TOGGLE           = 57;
+  SA_OBJ_KILL                          = 58;
+  SA_ART_CHANGE                        = 59;
+  SA_OBJ_DAMAGE                        = 60;
+  SA_CAST_SPELL_GLOBAL                 = 61;
+  SA_OBJ_ANIMATE                       = 62;
+  SA_GIVE_XP_QUEST_LEVEL               = 63;
+  SA_WRITTEN_UI_START_BOOK             = 64;
+  SA_WRITTEN_UI_START_IMAGE            = 65;
+  SA_CREATE_ITEM_INSIDE_OBJ            = 66;
+  SA_CRITTEr_WAIT_LEADER               = 67;
+  SA_OBJ_DESTROY                       = 68;
+  SA_CRITTER_WALk                      = 69;
+  SA_STORE_WEAPON                      = 70;
+  SA_OBJ_DISTANCE_GET                  = 71;
+  SA_OBJ_GIVE_REP                      = 72;
+  SA_OBJ_REMOVE_REP                    = 73;
+  SA_CRITTER_RUN                       = 74;
+  SA_HEAL_POINTS                       = 75;
+  SA_HEAL_FATIGUE                      = 76;
+  SA_OBJ_EFFECT_GIVE                   = 77;
+  SA_OBJ_EFFECT_REMOVE                 = 78;
+  SA_USE_OBJ_ON_OBJ_WITH_SKILL_MOD     = 79;
+  SA_ADJUST_MAGIC_TECH                 = 80;
+  SA_CALL_SCRIPT_ATTACHED_TO           = 81;
+  SA_PLAY_SOUND                        = 82;
+  SA_PLAY_SOUND_AT                     = 83;
+  SA_OBJ_AREA_STORE                    = 84;
+  SA_QUEUE_NEWSPAPER                   = 85;
+  SA_FLOAT_NEWSPAPER_HEADLINE          = 86;
+  SA_PLAY_SOUND_SCHEME                 = 87;
+  SA_OBJ_TOGGLE_OPEN_CLOSED            = 88;
+  SA_STORE_FACTION                     = 89;
+  SA_SCROLL_DISTANCE_STORE             = 90;
+  SA_MAGIC_TECH_ADJUST                 = 91;
+  SA_OBJ_RENAME                        = 92;
+  SA_OBJ_PRONE                         = 93;
+  SA_WRITTEN_START_IN_OBJ_SET          = 94;
+  SA_OBJ_LOCATION_STORE                = 95;
+  SA_STORE_DAYS_SINCE_STARTUP          = 96;
+  SA_STORE_GAME_HOUR                   = 97;
+  SA_STORE_GAME_MINUTE                 = 98;
+  SA_OBJ_CHANGE_SCRIPT_AT_POINT        = 99;
+  SA_SET_GLOBAL_FLAG                   = 100;
+  SA_CLEAR_GLOBAL_FLAG                 = 101;
+  SA_FADE_TELEPORT_MOVE                = 102;
+  SA_FADE_WAIT_PLAY_SFX_MOVIE          = 103;
+  SA_SPELL_EYECANDY_PLAY               = 104;
+  SA_STORE_HOURS_SINCE_STARTUP         = 105;
+  SA_BLOCKED_STATE_TOGGLE              = 106;
+  SA_HITPOINTS_STORE_CURRENT_MAX       = 107;
+  SA_FATIGUE_STORE_CURRENT_MAX         = 108;
+  SA_COMBAT_OBJ_FORCE_STOP             = 109;
+  SA_MONSTERGEN_TOGGLE                 = 110;
+  SA_ARMOR_COVERAGE_STORE              = 111;
+  SA_OBJ_SPELL_MASTERY_GIVE            = 112;
+  SA_TOWNMAP_UNFOG                     = 113;
+  SA_WRITTEN_UI_PLAQUE_START           = 114;
+  SA_OBJ_STEAL_100_COINS               = 115;
+  SA_STOP_SPELL_EYECANDY               = 116;
+  SA_GIVE_FATE_POINT                   = 117;
+  SA_OBJ_FREE_SPELL_CAST               = 118;
+  SA_PC_QUEST_UNBOTCHED                = 119;
+  SA_PLAY_SCRIPT_EYECANDY              = 120;
+  SA_OBJ_UNRESISTABLE_SPELL_CAST       = 121;
+  SA_OBJ_FREE_UNRESISTABLE_SPELL_CAST  = 122;
+  SA_TOUCH_ART                         = 123;
+  SA_STOP_SCRIPT_EYECANDY              = 124;
+  SA_REMOVE_SCRIPT_CALL_FROM_QUEUE     = 125;
+  SA_DESTROY_ITEM                      = 126;
+  SA_OBJ_INVENTORY_TOGGLE              = 127;
+  SA_OBJ_POISON_HEAL                   = 128;
+  SA_DISPLAY_SCHEMATIC_UI              = 129;
+  SA_STOP_SPELL                        = 130;
+  SA_QUEUE_SLIDE                       = 131;
+  SA_END_GAME_PLAY_SLIDES              = 132;
+  SA_OBJ_SET_ROTATION                  = 133;
+  SA_SET_OBJ_FACTION                   = 134;
+  SA_DRAIN_CHARGES                     = 135;
+  SA_GLOBAL_CAST_UNRESISTABLE_SPELL    = 136;
+  SA_OBJ_ADJUST_STAT                   = 137;
+  SA_DAMAGE_OBJ_UNRESISTABLE           = 138;
+  SA_CHANGE_AUTOLEVEL_SCHEME           = 139;
+  SA_OBJ_SET_DAY_STANDPOINT_ON_MAP     = 140;
+  SA_OBJ_SET_NIGHT_STANDPOINT_ON_MAP   = 141;
+
+
+const
+  SC_DAYTIME                                      = 1;
+  SC_OBJ_HAS_GOLD_NUM                             = 2;
+  SC_LOCAL_FLAG_IS_SET                            = 3;
+  SC_NUM_EQUALS_NUM                               = 4;
+  SC_NUM_LESS_OR_EQUAL_NUM                        = 5;
+  SC_PC_HAS_QUEST_IN_STATE                        = 6;
+  SC_QUEST_IN_GLOBAL_STATE                        = 7;
+  SC_OBJ_HAS_BLESS                                = 8;
+  SC_OBJ_HAS_CURSE                                = 9;
+  SC_NPC_OBJ_HAS_MET_PC_OBJ_BEFORE                = 10;
+  SC_OBJ_HAS_BAD_ASSOCIATES                       = 11;
+  SC_OBJ_IS_POLYMORPHED                           = 12;
+  SC_OBJ_IS_SHRUNK                                = 13;
+  SC_OBJ_HAS_BODY_SPELL                           = 14;
+  SC_OBJ_IS_INVISIBLE                             = 15;
+  SC_OBJ_HAS_MIRROR_IMAGE                         = 16;
+  SC_OBJ_HAS_ITEM_NAMED_OBJ                       = 17;
+  SC_NPC_IS_A_FOLLOWER_OF_PC                      = 18;
+  SC_NPC_OBJ_IS_A_MONSTER_OF_SPECIES              = 19;
+  SC_OBJ_IS_NAMED_NUM                             = 20;
+  SC_OBJ_IS_WIELDING_ITEM                         = 21;
+  SC_OBJ_IS_DEAD                                  = 22;
+  SC_OBJ_HAS_MAXIMUM_FOLLOWERS                    = 23;
+  SC_OBJ_CAN_OPEN_THE_CONTAINER_OBJ               = 24;
+  SC_OBJ_HAS_SURRENDERED                          = 25;
+  SC_OBJ_IS_IN_DIALOG                             = 26;
+  SC_OBJ_IS_SWITCHED_OFF                          = 27;
+  SC_OBJ_CAN_SEE_OBJ                              = 28;
+  SC_OBJ_CAN_HEAR_OBJ                             = 29;
+  SC_OBJ_IS_INVULNERABLE                          = 30;
+  SC_OBJ_IS_IN_COMBAT                             = 31;
+  SC_OBJ_IS_AT_LOCATION_XY                        = 32;
+  SC_OBJ_HAS_REPUTATION_NUM                       = 33;
+  SC_OBJ_IS_WITHIN_NUM_TILES_OF_LOCATION_XY       = 34;
+  SC_OBJ_IS_UNDER_THE_INFLUENCE_OF_SPELL_NUM      = 35;
+  SC_OBJ_IS_OPEN                                  = 36;
+  SC_OBJ_IS_AN_ANIMAL                             = 37;
+  SC_OBJ_IS_UNDEAD                                = 38;
+  SC_OBJ_WAS_JILTED_BY_A_PC                       = 39;
+  SC_PC_OBJ_KNOWS_RUMOR_NUM                       = 40;
+  SC_RUMOR_HAS_BEEN_QUELLED                       = 41;
+  SC_OBJ_IS_BUSTED                                = 42;
+  SC_GLOBAL_FLAG_NUM_IS_SET                       = 43;
+  SC_OBJ_CAN_OPEN_THE_PORTAL_OBJ_IN_DIRECTION_NUM = 44;
+  SC_SECTOR_AT_LOCATION_IS_BLOCKED                = 45;
+  SC_MONSTER_GENERATOR_IS_DISABLED                = 46;
+  SC_OBJ_IS_IDENTIFIED                            = 47;
+  SC_OBJ_KNOWS_SPELL_NUM                          = 48;
+  SC_OBJ_HAS_MASTERED_SPELL_COLLEGE_NUM           = 49;
+  SC_ITEMS_ARE_BEING_REWIELDED                    = 50;
+  SC_OBJ_IS_PROWLING                              = 51;
+  SC_OBJ_IS_WAITING_FOR_LEADERS_RETURN            = 52;
+
+
+
+const
+  PARAM_TYPE_OBJ = 1;
+  PARAM_TYPE_NUM = 2;
+
+(*
+
+  1 (0x1)      Nonmagical Trap
+  2 (0x2)      Magical Trap
+  4 (0x4)      Auto Removing
+  8   (0x8)      Death Speech
+  16   (0x10)    Surrender Speech
+  32   (0x20)    Radius Two
+  64  (0x40)    Radius Three
+  128  (0x80)    Radius Five
+  256  (0x100)    Teleport Trigger
+
+
+*)
+
+  FLAGS_NONMAGICAL_TRAP  = 1;
+  FLAGS_MAGICAL_TRAP     = 2;
+  FLAGS_AUTO_REMOVING    = 4;
+  FLAGS_DEATH_SPEECH     = 8;
+  FLAGS_SURRENDER_SPEECH = 16;
+  FLAGS_RADIUS_TWO       = 32;
+  FLAGS_RADIUS_THREE     = 64;
+  FLAGS_RADIUS_FIVE      = 128;
+  FLAGS_TELEPORT_TRIGGER = 256;
+
+type
+  PScriptFile = ^ScriptFile;
+
+// Dialogue File structure
+
+const
+  NO_GENDER     = -1;
+  GENDER_FEMALE = 0;
+  GENDER_MALE   = 1;
+
+type
+  PlayerOption = record
+    lineindex:            Integer;
+    Text:                 String;
+    gendertest:           Integer;
+    iqtest:               Integer;
+    conditions:           String;
+    linktonode:           Integer;
+    playeroptioncomments: String;
+    actions:              String;
+  end;
+
+  DialogueNode = record
+    start_index:           Integer;
+    old_index:             Integer;
+    isfloatmessage:        Boolean;
+    floatgroupstartmarker: Boolean;
+    nodecomments:          String;
+    nodename:              String;
+    nodedesc:              String;
+    npctextmale:           String;
+    npctextfemale:         String;
+    voicefield:            String;
+    nodeactions:           String;
+    PlayerOptions:         array of ^PlayerOption;
+    PlayerOptioncnt:       Integer;
+  end;
+
+  DialogueFile = record
+    dlgfilename: String;
+    dlgheader:   String;
+    nodes:       array of ^DialogueNode;
+    nodecount:   Integer;
+  end;
+
+type
+  PDialogueFile = ^DialogueFile;
+
+
+procedure ScriptLineAdd(str: PChar); stdcall;
+procedure GetScript(var scrptr: PScriptFile); stdcall;
+procedure GetModuleDir(var Data: PChar); stdcall;
+function OpcodeActionToString(id: Integer): String;
+function OpcodeConditionToString(id: Integer): String;
+procedure DebugMessage(Data: PAnsiChar); stdcall;
+procedure EditorFindLine(linenum: Integer); stdcall;
+procedure GetDialogue(var dlgptr: PDialogueFile); stdcall;
+procedure ClearVoiceComboItems; stdcall;
+procedure AddVoiceComboItem (str: pansichar); stdcall;
+
+implementation
+
+
+function OpcodeConditionToString(id: Integer): String;
+begin
+  case id of
+    1:
+      Result := 'DAYTIME';
+    2:
+      Result := 'OBJ_HAS_GOLD_NUM';
+    3:
+      Result := 'LOCAL_FLAG_IS_SET';
+    4:
+      Result := 'NUM_EQUALS_NUM';
+    5:
+      Result := 'NUM_LESS_OR_EQUAL_NUM';
+    6:
+      Result := 'PC_HAS_QUEST_IN_STATE';
+    7:
+      Result := 'QUEST_IN_GLOBAL_STATE';
+    8:
+      Result := 'OBJ_HAS_BLESS';
+    9:
+      Result := 'OBJ_HAS_CURSE';
+    10:
+      Result := 'NPC_OBJ_HAS_MET_PC_OBJ_BEFORE';
+    11:
+      Result := 'OBJ_HAS_BAD_ASSOCIATES';
+    12:
+      Result := 'OBJ_IS_POLYMORPHED';
+    13:
+      Result := 'OBJ_IS_SHRUNK';
+    14:
+      Result := 'OBJ_HAS_BODY_SPELL';
+    15:
+      Result := 'OBJ_IS_INVISIBLE';
+    16:
+      Result := 'OBJ_HAS_MIRROR_IMAGE';
+    17:
+      Result := 'OBJ_HAS_ITEM_NAMED_OBJ';
+    18:
+      Result := 'NPC_IS_A_FOLLOWER_OF_PC';
+    19:
+      Result := 'NPC_OBJ_IS_A_MONSTER_OF_SPECIES';
+    20:
+      Result := 'OBJ_IS_NAMED_NUM';
+    21:
+      Result := 'OBJ_IS_WIELDING_ITEM';
+    22:
+      Result := 'OBJ_IS_DEAD';
+    23:
+      Result := 'OBJ_HAS_MAXIMUM_FOLLOWERS';
+    24:
+      Result := 'OBJ_CAN_OPEN_THE_CONTAINER_OBJ';
+    25:
+      Result := 'OBJ_HAS_SURRENDERED';
+    26:
+      Result := 'OBJ_IS_IN_DIALOG';
+    27:
+      Result := 'OBJ_IS_SWITCHED_OFF';
+    28:
+      Result := 'OBJ_CAN_SEE_OBJ';
+    29:
+      Result := 'OBJ_CAN_HEAR_OBJ';
+    30:
+      Result := 'OBJ_IS_INVULNERABLE';
+    31:
+      Result := 'OBJ_IS_IN_COMBAT';
+    32:
+      Result := 'OBJ_IS_AT_LOCATION_XY';
+    33:
+      Result := 'OBJ_HAS_REPUTATION_NUM';
+    34:
+      Result := 'OBJ_IS_WITHIN_NUM_TILES_OF_LOCATION_XY';
+    35:
+      Result := 'OBJ_IS_UNDER_THE_INFLUENCE_OF_SPELL_NUM';
+    36:
+      Result := 'OBJ_IS_OPEN';
+    37:
+      Result := 'OBJ_IS_AN_ANIMAL';
+    38:
+      Result := 'OBJ_IS_UNDEAD';
+    39:
+      Result := 'OBJ_WAS_JILTED_BY_A_PC';
+    40:
+      Result := 'PC_OBJ_KNOWS_RUMOR_NUM';
+    41:
+      Result := 'RUMOR_HAS_BEEN_QUELLED';
+    42:
+      Result := 'OBJ_IS_BUSTED';
+    43:
+      Result := 'GLOBAL_FLAG_NUM_IS_SET';
+    44:
+      Result := 'OBJ_CAN_OPEN_THE_PORTAL_OBJ_IN_DIRECTION_NUM';
+    45:
+      Result := 'SECTOR_AT_LOCATION_IS_BLOCKED';
+    46:
+      Result := 'MONSTER_GENERATOR_IS_DISABLED';
+    47:
+      Result := 'OBJ_IS_IDENTIFIED';
+    48:
+      Result := 'OBJ_KNOWS_SPELL_NUM';
+    49:
+      Result := 'OBJ_HAS_MASTERED_SPELL_COLLEGE_NUM';
+    50:
+      Result := 'ITEMS_ARE_BEING_REWIELDED';
+    51:
+      Result := 'OBJ_IS_PROWLING';
+    52:
+      Result := 'OBJ_IS_WAITING_FOR_LEADERS_RETURN';
+  end;
+end;
+
+
+
+(*
+
+This function returns a corresponding script command from
+a given action opcode number.
+
+example:
+
+str := OpcodeActionTostring(6);
+
+the resulting contents of the string 'str' will be 'CHANGE_SCRIPT'
+etc etc
+
+*)
+
+
+function OpcodeActionToString(id: Integer): String;
+begin
+  case id of
+    0:
+      Result := 'DO_NOTHING';
+    1:
+      Result := 'RETURN_SKIP_DEFAULT';
+    2:
+      Result := 'RETURN_RUN_DEFAULT';
+    3:
+      Result := 'GOTO';
+    4:
+      Result := 'DIALOG';
+    5:
+      Result := 'REMOVE_SCRIPT';
+    6:
+      Result := 'CHANGE_SCRIPT';
+    7:
+      Result := 'CALL_SCRIPT';
+    8:
+      Result := 'SET_LOCAL_FLAG';
+    9:
+      Result := 'CLEAR_LOCAL_FLAG';
+    10:
+      Result := 'NUM_ASSIGN';
+    11:
+      Result := 'NUM_ADD';
+    12:
+      Result := 'NUM_SUBTRACT';
+    13:
+      Result := 'NUM_MULTIPLY';
+    14:
+      Result := 'NUM_DIVIDE';
+    15:
+      Result := 'OBJ_ASSIGN';
+    16:
+      Result := 'SET_PC_QUEST_STATE';
+    17:
+      Result := 'SET_GLOBAL_QUEST_STATE';
+    18:
+      Result := 'LOOP_FOR';
+    19:
+      Result := 'LOOP_END';
+    20:
+      Result := 'LOOP_BREAK';
+    21:
+      Result := 'CRITTER_PARTY_ADD';
+    22:
+      Result := 'CRITTER_PARTY_REMOVE';
+    23:
+      Result := 'FLOAT_LINE';
+    24:
+      Result := 'PRINT_LINE';
+    25:
+      Result := 'BLESSING_ADD';
+    26:
+      Result := 'BLESSING_REMOVE';
+    27:
+      Result := 'CURSE_ADD';
+    28:
+      Result := 'CURSE_REMOVE';
+    29:
+      Result := 'STORE_REACTION';
+    30:
+      Result := 'SET_REACTION';
+    31:
+      Result := 'ADJUST_REACTION';
+    32:
+      Result := 'STORE_ARMOR';
+    33:
+      Result := 'STORE_STAT';
+    34:
+      Result := 'STORE_OBJECT_TYPE';
+    35:
+      Result := 'ADJUST_GOLD';
+    36:
+      Result := 'CRITTER_ATTACK';
+    37:
+      Result := 'RANDOM_NUMBER';
+    38:
+      Result := 'SOCIAL_CLASS';
+    39:
+      Result := 'NPC_ORIGIN_STORE';
+    40:
+      Result := 'TRANSFORM_TO_BASIC_PROTO';
+    41:
+      Result := 'TRANSFER_NAMED_ITEM';
+    42:
+      Result := 'STORY_STATE_STORE';
+    43:
+      Result := 'STORY_STATE_SET';
+    44:
+      Result := 'TELEPORT_OBJECT';
+    45:
+      Result := 'DAY_STAND_POINT_SET_CURRENT_MAP';
+    46:
+      Result := 'NIGHT_STAND_POINT_SET_CURRENT_MAP';
+    47:
+      Result := 'SKILL_STORE';
+    48:
+      Result := 'CAST_SPELL';
+    49:
+      Result := 'MARK_LOCATION';
+    50:
+      Result := 'SET_RUMOR';
+    51:
+      Result := 'QUELL_RUMOR';
+    52:
+      Result := 'OBJ_CREATE';
+    53:
+      Result := 'LOCK_STATE_SET';
+    54:
+      Result := 'CALL_SCRIPT_IN_SECONDS';
+    55:
+      Result := 'CALL_SCRIPT_AT_SECOND';
+    56:
+      Result := 'OBJ_STATE_TOGGLE';
+    57:
+      Result := 'OBJ_INVULNERABLE_TOGGLE';
+    58:
+      Result := 'OBJ_KILL';
+    59:
+      Result := 'ART_CHANGE';
+    60:
+      Result := 'OBJ_DAMAGE';
+    61:
+      Result := 'CAST_SPELL_GLOBAL';
+    62:
+      Result := 'OBJ_ANIMATE';
+    63:
+      Result := 'GIVE_XP_QUEST_LEVEL';
+    64:
+      Result := 'WRITTEN_UI_START_BOOK';
+    65:
+      Result := 'WRITTEN_UI_START_IMAGE';
+    66:
+      Result := 'CREATE_ITEM_INSIDE_OBJ';
+    67:
+      Result := 'CRITTEr_WAIT_LEADER';
+    68:
+      Result := 'OBJ_DESTROY';
+    69:
+      Result := 'CRITTER_WALk';
+    70:
+      Result := 'STORE_WEAPON';
+    71:
+      Result := 'OBJ_DISTANCE_GET';
+    72:
+      Result := 'OBJ_GIVE_REP';
+    73:
+      Result := 'OBJ_REMOVE_REP';
+    74:
+      Result := 'CRITTER_RUN';
+    75:
+      Result := 'HEAL_POINTS';
+    76:
+      Result := 'HEAL_FATIGUE';
+    77:
+      Result := 'OBJ_EFFECT_GIVE';
+    78:
+      Result := 'OBJ_EFFECT_REMOVE';
+    79:
+      Result := 'USE_OBJ_ON_OBJ_WITH_SKILL_MOD)';
+    80:
+      Result := 'ADJUST_MAGIC_TECH';
+    81:
+      Result := 'CALL_SCRIPT_ATTACHED_TO';
+    82:
+      Result := 'PLAY_SOUND';
+    83:
+      Result := 'PLAY_SOUND_AT';
+    84:
+      Result := 'OBJ_AREA_STORE';
+    85:
+      Result := 'QUEUE_NEWSPAPER';
+    86:
+      Result := 'FLOAT_NEWSPAPER_HEADLINE';
+    87:
+      Result := 'PLAY_SOUND_SCHEME';
+    88:
+      Result := 'OBJ_TOGGLE_OPEN_CLOSED';
+    89:
+      Result := 'STORE_FACTION';
+    90:
+      Result := 'SCROLL_DISTANCE_STORE';
+    91:
+      Result := 'MAGIC_TECH_ADJUST';
+    92:
+      Result := 'OBJ_RENAME';
+    93:
+      Result := 'OBJ_PRONE';
+    94:
+      Result := 'WRITTEN_START_IN_OBJ_SET';
+    95:
+      Result := 'OBJ_LOCATION_STORE';
+    96:
+      Result := 'STORE_DAYS_SINCE_STARTUP';
+    97:
+      Result := 'STORE_GAME_HOUR';
+    98:
+      Result := 'STORE_GAME_MINUTE';
+    99:
+      Result := 'OBJ_CHANGE_SCRIPT_AT_POINT';
+    100:
+      Result := 'SET_GLOBAL_FLAG';
+    101:
+      Result := 'CLEAR_GLOBAL_FLAG';
+    102:
+      Result := 'FADE_TELEPORT_MOVE';
+    103:
+      Result := 'FADE_WAIT_PLAY_SFX_MOVIE';
+    104:
+      Result := 'SPELL_EYECANDY_PLAY';
+    105:
+      Result := 'STORE_HOURS_SINCE_STARTUP';
+    106:
+      Result := 'BLOCKED_STATE_TOGGLE';
+    107:
+      Result := 'HITPOINTS_STORE_CURRENT_MAX';
+    108:
+      Result := 'FATIGUE_STORE_CURRENT_MAX';
+    109:
+      Result := 'COMBAT_OBJ_FORCE_STOP';
+    110:
+      Result := 'MONSTERGEN_TOGGLE';
+    111:
+      Result := 'ARMOR_COVERAGE_STORE';
+    112:
+      Result := 'OBJ_SPELL_MASTERY_GIVE';
+    113:
+      Result := 'TOWNMAP_UNFOG';
+    114:
+      Result := 'WRITTEN_UI_PLAQUE_START';
+    115:
+      Result := 'OBJ_STEAL_100_COINS';
+    116:
+      Result := 'STOP_SPELL_EYECANDY';
+    117:
+      Result := 'GIVE_FATE_POINT';
+    118:
+      Result := 'OBJ_FREE_SPELL_CAST';
+    119:
+      Result := 'PC_QUEST_UNBOTCHED';
+    120:
+      Result := 'PLAY_SCRIPT_EYECANDY';
+    121:
+      Result := 'OBJ_UNRESISTABLE_SPELL_CAST';
+    122:
+      Result := 'OBJ_FREE_UNRESISTABLE_SPELL_CAST';
+    123:
+      Result := 'TOUCH_ART';
+    124:
+      Result := 'STOP_SCRIPT_EYECANDY';
+    125:
+      Result := 'REMOVE_SCRIPT_CALL_FROM_QUEUE';
+    126:
+      Result := 'DESTROY_ITEM';
+    127:
+      Result := 'OBJ_INVENTORY_TOGGLE';
+    128:
+      Result := 'OBJ_POISON_HEAL';
+    129:
+      Result := 'DISPlAY_SCHEMATIC_UI';
+    130:
+      Result := 'STOP_SPELL';
+    131:
+      Result := 'QUEUE_SLIDE';
+    132:
+      Result := 'END_GAME_PLAY_SLIDES';
+    133:
+      Result := 'OBJ_SET_ROTATION';
+    134:
+      Result := 'SET_OBJ_FACTION';
+    135:
+      Result := 'DRAIN_CHARGES';
+    136:
+      Result := 'GLOBAL_CAST_UNRESISTABLE_SPELL';
+    137:
+      Result := 'OBJ_ADJUST_STAT';
+    138:
+      Result := 'DAMAGE_OBJ_UNRESISTABLE';
+    139:
+      Result := 'CHANGE_AUTOLEVEL_SCHEME';
+    140:
+      Result := 'OBJ_SET_DAY_STANDPOINT_ON_MAP';
+    141:
+      Result := 'OBJ_SET_NIGHT_STANDPOINT_ON_MAP';
+  end;
+end;
+
+procedure GetDialogue(var dlgptr: PDialogueFile); stdcall; external 'ScriptEd.exe';
+procedure ScriptLineAdd(str: PChar); stdcall; external 'ScriptEd.exe';
+procedure GetScript(var scrptr: PScriptFile); stdcall; external 'ScriptEd.exe';
+procedure GetModuleDir(var Data: PChar); stdcall; external 'ScriptEd.exe';
+procedure DebugMessage(Data: PAnsiChar); stdcall; external 'ScriptEd.exe';
+procedure EditorFindLine(linenum: Integer); stdcall; external 'ScriptEd.exe';
+procedure ClearVoiceComboItems; stdcall; external 'ScriptEd.exe';
+procedure AddVoiceComboItem (str: pansichar); stdcall; external 'ScriptEd.exe';
+
+end.
+

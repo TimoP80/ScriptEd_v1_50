@@ -1,0 +1,69 @@
+unit LoadOfficialScript;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls;
+
+type
+  TForm2 = class(TForm)
+    ListView1: TListView;
+    Button1:   TButton;
+    Button2:   TButton;
+    procedure ListView1DblClick(Sender: TObject);
+    procedure ListView1Click(Sender: TObject);
+  Private
+    { Private declarations }
+  Public
+    procedure UpdateScriptList;
+    { Public declarations }
+  end;
+
+var
+  Form2:        TForm2;
+  selectedfile: String;
+
+implementation
+
+uses arcanumscrlib, Masks;
+
+procedure TForm2.UpdateScriptList;
+var
+  t: Integer;
+  x: TLIstItem;
+
+begin
+  listview1.Items.Clear;
+  ListView1.Items.BeginUpdate;
+  for t := 0 to scriptsdat.filecount - 1 do
+  begin
+    if MatchesMask(scriptsdat.files[t].filename, '*.scr') then
+    begin
+      x := listview1.Items.Add;
+      x.Caption := copy(extractfilename(scriptsdat.files[t].filename), 1, 5);
+      x.subitems.add(copy(extractfilename(scriptsdat.files[t].filename), 6, length(extractfilename(scriptsdat.files[t].filename))));
+      x.subitems.add(extractfiledir(scriptsdat.files[t].filename));
+      x.subitems.add(IntToStr(scriptsdat.files[t].realsize));
+      application.ProcessMessages;
+    end;
+  end;
+  ListView1.Items.EndUpdate;
+end;
+
+
+{$R *.dfm}
+
+procedure TForm2.ListView1DblClick(Sender: TObject);
+begin
+  selectedfile := listview1.Selected.subitems[1] + '\' + listview1.Selected.Caption + listview1.Selected.SubItems[0];
+  modalresult  := mrOk;
+end;
+
+procedure TForm2.ListView1Click(Sender: TObject);
+begin
+  selectedfile := listview1.Selected.subitems[1] + '\' + listview1.Selected.Caption + listview1.Selected.SubItems[0];
+
+end;
+
+end.

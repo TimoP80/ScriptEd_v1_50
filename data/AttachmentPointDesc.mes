@@ -1,0 +1,408 @@
+// ScriptEd 1.50 data file
+// 
+// -- do not modify! --
+// 
+// List of script attachment points mapped
+// to string values
+// 
+// These are the corresponding
+// descriptions for each value
+// 
+// Taken from Troika's official
+// EventScripts.doc documentation
+// 
+// Used for informational purposes only
+{0}{Override the default examine text of an object, providing a message in the display window or a floating text bubble above the object.
+
+when called: when the pc hovers over an object in the isometric view with his mouse
+
+triggerer: pc
+
+attachee: targeted object
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: the standard examine data is not displayed}
+{1}{Prevent an object from being opened or used, or to detect that such an action is taking place.
+
+when called: when a critter uses something, ie. a container, door or window is opened, a trap is triggered, an item is used (outside of the context of combat. For combat see HIT and MISS script attachment points)
+
+triggerer: object user
+
+attachee: object used (may be NULL with a tile trap)
+
+extra object: the target of the object (usually NULL, is non–NULL when an item is used by a critter on a critter)
+
+effect of RETURN AND SKIP DEFAULT: the use of the object is disallowed. So, for example, a container would not open.}
+{2}{Detect or prevent the destruction of an object.
+
+when called: when an object is being completely destroyed and removed from the game
+
+triggerer: object
+
+attachee: object 
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: the object will not be destroyed. Note that the item is not healed or restored in any way. It is simply not destroyed.}
+{3}{Force a container, door or window to be locked
+
+when called: when a lockable object (container, door or window) is being queried by a critter to see if the object is locked. Note that doors and windows are queried by the path generation function, so this script could be called multiple times when a critter is attempting to find a path that includes the door or window, and it could be called even when ultimately the path with the door or window is not used.
+
+triggerer: critter
+
+attachee: lockable object
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: the game assumes the object cannot be unlocked}
+{4}{Detect or prevent an item from being picked up from the ground
+
+when called: when a critter is picking up an item from the ground. Note: this script is NOT called when an item is transferred from one critter to another (see TRANSFER attachment point)
+
+triggerer: critter
+
+attachee: item
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: the critter is not allowed to pick up the item, which remains on the ground}
+{5}{Detect or prevent an item from being dropped to the ground
+
+when called: when an item is removed from a critter’s inventory and place on the ground
+
+triggerer: critter
+
+attachee: item
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: the item remains in the critter’s inventory}
+{6}{Detect or prevent a critter from throwing an item
+
+when called: when a critter tries to throw an item at a target
+
+triggerer: critter
+
+attachee: item
+
+extra object: target (may be NULL if the critter is throwing item at a location)
+
+effect of RETURN AND SKIP DEFAULT: the throw is disallowed. No message is generated.
+}
+{7}{Detect that a critter has used an item to successfully hit a target
+
+when called: when a successful attack is performed by a critter on a target
+
+triggerer: critter
+
+attachee: item
+
+extra object: target (may be NULL if the critter is throwing item at a location)
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the hit}
+{8}{Detect that a critter has used an item in a unsuccessful attempt to hit a target
+
+when called: when an unsuccessful attack is performed by a critter on a target. Note that for unsuccessful throws, this occurs when the projectile has reached its maximum range
+
+triggerer: critter
+
+attachee: item
+
+extra object: target (may be NULL if the critter is throwing item at a location)
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the miss.}
+{9}{Allow a dialog interface to be used
+
+when called: when the pc targets and clicks on an npc in the isometric view
+
+triggerer: pc
+
+attachee: targeted pc
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: the npc will NOT float a generic greeting}
+{10}{Detect when a critter first becomes active or prevent its activity
+
+when called: when a critter is on a sector that is loaded into memory
+triggerer: critter
+attachee: critter
+extra object: NULL
+effect of RETURN AND SKIP DEFAULT: the critter will not perform normal heartbeat functions, like combat or AI-related activities}
+{11}{Detect stealing or prevent an attack because of it
+
+when called: when the PC fails or critically fails at pick pocketing (stealing or planting) an item from an NPC, or when a container, door or window that the NPC cares about is damaged or picklocked by the PC
+
+triggerer: PC
+
+attachee: NPC
+extra object: pick pocketed item or opened object
+
+effect of RETURN AND SKIP DEFAULT: the NPC will NOT attack the PC}
+{12}{Detect or prevent a critter from dying
+
+when called: when a killer kills a victim
+
+triggerer: killer
+
+attachee: victim
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: the effects of dying (magic effects turning off, experience point awards, etc) do not occur. Note that as with DESTROY, the critter is not healed or restored in any way. He is simply not processed for death. The script must heal him.
+}
+{13}{Detect when an NPC has begun combat
+
+when called: when an NPC switches to combat mode and targets a foe
+
+triggerer: foe
+
+attachee: NPC
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the combat.
+}
+{14}{Detect when an NPC has finished combat
+
+when called: when an NPC stops fighting
+
+triggerer: last valid foe (may be dead or NULL)
+
+attachee: NPC
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the end of combat.}
+{15}{Detect when an NPC has begun a combat round
+
+when called: when a combat round for an NPC starts in turn-based, or before an attack begins in real-time
+
+triggerer: foe
+
+attachee: NPC
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the start of combat.}
+{16}{Detect when an NPC has completed a combat round
+
+when called: when a combat round for an NPC ends in turn-based, or when an attack completes in real-time
+
+triggerer: foe
+
+attachee: NPC
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the end of combat.
+}
+{17}{Detect or prevent an NPC from buying an item from the PC
+
+when called: when NPC buys an item from the PC
+
+triggerer: item
+
+attachee: NPC
+
+extra object: PC
+
+effect of RETURN AND SKIP DEFAULT: NPC won’t buy the item in question}
+{18}{Detect or prevent a critter from being raised from the dead
+
+when called: when a dead critter is being raised from the dead by a caster, who might be using an item
+
+triggerer: caster
+
+attachee: critter
+
+extra object: item (can be NULL)
+
+effect of RETURN AND SKIP DEFAULT: critter is not resurrected
+}
+{19}{Allow periodic activity of a critter or to prevent such activity
+
+when called: every two seconds on all NPC’s in loaded sectors
+
+triggerer: npc
+
+attachee: npc
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: no heartbeat functions (combat, AI, etc)}
+{20}{Detect when an NPC’s leader has killed a victim
+
+when called: when an NPC’s leader is killing a victim
+
+triggerer: victim
+
+attachee: NPC
+
+extra object: leader
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the death of the victim}
+{21}{Detect when an object has taken possession of an item
+
+when called: when an item is inserted into an object’s inventory
+
+triggerer: object
+
+attachee: item
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the acquisition of the item.}
+{22}{Prevent an NPC from attacking a critter on sight
+
+when called: when an NPC is considering initiating an attack on a foe (called “kill on sight”)
+
+triggerer: foe
+
+attachee: npc
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: NPC will not attack the foe. Note that the NPC will still fight back if attacked.}
+{23}{Detect or prevent an object from taking damage
+
+when called: when an object is hit by a foe
+
+triggerer: foe
+
+attachee: object
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: object will not take any damage}
+{24}{Detect when an item is being wielded
+
+when called: when an item is wielded by a critter
+
+triggerer: critter
+
+attachee: item
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the wielding of the item.
+}
+{25}{Detect when an item is being unwielded
+
+when called: when an item is unwielded by a critter
+
+triggerer: critter
+
+attachee: item
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the unwielding of the item.
+}
+{26}{Detect that a critter has successfully hit a target
+
+when called: when a successful attack is performed by a critter on a target
+
+triggerer: target
+
+attachee: critter
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the hit.
+}
+{27}{Detect that an NPC’s leader has entered a new sector
+
+when called: when an NPC’s leader has entered a new sector
+
+triggerer: leader
+
+attachee: npc
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only.
+}
+{28}{Detect when an object has lost a possession
+
+when called: when an item is removed from an object’s inventory
+
+triggerer: object
+
+attachee: item
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the loss of the item.}
+{29}{Detect when an NPC’s PC leader sleeps
+
+when called: when an NPC’s PC leader sleeps
+
+triggerer: PC leader
+
+attachee: NPC
+
+extra object: OBJ_HANDLE_NULL
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the PC from sleeping.
+}
+{30}{Detect when an object busts
+
+when called: when an object is being busted by an attacker (usually, this means reduced to 0 hit points but not destroyed. Not everything can bust).
+
+triggerer: attacker
+
+attachee: object 
+
+extra object: NULL
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the object from busting.
+}
+{31}{Override generated dialogue codes with custom messages. (Not documented)}
+{32}{Detect or prevent an item from being transferred from one inventory to another
+
+when called: when an item’s owner is transferring an item to a target (either a critter or a container)
+
+triggerer: owner
+
+attachee: target
+
+extra object: item
+
+effect of RETURN AND SKIP DEFAULT: the target is not allowed to receive the item, which remains on the owner
+}
+{33}{Detect a thief (called on the thief, not the target like with CATCHING THIEF PC)
+
+when called: when the thief fails or critically fails at pick pocketing (stealing or planting) an item from a target critter
+
+triggerer: target
+
+attachee: thief
+
+extra object: pick pocketed item
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the item from being stolen.
+}
+{34}{Detect that a critter has used a weapon to critically hit a target or that his armor has taken a critical hit from target
+
+when called: when a critical hit is performed by a critter on a target using a weapon OR when a critter takes a critical hit to his armor by target
+
+triggerer: critter
+
+attachee: weapon or armor
+
+extra object: target (may be NULL if the critter is throwing item at a location)
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the hit.}
+{35}{Detect that a critter has used a weapon in a critical failure in an attempt to hit a target or that his armor has taken a critical miss from himself
+
+when called: when an critical miss is performed by a critter on a target using a weapon (note that for unsuccessful throws, this occurs when the projectile has reached its maximum range) or when a critter critically misses and hits himself
+
+triggerer: critter
+
+attachee: weapon or armor
+
+extra object: target (may be NULL if the critter is throwing item at a location) or critter (in case of a critical miss on himself)
+
+effect of RETURN AND SKIP DEFAULT: no effect. This script is called for informational reasons only. It cannot prevent the miss}

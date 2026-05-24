@@ -1,0 +1,15 @@
+procedure ImportScript;
+var infotext, scriptname, author, description: string;
+begin
+
+infotext := 'This is a test script for importing a helper script to the ScriptEd environment. This info window is shown for "official" ScriptEd helper script packs.';
+
+scriptname := 'Test Script';
+description:='Testing doodling chickabow bow wow';
+author := 'Dj Unique <tpitkane@gmail.com>';
+
+AddHelperScript('helperscripts\Example1.dws','Example Script 1','Testing');
+ShowScriptInfo(scriptname, description, author, infotext);
+end;
+
+ShowMessage('Hello world - Your Arcanum installation is at path '+arcanumpath+' and your current module is '+modulefolder);

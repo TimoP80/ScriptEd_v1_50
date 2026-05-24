@@ -1,0 +1,18 @@
+description "line remapping - let's test it"
+MAX_LINES_ALLOCATED 10
+
+0. dialog 1
+
+1. IF Player is named 8012
+    THEN float line 3 above Attachee
+
+2. return and SKIP default
+
+3. goto line 5
+
+4. remove from time queue the call to script Counter 0 with attachee Triggerer
+
+5. do nothing
+
+6. return and SKIP default
+

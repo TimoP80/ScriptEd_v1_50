@@ -1,0 +1,361 @@
+
+Changelog:
+
+1.50-beta Build 5
+-----------------
+
+- Fixed a critical bug in the script parser that caused the 'transform Attachee into basic prototype (num)' line fail to compile. Now it should work just  fine.
+
+- Plugins should now deinitialize properly, there was an access violation occurring in PLG_CheckRefs.dll on exiting ScriptEd, traced back to JCL Unit Versioning, which I disabled.
+
+- Plugins now use the same VCL skin as the main program
+
+- Option to use Troika's original DbMaker.exe for building module databases, instead of the internal routines.
+
+- Added a commandline tool: ScriptCompiler.exe for mass decompiling scripts to txt and back to scr, also able to decompile all main game scripts
+
+- Added button to dialogue editor for automatic voiceover numbering, makes voicing characters easier, especially when using the SAPI5 plugin.
+
+- ArcanumSCRLib installation folder read from registry should now work properly.
+
+- Speech playback implemented for dialogues with voiceover
+
+ 1.50-stable Build 8
+ ------------------
+
+ - Added support for generating text with Ollama. Automatically detects if the server is running.
+ You'll need to install Ollama from https://ollama.com/ and then pull some models from command line
+ by using "ollama pull <modelname>", you can find all available models at https://ollama.com/search.
+ These will be automatically detected by ScriptEd.
+   AI Support currently enabled for generating npc responses, player options and journal entries.
+ More AI enhancements will be added later.
+  Also note: The performance of the AI text generation depends on your hardware (CPU, GPU, Memory)
+ and how many parameters the model has, so it might take a while for the Ollama server to generate
+  a response. On my setup (Ryzen 5600X & GTX 1070 + 16gb of DDR4 RAM), it takes around 30 seconds
+  up to one minute to generate text with mistral:7b. The <7B parameter models are much faster
+ and more suitable for rapid dialogue creation.
+ 
+ - Rewrote and optimized some of the script compiler code with some help from ChatGPT.
+   The special case transform Attachee into basic prototype (num) was broken but was eventually
+   fixed after a bit of debugging. Same goes for have (obj) try to steal 100 coins from (obj), this
+   had problems compiling but now it should work fine.
+ 
+ - Flags are now set properly in the ScriptEd GUI version of the compiler.
+ 
+ - Fixed command line script compiler code to properly store flags when specified (Scripted
+   will set the flags from the properties so they are already set when the script is compiled)
+ 
+ - Command line script compiler now passes the compilation of all official scripts.
+ 
+ - Command line script compiler updated with the new ArcanumSCRLib code.
+ 
+ - Added hints to various sections of the dialogue editor
+ 
+ - Updated app icon to a new one generated with DALL-E 3 through ChatGPT
+ 
+ - Dialogue Editor window enhancements: Added the npc text and player options to the tree view so they
+   are visible at all times. Also changed the treeview to a HTML formatted component. When you edit either
+   NPC text or player options, these items are updated as well.
+   NOTE: they are for display only, you cannot edit them from the tree nodes directly.
+
+ 1.50-beta Build 7
+ -----------------
+ 
+ - Added a button to add float lines from a listbox. Each line represents one float message.
+ Useful for message lists generated with AI (ChatGPT, for example)
+ 
+ - Added a button for clearing the dialogue, with a confirmation dialog that you actually want to do this.
+ This could be useful when you want to completely rework the dialogue from scratch.
+ 
+ - Added a button to dialogue editor for linking to another dialogue. This requires a global variable
+ for both dialogue entry point and the script line to call. This is very useful for inter-NPC dialogues
+ that require complex scripting to implement. Both scripts need to be set up with the following:
+ 
+ dialog Global Variable <x> (where x is the number of the global variable you want to use for
+ the dialog entry point)
+ 
+ and
+ 
+ loop for Everyone in Group (PC and NPC, single player)
+ 
+ IF Current Looped Object is named <internal_name>
+     THEN call script attached to Current Looped Object at point 9 at line Global Variable <y> with triggerer Player
+ 
+ loop end
+ 
+ where internal_name is the internal name of the npc to link the dialog to, also <y> is
+ the global variable of the script line to call.
+ 
+ - Added a new option for player option editor to directly create a new node
+ for the dialogue. Should speed up dialogue creation a little bit.
+ 
+ 1.50-beta Build 6
+ -----------------
+
+ - [Improvement] Script compiler now supports comments that have no space between // and a comment, they will be automatically formatted as // <comment>
+ 
+ - [Improvement] Added option to automatically insert new VO number for each new node, great for voiced dialogues. If the dialogue has no voiceover, this
+   option will not increment the voiceover number
+ 
+ - [Improvement] Added search options to script loader windows (both load official script and module script loader) Main campaign voiced dialogues can now also be filtered.
+ 
+ - [Fix] Fixed dialogue not being reset after loading a script with no dialogue, and a dialogue file was previously loaded.
+ 
+ - [Improvement] Added a field for voiceovers in module script loader. This can help you find dialogues that have voiceover.
+ 
+ - [Fix] Fixed script name not being updated properly (it updated without the script id)
+ 
+ - [Improvement] Editor code completion enhancements: Now certain opcodes will invoke a specific selector window, for example "set global flag (num) to true"
+   invokes the global flag selector.
+ 
+ - [Fix] Added code to add line 1 to a newly created dialogue if there are no dialog entry points in the script. Previously this would result in a .dlg parse error since there were
+   no dialog lines to read.
+ 
+ - [Improvement] Added MES file header editor
+ 
+ - [New Feature] Added condition and action command wizards like in the old ScriptEd (finally) Also a command wizard for a complete IF..THEN..ELSE statement is available.
+ 
+ - [Improvement] Build number displayed in the main form caption
+ 
+ 1.50-beta Build 5
+ -----------------
+ 
+ - Fixed a critical bug in the script parser that caused the 'transform Attachee into basic prototype (num)' line fail to compile. Now it should work just  fine.
+ 
+ - Plugins should now deinitialize properly, there was an access violation occurring in PLG_CheckRefs.dll on exiting ScriptEd, traced back to JCL Unit Versioning, which I disabled.
+ 
+ - Plugins now use the same VCL skin as the main program
+ 
+ - Option to use Troika's original DbMaker.exe for building module databases, instead of the internal routines.
+ 
+ - Added a commandline tool: ScriptCompiler.exe for mass decompiling scripts to txt and back to scr, also able to decompile all main game scripts
+ 
+ - Added button to dialogue editor for automatic voiceover numbering, makes voicing characters easier, especially when using the SAPI5 plugin.
+ 
+ - ArcanumSCRLib installation folder read from registry should now work properly.
+ 
+ - Speech playback implemented for dialogues with voiceover
+ 
+ Known Issues:
+ 
+ - dialogue is not reset when loading another script that has no dialogue attached.
+
+1.50-beta Build 4
+-----------------
+
+- Added script creation date and modification date columns to the module script loader
+
+- fixed MES editor entry deletion: deleting the last entry would cause an access violation (only related to updating the listview)
+
+- added a fancy splash screen on startup
+
+- Ported code to work with Delphi 10 Seattle
+
+- Fancy VCL style now applied to the editor
+
+- Fixes made to the script compiler code incorporated. Thanks to Anthony Bailey for the fixes. Some lines would not compile, for example such as this one: "stat 4 of Triggerer: adjust by PC Variable 1001 of Triggerer"
+
+- Added plugin for creating speech files using the Windows SAPI5 Text to Speech Engine
+
++ various other fixes that I cannot remember right now.
+
+1.50-beta Build 3
+-----------------
+
+- Added a right-click menu for module script loader for various
+  operations. Currently only for deleting a script so you can
+  conveniently delete scripts that you don't need.
+
+- Fixed some bugs in the player option editor regarding data
+  left in from a previously edited player option. The temporary
+  data placeholders were not cleared properly.
+
+- Fixed incorrect code when loading compressed modules.
+
+- Player option editor now gets focused properly when you move
+  a player option up or down. The problem was that UpdatePlayerOptions 
+  was called after selecting the line which caused the list to lose focus.
+
+- Added buttons for decompressing and compressing module data.
+  For compressing modules, there are two modes: standard mode, for creating
+  a single dat file and advanced mode for splitting folders to separate
+  .patch<n> files and a main .dat file.
+
+- Added automatic helper script importing through a procedure called 
+  ImportScript that may be present in a script. This is used for providing 
+  additional helper scripts with  an installer script that contains a series 
+  AddHelperScript commands to import each script to ScriptEd.
+
+- DAT creation functions tweaked to work properly. The filenames
+  in the directory tree were stored incorrectly, without a null
+  character in the end. 
+
+- Added more right-click info tip data types: Script number,
+  basic prototype, stat. 
+
+- Improved dat file handling, now it should report the filename it tried to 
+  open if error occurs
+
+- Fixed parsing of lighting scheme message files. These files have data such as
+  1AM etc. without being prepended with the comment symbol. The parser couldn't catch
+  this as identifiers are expected to begin with a character and any text outside
+  comments or the actual MES data is parsed in as an identifier or a number even
+  if they are present as one whole string (e.g. )
+
+- DLG and MES parser will now ignore any input outside the curly braces that is not 
+  prepended with //, this improves compatibility with just about any dialogue file.
+
+- Added helper script manager to preferences screen. 
+
+- The script is now recompiled on save to ensure that the script
+  is up to date in case the user forgot to compile the script after
+  most recent changes. This can be toggled off if you wish to
+  handle compiling the script yourself before saving it. This is switched
+  on by default.
+
+- Added folder monitoring for the module list so now when new files
+  or folders are added or removed, the list will automatically
+  refresh.
+
+- Fixed crash when pressing OK in module selector without anything
+  selected.
+
+- Added a setting for turning on or off the confirmation of deleting 
+  a player option
+
+- Various error handling tweaks
+
+1.50-beta Build 2
+-----------------
+
+Hotfix release to address some
+more urgent issues.
+
+- Fixed Arcanum installation path management so that
+you can specify a folder own your own choice if you have
+multiple copies of Arcanum installed.
+
+- Added an MRU menu for module scripts. The full path is
+stored so in case you changed the module in between loading
+scripts, they can be accessed again easily. NOTE: The module
+folder variable will still hold only the currently selected
+module so strangeness may occur, so to be safe, just
+use the scripts in the currently selected module, and
+select a another module in case you wish to edit the
+data in that module. I will try to work this out
+better in a future build.
+
+- Basic colour coding for nodes implemented. Now float messages
+and empty lines will be coloured differently in the node list.
+
+- Undo should be working now. Unfortunately it has no buffer
+yet so only the text that was in the editor before compiling
+is restored.
+
+- Multiple player options can now be copied and pasted,
+as requested.
+
+- MES entry data is properly cleared from last usage of
+the generic mes editor.
+
+- In addition to the MRU menu, listview column widths are also
+saved from the module script loader window. This way the 
+columns are at the exact width that you had them when 
+you last quit ScriptEd.
+
+- Added a few more configuration options. Compiling script on
+pressing enter can now be disabled and a few others.
+
+- Implemented default line number step when 
+adding new nodes.
+
+- Fixed issues with some plugin related functions. Modulepath
+should now be returned correctly.
+
+- Female npc text is now correctly updated when you toggle the
+'use text from male npc line' checkbox on.
+
+- Added optional gender specific strings. These are used for 
+automatically synchronizing npc text for the female player with
+corresponding words such as 'sir' with 'madam' etc.
+
+- Added a safety check when creating a new dialogue. This
+is due to some reports about the existence of the file
+not being recognized. This should allow the user to
+cancel out of the creation process to prevent data loss.
+I need more info on this issue, can't reproduce it so far.
+
+- Finetuned script parser to allow consecutive lines without
+linebreaks in between. There should no longer be any lost lines, 
+but if there are, send me a snippet of the script that
+didn't work out and I'll debug it.
+
+- Added the following helper script commands:
+
+function SelectGlobalFlag: Integer;
+
+Invokes a window for selecting a global flag. Returns the 
+MES entry index for the global flag.
+
+function SelectGlobalVar: Integer;
+
+Invokes a window for selecting a global variable. Returns the 
+MES entry index for the global var.
+
+function SelectPCFlag: Integer;
+
+Invokes a window for selecting a PC flag. Returns the mes
+entry index for the selected pc flag.
+
+function SelectPCVar: Integer;
+
+Invokes a window for selecting a PC variable. Returns the mes
+entry index for the selected pc variable.
+
+function SelectQuest: Integer;
+
+Invokes a window for selecting a quest (from GameQuestLog.mes). 
+Returns the MES entry index 
+for the selected quest.
+
+function SelectRumor: Integer;
+
+Invokes a window for selecting a rumor or journal entry 
+(from GameRD_NPC_m2m.mes). Returns the MES entry index for the
+selected rumor / journal entry.
+
+function SelectInternalName: Integer;
+
+Invokes a window for selecting an internal name. Returns the
+MES entry index for the selected internal name.
+
+function ChooseScript: integer;
+
+Shows the module script loader window. If the script filename does
+not contain a script id, -2 is returned. If the window was
+canceled, -1 is returned. Otherwise the script ID part of the
+filename is returned for use within a scripting command that
+is added by a helper script.
+
+function ChooseFocus : String;
+
+Invokes a selection window to choose a focus string. The string
+value of the selected item is returned. 
+
+function ChooseValue : String;
+
+Invokes a selection window for choosing a value. Default value
+type is number (3). The selected value is returned as a string.
+For example 'Counter 0','Global Variable 1', 'Local 0', '25' etc.
+
+- Added global flag / variable / quest / internal name
+information display when right-clicking on certain script lines or 
+'Global Flag'/'Global Variable'  keywords. Can also display
+dialogue lines or float messages if they are being called
+as regular numbers.
+
+
+1.50-beta
+---------
+
+Initial release

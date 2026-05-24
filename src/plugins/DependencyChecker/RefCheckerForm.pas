@@ -1,0 +1,219 @@
+unit RefCheckerForm;
+
+interface
+
+uses
+  Windows, JclFileUtils, pluginfunc, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, JvExStdCtrls, JvHtControls;
+
+type
+  TForm1 = class(TForm)
+    Label1:       TLabel;
+    scrfilename:  TLabel;
+    Label3:       TLabel;
+    scrlines:     TLabel;
+    Label5:       TLabel;
+    JvHTListBox1: TJvHTListBox;
+    Button1:      TButton;
+    Label2:       TLabel;
+    scrdesc:      TLabel;
+    procedure Button1Click(Sender: TObject);
+    procedure JvHTListBox1DblClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1:        TForm1;
+  modulepath:   PansiChar;
+  moduledirstr: ansiString;
+  thescript:    PScriptFile;
+
+procedure BuildDependencyList;
+
+implementation
+
+{$R *.dfm}
+
+
+
+procedure BuildDependencyList;
+var
+  secs, scrnum: Integer;
+  flist: TStrings;
+  t: Integer;
+  point: Integer;
+begin
+  getmoduledir(modulepath);
+  moduledirstr := modulepath;
+  form1.JvHTListBox1.Clear;
+  flist := TStringList.Create;
+
+  DebugMessage(pansichar('module path: '+moduledirstr));
+  for t := 0 to thescript.LineCount - 1 do
+  begin
+    flist.Clear;
+    case thescript.ScriptLines[t].thenPart.opcode of
+      SA_OBJ_CHANGE_SCRIPT_AT_POINT:
+      begin
+        scrnum := thescript.ScriptLines[t].thenPart.varvalue[2];
+        point  := thescript.ScriptLines[t].thenPart.varvalue[1];
+        advbuildfilelist(moduledirstr + format('\scr\%0.5d*.scr', [scrnum]), faAnyFile, flist, amAny, []);
+        if flist.Count > 0 then
+        begin
+          form1.JvHTListBox1.Items.Add('<b>Line ' + IntToStr(t) + '</b>:<br>Change script attached at point ' +
+            IntToStr(point) + ' to script ' + IntToStr(scrnum) + ' (' + flist[0] + ')');
+         ;
+        end;
+
+      end;
+
+      SA_CHANGE_SCRIPT:
+      begin
+        scrnum := thescript.ScriptLines[t].thenPart.varvalue[0];
+        advbuildfilelist(moduledirstr + format('\scr\%0.5d*.scr', [scrnum]), faAnyFile, flist, amAny, []);
+        if flist.Count > 0 then
+        begin
+          form1.JvHTListBox1.Items.Add('<b>Line ' + IntToStr(t) + '</b>:<br>Change this script to script ' +
+            IntToStr(scrnum) + ' (' + flist[0] + ')');
+
+        end;
+
+      end;
+
+      SA_CALL_SCRIPT:
+      begin
+        scrnum := thescript.ScriptLines[t].thenPart.varvalue[0];
+        advbuildfilelist(moduledirstr + format('\scr\%0.5d*.scr', [scrnum]), faAnyFile, flist, amAny, []);
+        if flist.Count > 0 then
+        begin
+          form1.JvHTListBox1.Items.Add('<b>Line ' + IntToStr(t) + '</b>:<br>Call Script ' + IntToStr(scrnum) + ' (' + flist[0] + ')');
+        ;
+        end else
+          DebugMessage('No files found+??');
+
+      end;
+
+      SA_CALL_SCRIPT_IN_SECONDS:
+      begin
+        scrnum := thescript.ScriptLines[t].thenPart.varvalue[0];
+        secs := thescript.ScriptLines[t].thenPart.varvalue[4];
+        advbuildfilelist(moduledirstr + format('\scr\%0.5d*.scr', [scrnum]), faAnyFile, flist, amAny, []);
+        if flist.Count > 0 then
+        begin
+          form1.JvHTListBox1.Items.Add('<b>Line ' + IntToStr(t) + '</b>:<br>Call Script ' + IntToStr(scrnum) +
+            ' (' + flist[0] + ')' + ' in ' + IntToStr(secs) + ' seconds');
+
+        end else
+          DebugMessage('No files found+??');
+      end;
+      SA_CALL_SCRIPT_AT_SECOND:
+      begin
+        scrnum := thescript.ScriptLines[t].thenPart.varvalue[0];
+        secs := thescript.ScriptLines[t].thenPart.varvalue[4];
+        advbuildfilelist(moduledirstr + format('\scr\%0.5d*.scr', [scrnum]), faAnyFile, flist, amAny, []);
+        if flist.Count > 0 then
+        begin
+          form1.JvHTListBox1.Items.Add('<b>Line ' + IntToStr(t) + '</b>:<br>Call Script ' + IntToStr(scrnum) +
+            ' (' + flist[0] + ') at second ' + IntToStr(secs));
+
+        end else
+          DebugMessage('No files found+??');
+      end;
+
+    end;
+
+    case thescript.ScriptLines[t].elsePart.opcode of
+
+      SA_OBJ_CHANGE_SCRIPT_AT_POINT:
+      begin
+        scrnum := thescript.ScriptLines[t].elsePart.varvalue[2];
+        point  := thescript.ScriptLines[t].elsePart.varvalue[1];
+        advbuildfilelist(moduledirstr + format('\scr\%0.5d*.scr', [scrnum]), faAnyFile, flist, amAny, []);
+        if flist.Count > 0 then
+        begin
+          form1.JvHTListBox1.Items.Add('<b>Line ' + IntToStr(t) + '</b>:<br>Change script attached at point ' +
+            IntToStr(point) + ' to script ' + IntToStr(scrnum) + ' (' + flist[0] + ')');
+
+        end;
+
+      end;
+
+      SA_CHANGE_SCRIPT:
+      begin
+        scrnum := thescript.ScriptLines[t].elsePart.varvalue[0];
+        advbuildfilelist(moduledirstr + format('\scr\%0.5d*.scr', [scrnum]), faAnyFile, flist, amAny, []);
+        if flist.Count > 0 then
+        begin
+          form1.JvHTListBox1.Items.Add('<b>Line ' + IntToStr(t) + '</b>:<br>Change this script to script ' +
+            IntToStr(scrnum) + ' (' + flist[0] + ')');
+
+        end;
+
+      end;
+      SA_CALL_SCRIPT:
+      begin
+        scrnum := thescript.ScriptLines[t].elsePart.varvalue[0];
+        DebugMessage(PAnsiChar('search pattern = ' + moduledirstr + format('\scr\%0.5d*.scr', [scrnum])));
+        advbuildfilelist(moduledirstr + format('\scr\%0.5d*.scr', [scrnum]), faAnyFile, flist, amAny, []);
+        if flist.Count > 0 then
+        begin
+          form1.JvHTListBox1.Items.Add('<b>Line ' + IntToStr(t) + '</b>:<br>Call Script ' + IntToStr(scrnum) + ' (' + flist[0] + ')');
+
+        end else
+          DebugMessage('No files found+??');
+      end;
+
+      SA_CALL_SCRIPT_IN_SECONDS:
+      begin
+        scrnum := thescript.ScriptLines[t].elsePart.varvalue[0];
+        secs := thescript.ScriptLines[t].elsePart.varvalue[4];
+        DebugMessage(PAnsiChar('search pattern = ' + moduledirstr + format('\scr\%0.5d*.scr', [scrnum])));
+        advbuildfilelist(moduledirstr + format('\scr\%0.5d*.scr', [scrnum]), faAnyFile, flist, amAny, []);
+        if flist.Count > 0 then
+        begin
+          form1.JvHTListBox1.Items.Add('<b>Line ' + IntToStr(t) + '</b>:<br>Call Script ' + IntToStr(scrnum) +
+            ' (' + flist[0] + ')' + ' in ' + IntToStr(secs) + ' seconds');
+
+
+        end else
+          DebugMessage('No files found+??');
+      end;
+      SA_CALL_SCRIPT_AT_SECOND:
+      begin
+        scrnum := thescript.ScriptLines[t].elsePart.varvalue[0];
+        secs := thescript.ScriptLines[t].elsePart.varvalue[4];
+        advbuildfilelist(moduledirstr + format('\scr\%0.5d*.scr', [scrnum]), faAnyFile, flist, amAny, []);
+        if flist.Count > 0 then
+        begin
+          form1.JvHTListBox1.Items.Add('<b>Line ' + IntToStr(t) + '</b>:<br>Call Script ' + IntToStr(scrnum) +
+            ' (' + flist[0] + ') at second ' + IntToStr(secs));
+
+
+        end else
+          DebugMessage('No files found+??');
+      end;
+
+    end;
+
+  end;
+if form1.JvHTListBox1.Items.count=0 then
+form1.JvHTListBox1.Items.Add('No resolvable dependencies found.');
+Finalize(modulepath);
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  form1.hide;
+end;
+
+procedure TForm1.JvHTListBox1DblClick(Sender: TObject);
+begin
+  if jvhtlistbox1.ItemIndex = -1 then
+    exit;
+
+end;
+
+end.

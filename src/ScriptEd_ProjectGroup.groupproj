@@ -1,0 +1,72 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{F9BAE6EF-379A-4232-ABED-EE46BC630CDB}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="ScriptEd.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="plugins\SAPI5Plugin\DLG_SpeechApi.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="plugins\DebugScriptInfo\PLG_ScriptDebugInfo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="plugins\DependencyChecker\PLG_CheckRefs.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="ScriptEd">
+			<MSBuild Projects="ScriptEd.dproj"/>
+		</Target>
+		<Target Name="ScriptEd:Clean">
+			<MSBuild Projects="ScriptEd.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="ScriptEd:Make">
+			<MSBuild Projects="ScriptEd.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="DLG_SpeechApi">
+			<MSBuild Projects="plugins\SAPI5Plugin\DLG_SpeechApi.dproj"/>
+		</Target>
+		<Target Name="DLG_SpeechApi:Clean">
+			<MSBuild Projects="plugins\SAPI5Plugin\DLG_SpeechApi.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="DLG_SpeechApi:Make">
+			<MSBuild Projects="plugins\SAPI5Plugin\DLG_SpeechApi.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="PLG_ScriptDebugInfo">
+			<MSBuild Projects="plugins\DebugScriptInfo\PLG_ScriptDebugInfo.dproj"/>
+		</Target>
+		<Target Name="PLG_ScriptDebugInfo:Clean">
+			<MSBuild Projects="plugins\DebugScriptInfo\PLG_ScriptDebugInfo.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="PLG_ScriptDebugInfo:Make">
+			<MSBuild Projects="plugins\DebugScriptInfo\PLG_ScriptDebugInfo.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="PLG_CheckRefs">
+			<MSBuild Projects="plugins\DependencyChecker\PLG_CheckRefs.dproj"/>
+		</Target>
+		<Target Name="PLG_CheckRefs:Clean">
+			<MSBuild Projects="plugins\DependencyChecker\PLG_CheckRefs.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="PLG_CheckRefs:Make">
+			<MSBuild Projects="plugins\DependencyChecker\PLG_CheckRefs.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="ScriptEd;DLG_SpeechApi;PLG_ScriptDebugInfo;PLG_CheckRefs"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="ScriptEd:Clean;DLG_SpeechApi:Clean;PLG_ScriptDebugInfo:Clean;PLG_CheckRefs:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="ScriptEd:Make;DLG_SpeechApi:Make;PLG_ScriptDebugInfo:Make;PLG_CheckRefs:Make"/>
+		</Target>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
+	</Project>

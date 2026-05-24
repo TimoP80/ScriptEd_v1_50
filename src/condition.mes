@@ -1,0 +1,55 @@
+// Keep in sync with the enum Script_Condition_Type in Script.h
+
+// True is not provided a string to avoid presenting it as an option to the user
+{1}{it is daytime}
+{2}{(obj) has at least (num) gold}
+{3}{local flag (num) is set}
+{4}{(num) == (num)}
+{5}{(num) <= (num)}
+{6}{PC (obj) has quest (num) in state (num)}
+{7}{quest (num) in global state (num)}
+{8}{(obj) has bless (num)}
+{9}{(obj) has curse (num)}
+{10}{npc (obj) has met pc (obj) before}
+{11}{(obj) has bad associates}
+{12}{(obj) is polymorphed}
+{13}{(obj) is shrunk}
+{14}{(obj) has a body spell}
+{15}{(obj) is invisible}
+{16}{(obj) has mirror image}
+{17}{(obj) has item named (num)}
+{18}{npc (obj) is a follower of pc (obj)}
+{19}{npc (obj) is a monster of specie (num)}
+{20}{(obj) is named (num)}
+{21}{(obj) is wielding item named (num)}
+{22}{(obj) is dead}
+{23}{(obj) has maximum followers}
+{24}{(obj) can open the container (obj)}
+{25}{(obj) has surrendered}
+{26}{(obj) is in dialog}
+{27}{(obj) is switched off}
+{28}{(obj) can see (obj)}
+{29}{(obj) can hear (obj)}
+{30}{(obj) is invulnerable}
+{31}{(obj) is in combat}
+{32}{(obj) is at location X:(num) Y:(num)}
+{33}{(obj) has reputation (num)}
+{34}{(obj) is within (num) tiles of location X:(num) Y:(num)}
+{35}{(obj) is under the influence of spell (num)}
+{36}{(obj) is open}
+{37}{(obj) is an animal}
+{38}{(obj) is undead}
+{39}{(obj) was jilted by a PC}
+{40}{pc (obj) knows rumor (num)}
+{41}{rumor (num) has been quelled}
+{42}{(obj) is busted}
+{43}{global flag (num) is set}
+{44}{(obj) can open the portal (obj) in direction (num)}
+{45}{sector at location X:(num) and Y:(num) is blocked}
+{46}{monster generator (num) is disabled}
+{47}{(obj) is identified}
+{48}{(obj) knows spell (num)}
+{49}{(obj) has mastered spell college (num)}
+{50}{items are being rewielded}
+{51}{(obj) is prowling}
+{52}{(obj) is waiting for leader's return}

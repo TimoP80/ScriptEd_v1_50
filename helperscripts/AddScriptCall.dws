@@ -1,0 +1,55 @@
+//
+// Add Script call line
+//
+
+
+// The import script procedure
+// is called when the script is added to the menu
+// from the preferences
+
+procedure ImportScript;
+begin
+AddHelperScript('helperscripts\AddScriptCall.dws','Call script','Commands');
+end;
+
+
+var 
+scriptfile, fullpath: string;
+
+var
+attachmentpoint,seconds, attachee, triggerer, calltype, scriptindex, line: integer;
+
+
+DebugMessage('Starting script line call wizard...');
+calltype := SelectScriptCallType;
+attachee := ChooseFocus_Integer('Select Attachee');
+triggerer := ChooseFocus_Integer('Select Triggerer');
+if calltype = SA_CALL_SCRIPT_ATTACHED_TO then
+begin
+
+attachmentpoint := SelectAttachmentPoint;
+line := strtoint(InputBox('Enter script line','Script Request','0'));
+
+AddScriptCommand(calltype, attachee, attachmentpoint, line, triggerer, 0, 0, 0, 0, GetEditorCursorPosition);
+CompileScript;
+exit;
+end;
+
+seconds := strtoint(InputBox('Script Request','Enter number of seconds for calling the script','0'));
+
+
+
+
+scriptindex := ChooseScript(scriptfile);
+if scriptindex=-1 then
+begin
+DebugMessage('Wizard canceled.');
+end;
+
+if scriptindex<>-2 then
+begin
+fullpath := arcanumpath+'\Modules\'+modulefolder+'\scr\'+scriptfile;
+line := SelectScriptLine(fullpath);
+AddScriptCommand(calltype, scriptindex, line, triggerer,attachee,seconds,0,0,0, GetEditorCUrsorPosition);
+CompileScript;
+end;

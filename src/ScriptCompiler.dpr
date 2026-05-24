@@ -1,0 +1,157 @@
+program ScriptCompiler;
+
+{$APPTYPE CONSOLE}
+
+uses
+  SysUtils,
+  masks,
+  arcdatlibcmdline,
+  Classes,
+  Scriptedconfigcmdline,
+  jclfileutils,
+  ArcanumSCRLibCmdline in 'ArcanumSCRLibcmdline.pas',
+  MahBit32 in 'MahBit32.pas';
+
+var
+  i, t: Integer;
+  arcanumdat: datfileheader;
+  arcanumdathandle: file;
+  x: Integer;
+  res: Boolean;
+  check: boolean;
+  scripts_ok, scripts_failed: Integer;
+  files: tstrings;
+  src: tstrings;
+  dest: tstrings;
+  compilerlog: tstrings;
+begin
+  writeln('Arcanum script compiler/decompiler (c) 2008-2018 T. Pitkänen');
+  writeln;
+  if paramcount = 0 then
+  begin
+    writeln('Usage: ScriptCompiler.exe [-m] [-bc] [-a] <filename> [-d] [-c]');
+    writeln;
+    writeln('     -d        Decode script lines to text');
+    writeln('     -c        Compile text script to binary');
+    writeln('     -bc       Batch compile all files in current direcotry');
+
+    writeln('     -m        Mass decompile all official scripts');
+    writeln('     -a        Decompile all scripts in current folder');
+    halt;
+  end;
+  init_dat_logger(getcurrentdir);
+  LoadConfig;
+  InitOpcodes;
+  Initscriptdata;
+  if paramstr(1) = '-a' then
+  begin
+    files := Tstringlist.Create;
+    advbuildfilelist(getcurrentdir + '\*.scr', faAnyFile, files, amAny);
+    for x := 0 to files.Count - 1 do
+    begin
+      writeln('Decompiling ' + files[x]);
+      loadscript(files[x], currentscript^);
+      DecompileScript(changefileext(files[x], '.txt'), currentscript^);
+    end;
+    halt;
+  end;
+  if paramstr(1) = '-m' then
+  begin
+    writeln('MASS Decompiling all scripts...');
+    opendatfile(arcanumdathandle, arcanumdat, arcanumpath + '\arcanum2.dat');
+    writeln('Arcanum2.dat opened with ', arcanumdat.filecount, ' files.');
+    for x := 0 to arcanumdat.filecount - 1 do
+    begin
+      if MatchesMask(arcanumdat.files[x].filename, 'scr\*.scr') then
+      begin
+        writeln('Decompiling ' + arcanumdat.files[x].filename);
+        openfilefromdat(arcanumdathandle, arcanumdat,
+          arcanumdat.files[x].filename,
+          extractfilename(arcanumdat.files[x].filename));
+        loadscript(extractfilename(arcanumdat.files[x].filename),
+          currentscript^);
+        DecompileScript
+          (changefileext(extractfilename(arcanumdat.files[x].filename), '.txt'),
+          currentscript^);
+      end;
+
+    end;
+
+    halt;
+  end;
+  if paramstr(1) = '-bc' then
+  begin
+    writeln('Compiling all *.txt files in current directory...');
+     compilerlog := TStringlist.Create;
+     files := Tstringlist.Create;
+    scripts_ok := 0;
+    scripts_failed := 0;
+    advbuildfilelist(getcurrentdir + '\*.txt', faAnyFile, files, amAny);
+    for t := 0 to files.Count - 1 do
+    begin
+    writeln('Conpiling '+files[t]);
+
+      src := Tstringlist.Create;
+      dest := Tstringlist.Create;
+      Initscriptdata;
+      ParseTextScript(files[t], res);
+      Savescript(changefileext(files[t], '.scr'), currentscript^);
+      src.LoadFromFile(files[t]);
+      DecompileScript('dest_compare.txt', currentscript^);
+      dest.LoadFromFile('dest_compare.txt');
+      check := verifyoutput(src, dest);
+      if check = true then
+      begin
+        inc(scripts_ok);
+      end
+      else
+      begin
+       compilerlog.Add('Error compiling '+files[t]);
+       compilerlog.Add('');
+       compilerlog.Add('SRC: ');
+       compilerlog.Add(src.text);
+       compilerlog.Add('DEST: ');
+       compilerlog.Add(dest.text);
+
+        inc(scripts_failed);
+         end;
+     src.Free;
+     dest.Free;
+    end;
+    compilerlog.SaveToFile('CompilerLog.txt');
+    writeln('Batch compilation completed, ' + IntToStr(files.Count) +
+      ' scripts compiled.');
+    writeln('Scripts passed verification: ' + IntToStr(scripts_ok) +
+      ' scripts failed: ' + IntToStr(scripts_failed));
+    halt;
+  end;
+  if paramstr(2) = '-c' then
+  begin
+    writeln('Parsing script');
+    ParseTextScript(paramstr(1), res);
+    src := Tstringlist.Create;
+    dest := Tstringlist.Create;
+    Savescript(changefileext(paramstr(1), '.scr'), currentscript^);
+    // compare output
+    src.LoadFromFile(paramstr(1));
+    DecompileScript('dest_compare.txt', currentscript^);
+     dest.LoadFromFile('dest_compare.txt');
+    writeln('SRC lines: ',src.count);
+    writeln('DEST lines: ',dest.count);
+    check := verifyoutput(src, dest);
+    if check = true then
+      writeln('Script OK!');
+    writeln('Script compiled - size ', sizeof(currentscript^) +
+      (currentscript^.LineCount * sizeof(scriptline)) - 4);
+  end
+  else
+    loadscript(paramstr(1), currentscript^);
+  if paramstr(2) = '-d' then
+  begin
+    DecompileScript(changefileext(paramstr(1), '.txt'), currentscript^);
+  end;
+  cleanuptempfiles(opcodesdat, getcurrentdir + '\');
+  cleanuptempfiles(actionopcodesdat, getcurrentdir + '\');
+
+  { TODO -oUser -cConsole Main : Insert code here }
+end.

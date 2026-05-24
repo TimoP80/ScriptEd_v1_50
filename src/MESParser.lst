@@ -1,0 +1,206 @@
+
+================================================================================
+Grammar Tests:
+  Deletable symbols:        -- none --
+  Undefined nonterminals:   -- none --
+  Unreachable nonterminals: -- none --
+  Circular derivations:     -- none --
+  Underivable nonterminals: -- none --
+  LL(1) conditions:         --  ok  --
+
+================================================================================
+Time Compiled: 9. heinäkuuta 2008 @ 23:03:54
+
+Statistics:
+  number of terminals:        10 (limit   513)
+  number of non-terminals:     2 (limit   503)
+  number of pragmas:           0 (limit   503)
+  number of symbolnodes:      12 (limit   513)
+  number of graphnodes:       10 (limit  3001)
+  number of conditionsets:     1 (limit   101)
+  number of charactersets:    18 (limit   501)
+
+================================================================================
+Options:
+  Generate console app
+  Generate version information
+  Generate comment events
+  Use Hash functions to lookup literals
+  Force source listing
+
+
+
+================================================================================
+Listing
+
+    1  COMPILER MESParser
+    2  (*
+    3  
+    4  Attempt to create MSG parser
+    5    
+    6  *)
+    7  
+    8  DELPHI
+    9    PRIVATE
+   10      fOutputStream : TMemoryStream;
+   11      fSubSelectDepth : integer;
+   12      fInNaturalJoin : boolean;
+   13              
+   14      procedure Init;
+   15      procedure Final;
+   16      property OutputStream : TMemoryStream read fOutputStream write fOutputStream;
+   17    PUBLISHED
+   18      CREATE 
+   19        fOutputStream := TMemoryStream.Create;
+   20   
+   21    DESTROY                     
+   22      fOutputStream.Free;
+   23    ERRORS
+   24   
+   25  END_DELPHI
+   26  
+   27  (* Arbitrary Code *)
+   28  
+   29  type
+   30    MSGEntry = record
+   31      beforeline_comments: TCommentList;
+   32      index:      Integer;
+   33      messagestr: String;
+   34    end;
+   35  
+   36  type
+   37    MessageFile = record
+   38      msgfilename: String;
+   39      entries:     array of ^MSGEntry;
+   40      entrycnt:    Integer;
+   41    end;
+   42  
+   43  var
+   44    CurrentMessageFile: Messagefile;
+   45  
+   46  
+   47  const
+   48    PadLen = 20;
+   49  
+   50  
+   51                          
+   52  function PadR(S : string; Ch : char; L : integer) : string;
+   53  var
+   54    i : integer;
+   55  begin
+   56    for i := 1 to L - (Length(s)) do
+   57      s := s + Ch;
+   58    Result := s;
+   59  end;
+   60  
+   61  
+   62  procedure T-->Grammar<--.Init;
+   63  begin
+   64    OutputStream.Clear;
+   65  
+   66   end;
+   67  
+   68  procedure T-->Grammar<--.Final;
+   69  begin
+   70     OutputStream.Position := 0;
+   71    OutputStream.SaveToStream(ListStream);
+   72    OutputStream.Clear;
+   73  end;
+   74                                   
+   75  function parse_string(zstr: string): string;
+   76  var t:    integer;
+   77  var temp: string;
+   78  var len:  integer;
+   79  begin;
+   80  result:='';
+   81    len := 0;
+   82  temp:='';
+   83    //writeln ('Parsing string: ',zstr);
+   84    t   := pos('{', zstr) + 1;
+   85    len := length(zstr);
+   86    while (zstr[t] <> '}') do
+   87    begin;
+   88      //writeln (zstr[t]);
+   89  
+   90        temp := temp + zstr[t];
+   91  
+   92      Inc(t);
+   93    end;
+   94    Result := temp;
+   95  end;
+   96  
+   97  
+   98  
+   99  (* End of Arbitrary Code *)
+  100  
+  101  IGNORE CASE
+  102  
+  103  CHARACTERS
+  104    letter   = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" .
+  105    digit    = "0123456789" .
+  106    hexdigit = digit + "ABCDEFabcdef" .
+  107    tab      = CHR(9) .
+  108    lf       = CHR(10) .
+  109    eol      = CHR(13) .
+  110    files    = letter + digit + ":\." .
+  111    chars    = CHR(32) .. CHR(255) - "'" .
+  112    strings  = CHR(32) .. CHR(255) - '"'.
+  113    mesentrys  = CHR(9) + CHR(13) + CHR (10) +  CHR(32) .. CHR(255) - '{' - '}'.
+  114    macros   = ANY - eol .
+  115  
+  116  COMMENTS FROM "//" TO eol
+  117  
+  118  IGNORE
+  119    tab + eol + lf
+  120  
+  121  TOKENS
+  122    identifier = ( "_" | letter) { "_" | letter | digit } .
+  123    number     = digit { digit } [ "." { digit }] [ "U" | "u" | "L" | "l" ] .
+  124    hexnumber  = "0" ( "x" | "X" ) hexdigit { hexdigit } [ "U" | "u" | "L" | "l" ] .
+  125    _string     = '"' { strings } '"' .
+  126    _mesentry = "{" { ["#"] mesentrys } "}" .
+  127    char       = "'" [ "\" ] chars "'" .
+  128    library    = "<" files { files } ">" .
+  129    endofline = eol.
+  130  
+  131  IGNORE CHR(1)..CHR(32)
+  132  
+  133  PRODUCTIONS
+  134  
+  135  MESEntry = (. 
+  136   setlength(CurrentMessageFile.entries, CurrentMessageFile.entrycnt + 1);
+  137    new(CurrentMessageFile.entries[CurrentMessageFile.entrycnt]);
+  138    CurrentMessageFile.entries[CurrentMessageFile.entrycnt].beforeline_comments := TCommentList.create;
+  139  
+  140      if GetScanner.fLastCommentList.Count > 0 then
+  141    begin
+  142      //    writeln('before line comments: ', GetScanner.fLastCommentList.Text);
+  143      for i:=0 to GetScanner.fLastCommentList.Count -1 do
+  144      begin
+  145       CurrentMessageFile.entries[CurrentMessageFile.entrycnt].beforeline_comments.Add(GetScanner.fLastCommentList.Comments[i],GetScanner.fLastCommentList.Line[i],GetScanner.fLastCommentList.Column[i]);
+  146     end;
+  147  
+  148  
+  149        if Assigned(fInternalGrammarComment) then
+  150        fInternalGrammarComment(Self, GetScanner.fLastCommentList);
+  151        GetScanner.fLastCommentList.Clear;
+  152   // showmessage('comment count: '+inttostr( CurrentMessageFile.entries[CurrentMessageFile.entrycnt].beforeline_comments.count ));
+  153    end;
+  154  
+  155    
+  156  .) _mesentry (. 
+  157  
+  158    CurrentMessageFile.entries[CurrentMessageFile.entrycnt].index := StrToInt(parse_string(lexstring));
+  159  
+  160  
+  161  
+  162   .) _mesentry  (.
+  163    CurrentMessageFile.entries[CurrentMessageFile.entrycnt].messagestr := parse_string(lexstring);
+  164      Inc(currentmessagefile.entrycnt);
+  165  
+  166    .) .
+  167  
+  168  MESParser = MESEntry {MESEntry}.
+  169                                                                  
+  170  END MESParser.
+No errors.

@@ -1,0 +1,175 @@
+
+================================================================================
+Grammar Tests:
+  Deletable symbols:        -- none --
+  Undefined nonterminals:   -- none --
+  Unreachable nonterminals: -- none --
+  Circular derivations:     -- none --
+  Underivable nonterminals: -- none --
+  LL(1) conditions:         --  ok  --
+
+================================================================================
+Time Compiled: 2. heinäkuuta 2008 @ 19:17:13
+
+Statistics:
+  number of terminals:        29 (limit   513)
+  number of non-terminals:     5 (limit   484)
+  number of pragmas:           0 (limit   484)
+  number of symbolnodes:      34 (limit   513)
+  number of graphnodes:       56 (limit  3001)
+  number of conditionsets:     1 (limit   101)
+  number of charactersets:    16 (limit   501)
+
+================================================================================
+Options:
+  Generate console app
+  Generate version information
+  Generate comment events
+  Use Hash functions to lookup literals
+  Force source listing
+
+
+
+================================================================================
+Listing
+
+    1  COMPILER DLGCodes   
+    2  (*
+    3    Template for creating new parsers
+    4    
+    5    *)
+    6  
+    7  DELPHI
+    8    PRIVATE
+    9      fOutputStream : TMemoryStream;
+   10      fSubSelectDepth : integer;
+   11      fInNaturalJoin : boolean;
+   12              
+   13      procedure Init;
+   14      procedure Final;
+   15                  
+   16      property OutputStream : TMemoryStream read fOutputStream write fOutputStream;
+   17      CREATE 
+   18      fOutputStream := TMemoryStream.Create;
+   19    DESTROY                     
+   20      fOutputStream.Free;
+   21    ERRORS
+   22   
+   23  END_DELPHI
+   24  
+   25  (* Arbitrary Code *)
+   26  
+   27  const
+   28    PadLen = 20;
+   29                          
+   30  function PadR(S : string; Ch : char; L : integer) : string;
+   31  var
+   32    i : integer;
+   33  begin
+   34    for i := 1 to L - (Length(s)) do
+   35      s := s + Ch;
+   36    Result := s;
+   37  end;
+   38  
+   39  procedure T-->Grammar<--.Init;
+   40  begin
+   41    OutputStream.Clear;
+   42  
+   43   end;
+   44  
+   45  procedure T-->Grammar<--.Final;
+   46  begin
+   47     OutputStream.Position := 0;
+   48    OutputStream.SaveToStream(ListStream);
+   49    OutputStream.Clear;
+   50  end;
+   51                                   
+   52  
+   53  function parse_string(zstr: string): string;
+   54  var t:    integer;
+   55  var temp: string;
+   56  var len:  integer;
+   57  begin;
+   58  result:='';
+   59    len := 0;
+   60  temp:='';
+   61    //writeln ('Parsing string: ',zstr);
+   62    t   := pos('"', zstr) + 1;
+   63    len := length(zstr);
+   64    while (zstr[t] <> '"') do
+   65    begin;
+   66      //writeln (zstr[t]);
+   67      if (zstr[t] = '\') and (zstr[t + 1] = '"') then
+   68      begin;
+   69        temp := temp + '"';
+   70        Inc(t, 1);
+   71      end else
+   72      if (zstr[t] = '\') and (zstr[t + 1] = '\') then
+   73      begin;
+   74        temp := temp + '\';
+   75        Inc(t, 1);
+   76      end else
+   77      if (zstr[t] = '\') and (zstr[t + 1] = 't') then
+   78      begin;
+   79        temp := temp + #9;
+   80        Inc(t, 1);
+   81      end else
+   82      if (zstr[t] = '\') and (zstr[t + 1] = 'n') then
+   83      begin;
+   84        temp := temp + #13#10;
+   85        Inc(t, 1);
+   86      end else
+   87  
+   88        temp := temp + zstr[t];
+   89  
+   90      Inc(t);
+   91    end;
+   92    Result := temp;
+   93  end;
+   94  
+   95  
+   96  
+   97  (* End of Arbitrary Code *)
+   98  
+   99  IGNORE CASE
+  100  
+  101  CHARACTERS
+  102    letter   = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" .
+  103    digit    = "0123456789" .
+  104    hexdigit = digit + "ABCDEFabcdef" .
+  105    tab      = CHR(9) .
+  106    lf       = CHR(10) .
+  107    eol      = CHR(13) .
+  108    files    = letter + digit + ":\." .
+  109    chars    = CHR(32) .. CHR(255) - "'" .
+  110    strings  = CHR(32) .. CHR(255) - '"'.
+  111    macros   = ANY - eol .
+  112  
+  113  COMMENTS FROM "/*" TO "*/"
+  114  
+  115  IGNORE
+  116    tab + eol + lf
+  117  
+  118  TOKENS
+  119    identifier = ( "_" | letter) { "_" | letter | digit } .
+  120    number     = digit { digit } [ "." { digit }] [ "U" | "u" | "L" | "l" ] .
+  121    hexnumber  = "0" ( "x" | "X" ) hexdigit { hexdigit } [ "U" | "u" | "L" | "l" ] .
+  122    _string     = '"' { strings } '"' .
+  123    char       = "'" [ "\" ] chars "'" .
+  124    _library    = "<" files { files } ">" .
+  125  
+  126  IGNORE CHR(1)..CHR(32)
+  127  
+  128  PRODUCTIONS
+  129  
+  130  UsageDefinition = ("pc" | "npc") (.writeln('USAGE:',lexstring) .).
+  131  operator = ("<"|">"|"+"|"-") (.writeln('operator: ',lexstring); .).
+  132  operators = "{" operator {"," operator} "}".
+  133  
+  134  ResultCode= "ResultCode" _string (. writeln('result code: ',parse_string(lexstring) );.) "usage" "=" "(" UsageDefinition {"," UsageDefinition} ")" "description"
+  135  "=" _string (.writeln('description: ',parse_string(lexstring) ); .) "params" "=" number (.writeln('number of params: ',lexstring); .) "format" "=" "(" "cmd" [operators] ["param1"] ["param2"] ")" ";".
+  136  
+  137  DLGCodes = ResultCode {ResultCode}.
+  138                                                                  
+  139  END DLGCodes.
+No errors.
