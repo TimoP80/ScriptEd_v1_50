@@ -23,7 +23,7 @@ type
 
   TOllamaAPIBase = class
   public
-    function GenerateText(const Model, Prompt: string): string; virtual; abstract;
+    function GenerateText(const Model, Prompt: string; Temperature: Double = 0.7; MaxTokens: Integer = 100): string; virtual; abstract;
     function ListModels: TStringList; virtual; abstract;
     function IsServerRunning: Boolean; virtual; abstract;
     procedure GenerateTextAsync(const Prompt, Model: string; Callback: TGenerateTextCallback); virtual; abstract;
@@ -39,7 +39,7 @@ type
     constructor Create(const ABaseUrl: string);
     destructor Destroy; override;
     function ListModels: TStringList; override;
-    function GenerateText(const Model, Prompt: string): string; override;
+    function GenerateText(const Model, Prompt: string; Temperature: Double = 0.7; MaxTokens: Integer = 100): string; override;
     function IsServerRunning: Boolean; override;
     procedure GenerateTextAsync(const Prompt, Model: string;
       Callback: TGenerateTextCallback); override;
@@ -59,7 +59,7 @@ type
     constructor Create(const ABaseUrl, AApiKey: string);
     destructor Destroy; override;
     function ListModels: TStringList; override;
-    function GenerateText(const Model, Prompt: string): string; override;
+    function GenerateText(const Model, Prompt: string; Temperature: Double = 0.7; MaxTokens: Integer = 100): string; override;
     function IsServerRunning: Boolean; override;
     procedure GenerateTextAsync(const Prompt, Model: string;
       Callback: TGenerateTextCallback); override;
@@ -172,7 +172,7 @@ begin
   end;
 end;
 
-function TOllamaLocalAPI.GenerateText(const Model, Prompt: string): string;
+function TOllamaLocalAPI.GenerateText(const Model, Prompt: string; Temperature: Double = 0.7; MaxTokens: Integer = 100): string;
 var
   Response: IHTTPResponse;
   RequestJson: TJSONObject;
@@ -188,6 +188,8 @@ begin
       RequestJson.AddPair('model', Model);
       RequestJson.AddPair('prompt', Prompt);
       RequestJson.AddPair('stream', TJSONFalse.Create);
+      RequestJson.AddPair('temperature', TJSONNumber.Create(Temperature));
+      RequestJson.AddPair('num_predict', TJSONNumber.Create(MaxTokens));
 
       consoledebug('Posting...');
       Response := FHttpClient.Post(FBaseUrl + '/api/generate',
@@ -465,7 +467,7 @@ begin
   end;
 end;
 
-function TOllamaCloudAPI.GenerateText(const Model, Prompt: string): string;
+function TOllamaCloudAPI.GenerateText(const Model, Prompt: string; Temperature: Double = 0.7; MaxTokens: Integer = 100): string;
 var
   RequestJson: TJSONObject;
   ResponseStr: string;
@@ -478,6 +480,8 @@ begin
     RequestJson.AddPair('model', Model);
     RequestJson.AddPair('prompt', Prompt);
     RequestJson.AddPair('stream', TJSONFalse.Create);
+    RequestJson.AddPair('temperature', TJSONNumber.Create(Temperature));
+    RequestJson.AddPair('num_predict', TJSONNumber.Create(MaxTokens));
 
     if not SendPostRequest('/api/generate', RequestJson, ResponseStr) then
     begin

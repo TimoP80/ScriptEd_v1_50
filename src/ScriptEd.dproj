@@ -87,7 +87,7 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
-        <DCC_UnitSearchPath>C:\CodeProjects\ScriptEd_v1_50\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>C:\CodeProjects\ScriptEd_v1_50\src</DCC_UnitSearchPath>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <BT_BuildType>Debug</BT_BuildType>
     </PropertyGroup>
@@ -112,6 +112,8 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="ArcanumSCRLib.pas"/>
+        <DCCReference Include="DialogueGenerator.pas"/>
+        <DCCReference Include="DialogueGeneratorForm.pas"/>
         <DCCReference Include="ScriptEdWindow.pas">
             <Form>MainForm</Form>
         </DCCReference>
@@ -281,13 +283,13 @@
                 <Platform value="Win32">True</Platform>
             </Platforms>
             <Deployment Version="3">
-                <DeployFile LocalName="..\ScriptEd.exe" Configuration="Release" Class="ProjectOutput"/>
                 <DeployFile LocalName="..\ScriptEd.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>ScriptEd.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="..\ScriptEd.exe" Configuration="Release" Class="ProjectOutput"/>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>

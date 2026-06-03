@@ -10,10 +10,35 @@ uses
 
 type
   TFormDialogueGen = class(TForm)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    EditNodeDesc: TEdit;
+    MemoPlayerText: TMemo;
+    ButtonGenNPC: TButton;
+    MemoNPCResult: TMemo;
+    ButtonCopyNPC: TButton;
+    GroupBox2: TGroupBox;
+    Label3: TLabel;
+    EditContext: TEdit;
+    ButtonGenOptions: TButton;
+    MemoOptionsResult: TMemo;
+    ButtonCopyOptions: TButton;
+    GroupBox3: TGroupBox;
+    Label4: TLabel;
+    EditJournalTopic: TEdit;
+    CheckBoxSmart: TCheckBox;
+    ButtonGenJournal: TButton;
+    MemoJournalResult: TMemo;
+    ButtonCopyJournal: TButton;
+    procedure FormCreate(Sender: TObject);
     procedure ButtonGenNPCClick(Sender: TObject);
     procedure ButtonGenOptionsClick(Sender: TObject);
     procedure ButtonGenJournalClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure ButtonCopyNPCClick(Sender: TObject);
     procedure ButtonCopyOptionsClick(Sender: TObject);
     procedure ButtonCopyJournalClick(Sender: TObject);

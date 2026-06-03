@@ -1,5 +1,13 @@
 ScriptEd 1.50-stable Build 8
 
+- Added Dialogue Generator accessible via Script > "Dialogue Generator..." menu or toolbar button.
+  Provides a tabbed interface with three generation modes:
+    * NPC Response: Generates in-character NPC replies given a description/role and player dialogue.
+    * Player Options: Generates 3 concise player dialogue options from a context string.
+    * Journal Entry: Generates journal entries with optional smart/detailed or simple/dumb tone.
+  Includes copy-to-clipboard buttons for all result fields.
+  Requires Ollama to be enabled and configured in Preferences.
+
 - Added support for generating text with Ollama. Automatically detects if the server is running. 
 You'll need to install Ollama from https://ollama.com/ and then pull some models from command line 
 by using "ollama pull <modelname>", you can find all available models at https://ollama.com/search. 

@@ -9,15 +9,15 @@ type
   TDialogueGenerator = class
   public
     class function GenerateNPCResponse(API: TOllamaAPIBase; const Model,
-      NodeDescription, PlayerText: string): string; static;
+      NodeDescription, PlayerText: string; Temperature: Double = 0.7; MaxTokens: Integer = 100): string; static;
     class function GeneratePlayerOptions(API: TOllamaAPIBase; const Model,
-      Context: string): TStringList; static;
+      Context: string; Temperature: Double = 0.8; MaxTokens: Integer = 60): TStringList; static;
     class function GenerateJournalEntry(API: TOllamaAPIBase; const Model,
-      Topic: string; Smart: Boolean): string; static;
+      Topic: string; Smart: Boolean; Temperature: Double = 0.7; MaxTokens: Integer = 150): string; static;
     class function GenerateSmartVersion(API: TOllamaAPIBase; const Model,
-      Text: string): string; static;
+      Text: string; Temperature: Double = 0.6; MaxTokens: Integer = 100): string; static;
     class function GenerateDumbVersion(API: TOllamaAPIBase; const Model,
-      Text: string): string; static;
+      Text: string; Temperature: Double = 0.6; MaxTokens: Integer = 100): string; static;
   end;
 
 implementation
@@ -25,7 +25,7 @@ implementation
 { TDialogueGenerator }
 
 class function TDialogueGenerator.GenerateNPCResponse(API: TOllamaAPIBase;
-  const Model, NodeDescription, PlayerText: string): string;
+  const Model, NodeDescription, PlayerText: string; Temperature: Double; MaxTokens: Integer): string;
 var
   Prompt: string;
 begin
@@ -33,11 +33,11 @@ begin
             'NPC description: ' + NodeDescription + #13#10 +
             'Player: "' + PlayerText + '"' + #13#10 +
             'Write the NPC reply (1-2 sentences, stay in character):';
-  Result := API.GenerateText(Model, Prompt);
+  Result := API.GenerateText(Model, Prompt, Temperature, MaxTokens);
 end;
 
 class function TDialogueGenerator.GeneratePlayerOptions(API: TOllamaAPIBase;
-  const Model, Context: string): TStringList;
+  const Model, Context: string; Temperature: Double; MaxTokens: Integer): TStringList;
 var
   Prompt, Response: string;
   Lines: TStringList;
@@ -47,7 +47,7 @@ begin
   Prompt := 'Context: ' + Context + #13#10 +
             'Generate exactly 3 distinct player dialogue options. Each on a separate line. ' +
             'Do not number them or add prefixes. Keep each concise (under 12 words).';
-  Response := API.GenerateText(Model, Prompt);
+  Response := API.GenerateText(Model, Prompt, Temperature, MaxTokens);
   Lines := TStringList.Create;
   try
     Lines.Text := Response;
@@ -65,7 +65,7 @@ begin
 end;
 
 class function TDialogueGenerator.GenerateJournalEntry(API: TOllamaAPIBase;
-  const Model, Topic: string; Smart: Boolean): string;
+  const Model, Topic: string; Smart: Boolean; Temperature: Double; MaxTokens: Integer): string;
 var
   Prompt: string;
 begin
@@ -75,25 +75,25 @@ begin
   else
     Prompt := 'Write a simple, brief journal entry about: ' + Topic +
               '. Use short sentences and simple language.';
-  Result := API.GenerateText(Model, Prompt);
+  Result := API.GenerateText(Model, Prompt, Temperature, MaxTokens);
 end;
 
 class function TDialogueGenerator.GenerateSmartVersion(API: TOllamaAPIBase;
-  const Model, Text: string): string;
+  const Model, Text: string; Temperature: Double; MaxTokens: Integer): string;
 var
   Prompt: string;
 begin
   Prompt := 'Rewrite the following text to sound more intelligent, articulate and refined:' + #13#10 + Text;
-  Result := API.GenerateText(Model, Prompt);
+  Result := API.GenerateText(Model, Prompt, Temperature, MaxTokens);
 end;
 
 class function TDialogueGenerator.GenerateDumbVersion(API: TOllamaAPIBase;
-  const Model, Text: string): string;
+  const Model, Text: string; Temperature: Double; MaxTokens: Integer): string;
 var
   Prompt: string;
 begin
   Prompt := 'Rewrite the following text to sound less intelligent, more simple and crude:' + #13#10 + Text;
-  Result := API.GenerateText(Model, Prompt);
+  Result := API.GenerateText(Model, Prompt, Temperature, MaxTokens);
 end;
 
 end.

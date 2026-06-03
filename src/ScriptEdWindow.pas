@@ -100,6 +100,8 @@ type
     ToolButton3: TToolButton;
     ToolButton4: TToolButton;
     ToolButton5: TToolButton;
+    ToolButtonDialogueGen: TToolButton;
+    ToolButtonDialogueGen: TToolButton;
     DeveloperTools1: TMenuItem;
     Dumpscriptingfunctionstoatextfile1: TMenuItem;
     Editreputationlog1: TMenuItem;
