@@ -1369,8 +1369,8 @@ end;
 procedure TForm3.RemoveBlankNodesBtnClick(Sender: TObject);
 var
   Y, removed, cnt: integer;
-  blnode: pdialoguenode;
-  newnodes: array of pdialoguenode;
+  blnode: ^DialogueNode;
+  newnodes: array of ^DialogueNode;
 begin
   if CurDLG.nodecount = 0 then
   begin
