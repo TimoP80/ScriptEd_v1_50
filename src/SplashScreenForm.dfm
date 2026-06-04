@@ -24,37 +24,51 @@
       Align = alClient
       Center = True
       Proportional = True
+      Stretch = True
       ExplicitTop = -6
     end
-    object StatusLabel: TLabel
+    object BottomPanel: TPanel
       Left = 0
-      Top = 446
+      Top = 440
       Width = 640
-      Height = 17
+      Height = 40
       Align = alBottom
-      Alignment = taCenter
-      AutoSize = False
+      BevelOuter = bvNone
       Color = clBlack
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-      Transparent = False
-      Layout = tlCenter
-      ExplicitTop = 436
-      ExplicitWidth = 552
-    end
-    object ProgressBar1: TProgressBar
-      Left = 0
-      Top = 463
-      Width = 640
-      Height = 17
-      Align = alBottom
+      ParentBackground = False
       TabOrder = 0
-      ExplicitTop = 453
-      ExplicitWidth = 552
+      object StatusLabel: TLabel
+        Left = 0
+        Top = 0
+        Width = 640
+        Height = 20
+        Align = alTop
+        Alignment = taCenter
+        AutoSize = False
+        Color = clBlack
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        Layout = tlCenter
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+        ExplicitWidth = 552
+        ExplicitHeight = 17
+      end
+      object ProgressBar1: TProgressBar
+        Left = 0
+        Top = 20
+        Width = 640
+        Height = 20
+        Align = alClient
+        TabOrder = 0
+        ExplicitLeft = 1
+        ExplicitTop = 1
+        ExplicitWidth = 638
+        ExplicitHeight = 18
+      end
     end
   end
