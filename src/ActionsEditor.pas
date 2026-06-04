@@ -142,7 +142,7 @@ begin
     Item.Caption := Arr[i].Code;
     Item.SubItems.Add(IntToStr(Arr[i].ParamCount));
     Item.SubItems.Add(Arr[i].Description);
-    Item.Data := Pointer(PtrInt(i));
+    Item.Data := Pointer(NativeInt(i));
   end;
 end;
 
@@ -187,7 +187,7 @@ begin
     Item.Caption := Arr[i].Code;
     Item.SubItems.Add(IntToStr(Arr[i].ParamCount));
     Item.SubItems.Add(Arr[i].Description);
-    Item.Data := Pointer(PtrInt(i));
+    Item.Data := Pointer(NativeInt(i));
   end;
 end;
 
@@ -204,7 +204,7 @@ begin
     UpdatePreview;
     Exit;
   end;
-  i := PtrInt(CodeList.Items[CodeList.ItemIndex].Data);
+  i := NativeInt(CodeList.Items[CodeList.ItemIndex].Data);
   Arr := GetActiveCodeArray;
   if (i < 0) or (i >= Length(Arr)) then
   begin
