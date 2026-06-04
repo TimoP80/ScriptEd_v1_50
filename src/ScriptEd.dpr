@@ -143,6 +143,10 @@ begin
     SplashForm.HideSplash;
     MainForm.JvMRUManager1.Load;
   finally
+    // Unhook the callback BEFORE freeing the splash form, otherwise the
+    // pointer in ArcanumSCRLib will dangle and crash on the next script
+    // load (LoadScript calls SplashStatusProc unconditionally).
+    ArcanumSCRLib.SplashStatusProc := nil;
     SplashForm.Free;
   end;
   Application.Run;

@@ -80,6 +80,8 @@ end;
 
 procedure TSplashForm.UpdateStatus(const Msg: string);
 begin
+  if (Self = nil) or (StatusLabel = nil) or (csDestroying in ComponentState) then
+    Exit;
   StatusLabel.Caption := Msg;
   StatusLabel.Update;
   Application.ProcessMessages;
