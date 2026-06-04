@@ -2,7 +2,7 @@ object FormDialogueGen: TFormDialogueGen
   Left = 400
   Top = 200
   Caption = 'Dialogue Generator'
-  ClientHeight = 480
+  ClientHeight = 520
   ClientWidth = 620
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,7 +19,7 @@ object FormDialogueGen: TFormDialogueGen
     Left = 8
     Top = 8
     Width = 604
-    Height = 424
+    Height = 464
     ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -28,7 +28,7 @@ object FormDialogueGen: TFormDialogueGen
         Left = 8
         Top = 8
         Width = 580
-        Height = 380
+        Height = 420
         Caption = 'Generate NPC reply'
         TabOrder = 0
         object Label1: TLabel
@@ -60,30 +60,75 @@ object FormDialogueGen: TFormDialogueGen
           ScrollBars = ssVertical
           TabOrder = 1
         end
+         object CheckBoxContinue: TCheckBox
+           Left = 16
+           Top = 183
+           Width = 200
+           Height = 17
+           Caption = 'Continue from existing dialogue'
+           Font.Style = [fsBold]
+           ParentFont = False
+           TabOrder = 5
+           OnClick = CheckBoxContinueClick
+         end
+        object LabelExistingNPC: TLabel
+          Left = 16
+          Top = 204
+          Width = 75
+          Height = 13
+          Caption = 'NPC last said:'
+          Enabled = False
+        end
+        object MemoExistingNPC: TMemo
+          Left = 16
+          Top = 220
+          Width = 265
+          Height = 49
+          ScrollBars = ssVertical
+          TabOrder = 2
+          Enabled = False
+        end
+        object LabelExistingPlayer: TLabel
+          Left = 296
+          Top = 204
+          Width = 78
+          Height = 13
+          Caption = 'Player last said:'
+          Enabled = False
+        end
+        object MemoExistingPlayer: TMemo
+          Left = 296
+          Top = 220
+          Width = 265
+          Height = 49
+          ScrollBars = ssVertical
+          TabOrder = 3
+          Enabled = False
+        end
         object ButtonGenNPC: TButton
           Left = 16
-          Top = 184
+          Top = 278
           Width = 105
           Height = 25
           Caption = 'Generate Reply'
-          TabOrder = 2
+          TabOrder = 4
           OnClick = ButtonGenNPCClick
         end
         object MemoNPCResult: TMemo
           Left = 16
-          Top = 216
+          Top = 310
           Width = 545
-          Height = 145
+          Height = 89
           ScrollBars = ssVertical
-          TabOrder = 3
+          TabOrder = 6
         end
         object ButtonCopyNPC: TButton
           Left = 128
-          Top = 184
+          Top = 278
           Width = 97
           Height = 25
           Caption = 'Copy to Clipboard'
-          TabOrder = 4
+          TabOrder = 5
           OnClick = ButtonCopyNPCClick
         end
       end

@@ -38,6 +38,7 @@ type
     ButtonCopyJournal: TButton;
     procedure FormCreate(Sender: TObject);
     procedure ButtonGenNPCClick(Sender: TObject);
+    procedure CheckBoxContinueClick(Sender: TObject);
     procedure ButtonGenOptionsClick(Sender: TObject);
     procedure ButtonCreateNodesClick(Sender: TObject);
     procedure ButtonGenJournalClick(Sender: TObject);
@@ -86,6 +87,14 @@ begin
   // No initialization needed
 end;
 
+procedure TFormDialogueGen.CheckBoxContinueClick(Sender: TObject);
+begin
+  MemoExistingNPC.Enabled := CheckBoxContinue.Checked;
+  MemoExistingPlayer.Enabled := CheckBoxContinue.Checked;
+  LabelExistingNPC.Enabled := CheckBoxContinue.Checked;
+  LabelExistingPlayer.Enabled := CheckBoxContinue.Checked;
+end;
+
 procedure TFormDialogueGen.ButtonGenNPCClick(Sender: TObject);
 var
   NodeDesc, PlayerText, Response: string;
@@ -97,7 +106,11 @@ begin
     ShowMessage('Please enter both NPC description and player text.');
     Exit;
   end;
-  Response := TDialogueGenerator.GenerateNPCResponse(FAPI, FModel, NodeDesc, PlayerText);
+  if CheckBoxContinue.Checked then
+    Response := TDialogueGenerator.GenerateNPCResponseFromContext(FAPI, FModel,
+      Trim(MemoExistingNPC.Text), Trim(MemoExistingPlayer.Text), PlayerText)
+  else
+    Response := TDialogueGenerator.GenerateNPCResponse(FAPI, FModel, NodeDesc, PlayerText);
   MemoNPCResult.Text := Response;
 end;
 
