@@ -1,5 +1,10 @@
 ScriptEd 1.50-beta Build 9
 
+- Added "Create Nodes & Options" button to the Dialogue Generator (Player Options tab).
+  Generates 3 player options with implicit node links (=> NODE:<name>) and creates the
+  corresponding dialogue nodes in the currently selected node, wiring up linktonode
+  pointers automatically. Requires a node to be selected in the dialogue editor first.
+
 - Replaced TMS TAdvSmoothSplashScreen with native VCL splash screen (SplashScreenForm).
   Third-party AdvSmoothSplashScreen dependency removed from ScriptEd.dpr and ScriptEdWindow.dfm/pas.
   Splash image loaded from SplashIMG.png in EXE directory, with status label and progress bar.

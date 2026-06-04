@@ -137,6 +137,15 @@ object FormDialogueGen: TFormDialogueGen
           TabOrder = 3
           OnClick = ButtonCopyOptionsClick
         end
+        object ButtonCreateNodes: TButton
+          Left = 232
+          Top = 72
+          Width = 113
+          Height = 25
+          Caption = 'Create Nodes &Options'
+          TabOrder = 4
+          OnClick = ButtonCreateNodesClick
+        end
       end
     end
     object TabSheet3: TTabSheet

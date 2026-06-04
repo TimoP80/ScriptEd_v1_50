@@ -12,6 +12,8 @@ type
       NodeDescription, PlayerText: string; Temperature: Double = 0.7; MaxTokens: Integer = 100): string; static;
     class function GeneratePlayerOptions(API: TOllamaAPIBase; const Model,
       Context: string; Temperature: Double = 0.8; MaxTokens: Integer = 60): TStringList; static;
+    class function GeneratePlayerOptionsWithLinks(API: TOllamaAPIBase; const Model,
+      Context: string; Temperature: Double = 0.8; MaxTokens: Integer = 100): TStringList; static;
     class function GenerateJournalEntry(API: TOllamaAPIBase; const Model,
       Topic: string; Smart: Boolean; Temperature: Double = 0.7; MaxTokens: Integer = 150): string; static;
     class function GenerateSmartVersion(API: TOllamaAPIBase; const Model,
@@ -47,6 +49,35 @@ begin
   Prompt := 'Context: ' + Context + #13#10 +
             'Generate exactly 3 distinct player dialogue options. Each on a separate line. ' +
             'Do not number them or add prefixes. Keep each concise (under 12 words).';
+  Response := API.GenerateText(Model, Prompt, Temperature, MaxTokens);
+  Lines := TStringList.Create;
+  try
+    Lines.Text := Response;
+    Result := TStringList.Create;
+    for i := 0 to Lines.Count - 1 do
+    begin
+      if Trim(Lines[i]) <> '' then
+        Result.Add(Trim(Lines[i]));
+    end;
+    while Result.Count > 3 do
+      Result.Delete(Result.Count - 1);
+  finally
+    Lines.Free;
+  end;
+end;
+
+class function TDialogueGenerator.GeneratePlayerOptionsWithLinks(API: TOllamaAPIBase;
+  const Model, Context: string; Temperature: Double; MaxTokens: Integer): TStringList;
+var
+  Prompt, Response: string;
+  Lines: TStringList;
+  i: Integer;
+begin
+  Result := nil;
+  Prompt := 'Context: ' + Context + #13#10 +
+            'Generate exactly 3 distinct player dialogue options. Each on a separate line. ' +
+            'Do not number them or add prefixes. Keep each concise (under 12 words). ' +
+            'After each option, add "=> NODE:<meaningful_node_name>" to indicate which dialogue node it leads to.';
   Response := API.GenerateText(Model, Prompt, Temperature, MaxTokens);
   Lines := TStringList.Create;
   try

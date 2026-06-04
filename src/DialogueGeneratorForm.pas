@@ -28,6 +28,7 @@ type
     ButtonGenOptions: TButton;
     MemoOptionsResult: TMemo;
     ButtonCopyOptions: TButton;
+    ButtonCreateNodes: TButton;
     GroupBox3: TGroupBox;
     Label4: TLabel;
     EditJournalTopic: TEdit;
@@ -38,6 +39,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure ButtonGenNPCClick(Sender: TObject);
     procedure ButtonGenOptionsClick(Sender: TObject);
+    procedure ButtonCreateNodesClick(Sender: TObject);
     procedure ButtonGenJournalClick(Sender: TObject);
     procedure ButtonCopyNPCClick(Sender: TObject);
     procedure ButtonCopyOptionsClick(Sender: TObject);
@@ -58,7 +60,7 @@ implementation
 {$R *.dfm}
 
 uses
-  DialogueGenerator;
+  DialogueGenerator, DLGFileIO, ScriptEdConfig, DLGParser, DialogueEditor;
 
 { TFormDialogueGen }
 
@@ -116,6 +118,59 @@ begin
     MemoOptionsResult.Clear;
     for i := 0 to Options.Count - 1 do
       MemoOptionsResult.Lines.Add(IntToStr(i+1) + '. ' + Options[i]);
+  finally
+    Options.Free;
+  end;
+end;
+
+procedure TFormDialogueGen.ButtonCreateNodesClick(Sender: TObject);
+var
+  Context: string;
+  Options: TStringList;
+  i, newNodeIndex: Integer;
+  OptionText, LinkText: string;
+  P: Integer;
+begin
+  if nodeselected < 0 then
+  begin
+    ShowMessage('Please select a dialogue node in the editor first.');
+    Exit;
+  end;
+  Context := Trim(EditContext.Text);
+  if Context = '' then
+  begin
+    ShowMessage('Please enter context for player options.');
+    Exit;
+  end;
+  Options := TDialogueGenerator.GeneratePlayerOptionsWithLinks(FAPI, FModel, Context);
+  try
+    for i := 0 to Options.Count - 1 do
+    begin
+      OptionText := Options[i];
+      P := Pos('=> NODE:', OptionText);
+      if P > 0 then
+      begin
+        LinkText := Trim(Copy(OptionText, P + 8, Length(OptionText)));
+        OptionText := Trim(Copy(OptionText, 1, P - 1));
+      end
+      else
+        LinkText := '';
+      AddNode(Format('Node%0.3d', [CurDLG.nodecount + 1]));
+      newNodeIndex := CurDLG.nodecount - 1;
+      if newNodeIndex = 0 then
+        CurDLG.nodes[newNodeIndex].start_index := 1
+      else
+        CurDLG.nodes[newNodeIndex].start_index := CurDLG.nodes[newNodeIndex - 1].start_index + LineNumberStep;
+      CurDLG.nodes[newNodeIndex].nodename := LinkText;
+      AddPlayerOption(nodeselected, OptionText);
+      CurDLG.nodes[nodeselected].playeroptions[CurDLG.nodes[nodeselected].PlayerOptioncnt - 1].linktonode := 
+        CurDLG.nodes[newNodeIndex].start_index;
+    end;
+    MemoOptionsResult.Clear;
+    for i := 0 to Options.Count - 1 do
+      MemoOptionsResult.Lines.Add(IntToStr(i+1) + '. ' + Options[i]);
+    UpdatePlayerOptions;
+    UpdateDialogue;
   finally
     Options.Free;
   end;
