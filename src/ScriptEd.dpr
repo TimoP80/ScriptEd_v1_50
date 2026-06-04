@@ -34,9 +34,9 @@ uses
   AdvancedDATOptions in 'AdvancedDATOptions.pas' {Form22},
   CompressionSettings in 'CompressionSettings.pas',
   SpeechGenInterface in 'SpeechGenInterface.pas' {Form23},
-  AdvSmoothSplashScreen,
   Vcl.Themes,
   Vcl.Styles,
+  SplashScreenForm in 'SplashScreenForm.pas',
   MESFileHeader in 'MESFileHeader.pas' {Form24},
   SelectAction in 'SelectAction.pas' {Form25},
   SelectCondition in 'SelectCondition.pas' {Form26},
@@ -51,7 +51,6 @@ uses
 {$R *.res}
 
 var
-  x: TSplashListItem;
   u, t: Integer;
 
 begin
@@ -59,70 +58,93 @@ begin
   Application.Initialize;
   TStyleManager.TrySetStyle('Slate Classico');
   TStyleManager.SystemHooks := [shMenus, shDialogs,shToolTips];
-  Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TForm24, Form24);
-  Application.CreateForm(TForm25, Form25);
-  Application.CreateForm(TForm26, Form26);
-  Application.CreateForm(TForm27, Form27);
-  Application.CreateForm(TMessageList, MessageList);
-  Application.CreateForm(TForm28, Form28);
-  Application.CreateForm(TForm29, Form29);
-  Application.CreateForm(TForm30, Form30);
-  Application.CreateForm(TForm31, Form31);
-  x := MainForm.AdvSmoothSplashScreen1.ListItems.Add;
-  x.HTMLText := 'Initializing forms...';
-  Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TForm2, Form2);
-  Application.CreateForm(TForm5, Form5);
-  Application.CreateForm(TForm4, Form4);
-  Application.CreateForm(TForm3, Form3);
-  Application.CreateForm(TForm6, Form6);
-  Application.CreateForm(TForm7, Form7);
-  Application.CreateForm(TForm8, Form8);
-  Application.CreateForm(TForm9, Form9);
-  Application.CreateForm(TForm10, Form10);
-  Application.CreateForm(TForm11, Form11);
-  Application.CreateForm(TForm12, Form12);
-  Application.CreateForm(TForm13, Form13);
-  Application.CreateForm(TForm14, Form14);
-  Application.CreateForm(TForm15, Form15);
-  Application.CreateForm(TForm16, Form16);
-  Application.CreateForm(TForm17, Form17);
-  Application.CreateForm(TForm18, Form18);
-  Application.CreateForm(TForm19, Form19);
-  Application.CreateForm(TForm20, Form20);
-  Application.CreateForm(TForm21, Form21);
-  Application.CreateForm(TForm22, Form22);
-  Application.CreateForm(TForm23, Form23);
 
-  MainForm.AdvSmoothSplashScreen1.Refresh;
-  for u := 0 to plugincnt - 1 do
-  begin
-    if dllplugins[u].isspeechgenerator = True then
-    begin
-      consoledebug('Initializing SAPI5 plugin - "' + dllplugins[u]
-        .displayname + '"');
-      Form3.GenSpeech.Visible := True;
-      executeplugin(dllplugins[u].filename);
-    end;
-  end;
+  SplashForm := TSplashForm.Create(nil);
+  try
+    SplashForm.ShowSplash;
+    SplashForm.UpdateStatus('Initializing forms...');
+    ArcanumSCRLib.SplashStatusProc := SplashForm.UpdateStatus;
 
-  for t := 0 to Application.ComponentCount - 1 do
-  begin
-    if Application.Components[t] is TForm then
+    Application.CreateForm(TMainForm, MainForm);
+    SplashForm.UpdateProgress(1, 15);
+    Application.CreateForm(TForm24, Form24);
+    SplashForm.UpdateProgress(2, 15);
+    Application.CreateForm(TForm25, Form25);
+    SplashForm.UpdateProgress(3, 15);
+    Application.CreateForm(TForm26, Form26);
+    SplashForm.UpdateProgress(4, 15);
+    Application.CreateForm(TForm27, Form27);
+    SplashForm.UpdateProgress(5, 15);
+    Application.CreateForm(TMessageList, MessageList);
+    SplashForm.UpdateProgress(6, 15);
+    Application.CreateForm(TForm28, Form28);
+    SplashForm.UpdateProgress(7, 15);
+    Application.CreateForm(TForm29, Form29);
+    SplashForm.UpdateProgress(8, 15);
+    Application.CreateForm(TForm30, Form30);
+    SplashForm.UpdateProgress(9, 15);
+    Application.CreateForm(TForm31, Form31);
+    SplashForm.UpdateProgress(10, 15);
+    Application.CreateForm(TForm1, Form1);
+    SplashForm.UpdateProgress(11, 15);
+    Application.CreateForm(TForm2, Form2);
+    SplashForm.UpdateProgress(12, 15);
+    Application.CreateForm(TForm5, Form5);
+    SplashForm.UpdateProgress(13, 15);
+    Application.CreateForm(TForm4, Form4);
+    SplashForm.UpdateProgress(14, 15);
+    Application.CreateForm(TForm3, Form3);
+    SplashForm.UpdateProgress(15, 15);
+    Application.CreateForm(TForm6, Form6);
+    Application.CreateForm(TForm7, Form7);
+    Application.CreateForm(TForm8, Form8);
+    Application.CreateForm(TForm9, Form9);
+    Application.CreateForm(TForm10, Form10);
+    Application.CreateForm(TForm11, Form11);
+    Application.CreateForm(TForm12, Form12);
+    Application.CreateForm(TForm13, Form13);
+    Application.CreateForm(TForm14, Form14);
+    Application.CreateForm(TForm15, Form15);
+    Application.CreateForm(TForm16, Form16);
+    Application.CreateForm(TForm17, Form17);
+    Application.CreateForm(TForm18, Form18);
+    Application.CreateForm(TForm19, Form19);
+    Application.CreateForm(TForm20, Form20);
+    Application.CreateForm(TForm21, Form21);
+    Application.CreateForm(TForm22, Form22);
+    Application.CreateForm(TForm23, Form23);
+
+    ArcanumSCRLib.SplashStatusProc := SplashForm.UpdateStatus;
+    for u := 0 to plugincnt - 1 do
     begin
-      if TForm(Application.Components[t]).Position <> poMainFormCenter then
+      if dllplugins[u].isspeechgenerator = True then
       begin
-        consoledebug(TForm(Application.Components[t]).Name + ' (' +
-          TForm(Application.Components[t]).Caption +
-          ') is not centered to Main Form!');
-        TForm(Application.Components[t]).Position := poMainFormCenter;
+        consoledebug('Initializing SAPI5 plugin - "' + dllplugins[u]
+          .displayname + '"');
+        Form3.GenSpeech.Visible := True;
+        executeplugin(dllplugins[u].filename);
       end;
     end;
-  end;
 
-  MainForm.AdvSmoothSplashScreen1.Hide;
-  MainForm.JvMRUManager1.Load;
+    for t := 0 to Application.ComponentCount - 1 do
+    begin
+      if Application.Components[t] is TForm then
+      begin
+        if TForm(Application.Components[t]).Position <> poMainFormCenter then
+        begin
+          consoledebug(TForm(Application.Components[t]).Name + ' (' +
+            TForm(Application.Components[t]).Caption +
+            ') is not centered to Main Form!');
+          TForm(Application.Components[t]).Position := poMainFormCenter;
+        end;
+      end;
+    end;
+
+    SplashForm.HideSplash;
+    MainForm.JvMRUManager1.Load;
+  finally
+    SplashForm.Free;
+  end;
   Application.Run;
 
 end.

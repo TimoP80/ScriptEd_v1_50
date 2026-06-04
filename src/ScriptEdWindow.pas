@@ -17,7 +17,7 @@ uses
    dynamic_bass, dlgparser, SynCompletionProposal, SynAutoCorrect,
    dwsStringResult, OllamaLib,
    JvComponentBase, JvMRUManager, JvAppStorage, JvFormPlacement,
-  JvAppIniStorage, ToolWin, ImgList, AdvSmoothSplashScreen, System.ImageList,
+  JvAppIniStorage, ToolWin, ImgList, System.ImageList, SplashScreenForm,
   VCL.XPMan;
 
 type
@@ -100,8 +100,6 @@ type
     ToolButton3: TToolButton;
     ToolButton4: TToolButton;
     ToolButton5: TToolButton;
-    ToolButtonDialogueGen: TToolButton;
-    ToolButtonDialogueGen: TToolButton;
     DeveloperTools1: TMenuItem;
     Dumpscriptingfunctionstoatextfile1: TMenuItem;
     Editreputationlog1: TMenuItem;
@@ -112,7 +110,6 @@ type
     ToolButton6: TToolButton;
     ToolButton7: TToolButton;
     Selectmessagefiletoedit1: TMenuItem;
-    AdvSmoothSplashScreen1: TAdvSmoothSplashScreen;
     ConditionStatement1: TMenuItem;
     procedure Newscript1Click(Sender: TObject);
     procedure pluginexec(Sender: TObject);
@@ -712,12 +709,9 @@ begin
 end;
 
 procedure SplashMessage(str: string);
-var
-  X: TSplashListItem;
 begin
-  X := MainForm.AdvSmoothSplashScreen1.ListItems.Add;
-  X.HTMLText := str;
-  MainForm.AdvSmoothSplashScreen1.Refresh;
+  if Assigned(SplashForm) then
+    SplashForm.UpdateStatus(str);
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);

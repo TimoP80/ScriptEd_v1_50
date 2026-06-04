@@ -1,3 +1,12 @@
+ScriptEd 1.50-beta Build 9
+
+- Replaced TMS TAdvSmoothSplashScreen with native VCL splash screen (SplashScreenForm).
+  Third-party AdvSmoothSplashScreen dependency removed from ScriptEd.dpr and ScriptEdWindow.dfm/pas.
+  Splash image loaded from SplashIMG.png in EXE directory, with status label and progress bar.
+
+- ConsoleDebug() status messages now routed to the native splash screen via ArcanumSCRLib.SplashStatusProc
+  callback, replacing TMS TSplashListItem-based SplashMessage() implementation.
+
 ScriptEd 1.50-stable Build 8
 
 - Added Dialogue Generator accessible via Script > "Dialogue Generator..." menu or toolbar button.

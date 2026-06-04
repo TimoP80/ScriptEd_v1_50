@@ -301,6 +301,9 @@ const
   FLAGS_TELEPORT_TRIGGER = 256;
 
 type
+  TSplashProc = procedure(const Msg: string) of object;
+
+type
   PScriptFile = ^ScriptFile;
 
 type
@@ -337,6 +340,9 @@ var
   alt_output: TStrings;
   memo_output: TMemo;
   scriptdathandle, actiondathandle, dathandle: file;
+  IsConsole: Boolean;
+  verbosedebug: Boolean;
+  SplashStatusProc: TSplashProc = nil;
   scriptsdat: datfileheader;
   opcodesdat: datfileheader;
   actionopcodesdat: datfileheader;
@@ -887,6 +893,9 @@ begin
       end;
 
     end;
+
+    if Assigned(SplashStatusProc) then
+      SplashStatusProc(thestr);
 
   end;
 
