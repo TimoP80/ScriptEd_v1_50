@@ -4,6 +4,16 @@ All notable changes to ScriptEd are documented in this file. The format is rough
 
 For the most recent build-level changes only, see `BuildChangeLog.txt` next to this file. This file contains the **full** version history including older beta builds.
 
+## [1.50-beta] - Build 10
+
+### Fixed
+- Plugin error handling in `pluginapi.pas` is now consistent:
+  - User-facing failures use `messagedlg` / `MessageDlg` with appropriate severity (`mtError` for load failures, `mtWarning` for already-running and version issues).
+  - Diagnostic/developer-only messages remain in `ConsoleDebug`.
+  - Replaced bare `ShowMessage('FAILED TO GET HANDLE ...')` failures with parameterized error dialogs.
+  - Changed the "plugin already running" path from `ConsoleDebug` to a visible warning dialog.
+  - Added missing user-facing error dialogs when required exported functions (`ImportData`, `GenerateSpeech`, `RunPlugin`, `PluginConfig`) are not found by a plugin.
+
 ## [1.50-beta] - Build 9
 
 ### Added

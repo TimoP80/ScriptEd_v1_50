@@ -325,15 +325,17 @@ begin
   i := getpluginbyname(filename);
   if GetModuleHandle(PChar(filename)) <> 0 then
   begin
-    ConsoleDebug('WARNING: Plugin already running!');
+    messagedlg('WARNING: Plugin already running!', mtWarning, [mbOK], 0);
     exit;
   end;
   dllplugins[i].instancehandle := LoadLibrary(PChar(dllplugins[i].filename));
-  if dllplugins[i].instancehandle = 0 then
-  begin
-    ShowMessage('FAILED TO GET HANDLE for ' + dllplugins[i].filename);
-  end
-  else if dllplugins[i].instancehandle <> 0 then
+    if dllplugins[i].instancehandle = 0 then
+    begin
+      messagedlg('Failed to load plugin: ' + dllplugins[i].filename, mtError, [mbOK], 0);
+      Exit;
+    end
+
+    else if dllplugins[i].instancehandle <> 0 then
   begin
     @ConfigProc := GetProcAddress(dllplugins[i].instancehandle, 'PluginConfig');
     if @ConfigProc <> nil then
