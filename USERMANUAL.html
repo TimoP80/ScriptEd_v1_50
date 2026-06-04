@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScriptEd v1.50 User Manual</title>
+  <style>
+    :root {
+      --sidebar-width: 280px;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --bg: #ffffff;
+      --bg-secondary: #f8fafc;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --border: #e2e8f0;
+      --code-bg: #1e293b;
+      --code-text: #e2e8f0;
+      --inline-code-bg: #f1f5f9;
+      --inline-code-text: #dc2626;
+      --sidebar-bg: #f8fafc;
+      --sidebar-hover: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      padding: 2rem 0;
+      z-index: 100;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-header {
+      padding: 0 1.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+
+    .sidebar-header h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar-header .version {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-left: auto;
+      background: var(--border);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .nav-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .nav-section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      padding: 0 1.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .nav-item {
+      display: block;
+      padding: 0.5rem 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-left: 3px solid transparent;
+      transition: all 0.15s ease;
+    }
+
+    .nav-item:hover {
+      background: var(--sidebar-hover);
+      border-left-color: var(--primary);
+    }
+
+    .nav-item.active {
+      background: var(--sidebar-hover);
+      border-left-color: var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .nav-item .icon {
+      display: inline-block;
+      width: 1.2em;
+      margin-right: 0.5rem;
+      opacity: 0.7;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      max-width: 900px;
+      padding: 3rem 4rem 6rem;
+    }
+
+    .content {
+      max-width: 100%;
+    }
+
+    /* Typography */
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    h1 .subtitle {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    h3 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    strong {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Lists */
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+      line-height: 1.75;
+    }
+
+    li::marker {
+      color: var(--primary);
+    }
+
+    /* Code */
+    code {
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    :not(pre) > code {
+      background: var(--inline-code-bg);
+      color: var(--inline-code-text);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 1.25rem 1.5rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      position: relative;
+      box-shadow: var(--shadow);
+    }
+
+    pre code {
+      color: var(--code-text);
+      font-weight: 400;
+      white-space: pre;
+    }
+
+    /* Syntax highlighting */
+    .token-comment,
+    .token-comment-line { color: #6a737d; font-style: italic; }
+
+    .token-keyword { color: #ff7b72; }
+    .token-string { color: #a5d6ff; }
+    .token-number { color: #79c0ff; }
+    .token-boolean { color: #ff7b72; }
+    .token-function { color: #d2a8ff; }
+    .token-operator { color: #ff7b72; }
+    .token-punctuation { color: #e2e8f0; }
+    .token-property { color: #7ee787; }
+    .token-tag { color: #7ee787; }
+    .token-attribute { color: #79c0ff; }
+    .token-selector { color: #7ee787; }
+    .token-value { color: #a5d6ff; }
+    .token-variable { color: #ffa657; }
+
+    /* Inline code for specific languages */
+    .language-pascal pre { --code-bg: #1e293b; }
+    .language-javascript pre { --code-bg: #1e293b; }
+    .language-python pre { --code-bg: #1e293b; }
+    .language-bash pre { --code-bg: #0f172a; }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background: var(--bg-secondary);
+      font-weight: 600;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--text);
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tr:hover td {
+      background: var(--bg-secondary);
+    }
+
+    /* Callouts */
+    .callout {
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+      border-left: 4px solid;
+    }
+
+    .callout-info {
+      background: #eff6ff;
+      border-color: var(--primary);
+      color: #1e40af;
+    }
+
+    .callout-warning {
+      background: #fffbeb;
+      border-color: #f59e0b;
+      color: #92400e;
+    }
+
+    .callout-danger {
+      background: #fef2f2;
+      border-color: #dc2626;
+      color: #991b1b;
+    }
+
+    .callout-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Blockquote */
+    blockquote {
+      border-left: 4px solid var(--border);
+      padding: 0.75rem 1.25rem;
+      margin: 1.5rem 0;
+      color: var(--text-secondary);
+      font-style: italic;
+      background: var(--bg-secondary);
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* Mobile menu button */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 200;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 90;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .main {
+        padding: 2rem;
+      }
+      :root {
+        --sidebar-width: 260px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .overlay.open {
+        display: block;
+      }
+      .main {
+        margin-left: 0;
+        padding: 1.5rem;
+        padding-top: 4rem;
+      }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.5rem; }
+      pre {
+        padding: 1rem;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="menu-toggle" aria-label="Toggle navigation">&#9776;</button>
+  <div class="overlay"></div>
+
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>📚 ScriptEd Manual <span class="version">v1.50</span></h2>
+    </div>
+
+    <nav>
+      <div class="nav-section">
+        <div class="nav-section-title">Getting Started</div>
+        <a href="#introduction" class="nav-item active"><span class="icon">→</span>Introduction</a>
+        <a href="#installation--setup" class="nav-item"><span class="icon">→</span>Installation & Setup</a>
+        <a href="#quick-start" class="nav-item"><span class="icon">→</span>Quick Start</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Editors</div>
+        <a href="#main-interface" class="nav-item"><span class="icon">→</span>Main Interface</a>
+        <a href="#script-editor" class="nav-item"><span class="icon">→</span>Script Editor</a>
+        <a href="#dialogue-editor" class="nav-item"><span class="icon">→</span>Dialogue Editor</a>
+        <a href="#mes-editors" class="nav-item"><span class="icon">→</span>MES Editors</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Advanced</div>
+        <a href="#ai-dialogue-generator" class="nav-item"><span class="icon">→</span>AI Dialogue Generator</a>
+        <a href="#plugin-system" class="nav-item"><span class="icon">→</span>Plugin System</a>
+        <a href="#compilation-workflow" class="nav-item"><span class="icon">→</span>Compilation</a>
+        <a href="#preferences--configuration" class="nav-item"><span class="icon">→</span>Preferences</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Support</div>
+        <a href="#troubleshooting" class="nav-item"><span class="icon">→</span>Troubleshooting</a>
+        <a href="#reference" class="nav-item"><span class="icon">→</span>Reference</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <article class="content">
+      <h1>ScriptEd v1.50<span class="subtitle">User Manual — A comprehensive guide to Arcanum modding</span></h1>
+
+      <p>Welcome to the official user manual for ScriptEd. This guide covers everything from basic setup to advanced plugin development for <strong>Arcanum: Of Steamworks and Magick Obscura</strong> (2001, Troika Games).</p>
+
+      <div class="callout callout-info">
+        <div class="callout-title">ℹ️ New here?</div>
+        Start with the <a href="#quick-start">Quick Start</a> guide to get up and running in minutes.
+      </div>
+
+      <h2 id="introduction">Introduction</h2>
+      <p>ScriptEd is a complete script and dialogue editor for <strong>Arcanum: Of Steamworks and Magick Obscura</strong> (2001, Troika Games). It lets modders edit, compile, and manage the game's proprietary <code>.scr</code> (script) and <code>.dlg</code> (dialogue) files using a friendly text-based workflow.</p>
+
+      <blockquote>
+        <strong>Note:</strong> You need to run ScriptEd as administrator if installing to <code>C:\Program Files (x86)</code>. Windows is very restrictive with file permissions otherwise.
+      </blockquote>
+
+      <h3>What is Arcanum modding?</h3>
+      <p>Arcanum stores its game logic in proprietary binary formats inside <code>*.dat</code> archives:</p>
+      <ul>
+        <li><code>.scr</code> - compiled scripts (NPC AI, triggers, item behaviour, quest logic)</li>
+        <li><code>.dlg</code> - dialogue trees (NPC replies, player choices, jump-to-node pointers)</li>
+        <li><code>.mes</code> - message-string tables (all in-game text, indexed by integer ID)</li>
+        <li><code>.proto</code> - prototype records (items, NPCs, placeables)</li>
+        <li><code>.dlg</code> headers, voice-over numbers, attachment points, etc.</li>
+      </ul>
+      <p>ScriptEd gives modders a text editor for <code>.scr</code>/<code>.dlg</code> files, structured editors for <code>.mes</code> tables, and a complete pipeline for round-tripping between human-readable text and the binary in-game format.</p>
+
+      <h2 id="installation--setup">Installation & Setup</h2>
+
+      <h3>System Requirements</h3>
+      <ul>
+        <li><strong>Windows 7 or later</strong> (Windows 10/11 recommended)</li>
+        <li><strong>Embarcadero Delphi 10 Seattle or later</strong> (for building from source)</li>
+        <li><strong>JCL (Jedi Code Library) 2.8+</strong> - for file utilities and string handling</li>
+        <li><strong>JVCL (Jedi Visual Component Library) 3.0+</strong> - for UI components</li>
+        <li><strong>Ollama</strong> (optional) - for AI-assisted dialogue generation
+          <ul>
+            <li>Local: <code>http://localhost:11434</code></li>
+            <li>Or OllamaCloud with API key</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>Installation Steps</h3>
+      <ol>
+        <li>Extract the ScriptEd archive to a permanent location (e.g., <code>C:\Tools\ScriptEd\</code>)</li>
+        <li>If installing to <code>C:\Program Files</code>, run the installer as Administrator</li>
+        <li>Copy the <code>plugins\</code> folder to the same directory as <code>ScriptEd.exe</code></li>
+        <li>Create a <code>data\</code> folder next to the executable if you want to use custom MES files</li>
+        <li>Double-click <code>ScriptEd.exe</code> to launch</li>
+      </ol>
+
+      <h3>First Run</h3>
+      <p>On first launch, ScriptEd will:</p>
+      <ol>
+        <li>Create <code>ScriptEd.ini</code> in the application directory</li>
+        <li>Load default settings</li>
+        <li>Scan the <code>plugins\</code> directory for available plugins</li>
+        <li>Attempt to detect an installed Arcanum game from the Windows registry</li>
+      </ol>
+      <p>If Arcanum is not detected, you can manually set the path in <strong>File &gt; Set Module Folder</strong> or via Preferences.</p>
+
+      <h3>Ollama Setup (Optional)</h3>
+      <p>To use the AI Dialogue Generator:</p>
+      <ol>
+        <li>Install Ollama from <a href="https://ollama.com">ollama.com</a></li>
+        <li>Run <code>ollama pull mistral:7b</code> (or another model)</li>
+        <li>In ScriptEd, go to <strong>Edit &gt; Preferences</strong></li>
+        <li>Enable "Ollama integration"</li>
+        <li>Set provider to "Local" (default: <code>http://localhost:11434</code>)</li>
+        <li>Enter the model name (e.g., <code>mistral:7b</code>)</li>
+        <li>Click "Test Connection" to verify</li>
+      </ol>
+      <p><strong>For OllamaCloud:</strong></p>
+      <ol>
+        <li>Select "OllamaCloud" as provider</li>
+        <li>Enter your API endpoint and key</li>
+        <li>Click "Test Connection"</li>
+      </ol>
+
+      <h2 id="quick-start">Quick Start</h2>
+
+      <h3>Opening a Script</h3>
+      <ol>
+        <li>Launch ScriptEd</li>
+        <li>Click <strong>File &gt; Open Script</strong> (or press <code>Ctrl+O</code>)</li>
+        <li>Navigate to your module's <code>scr\</code> folder</li>
+        <li>Select a <code>.scr</code> file</li>
+        <li>The script loads into the editor as formatted text</li>
+      </ol>
+
+      <h3>Editing and Compiling</h3>
+      <ol>
+        <li>Edit the script text in the main editor pane</li>
+        <li>Press <strong>Compile</strong> (<code>F9</code>) or click <strong>Script &gt; Compile</strong></li>
+        <li>Check the compiler log at the bottom for errors</li>
+        <li>If successful, the binary <code>.scr</code> file is updated</li>
+      </ol>
+
+      <h3>Creating a New Script</h3>
+      <ol>
+        <li>Click <strong>File &gt; New Script</strong> (or press <code>Ctrl+N</code>)</li>
+        <li>A blank script with a default header is created</li>
+        <li>Edit the description line: <code>description "My quest script"</code></li>
+        <li>Add script lines using the <strong>Script &gt; Action</strong> and <strong>Script &gt; Condition</strong> menus</li>
+        <li>Save with <strong>File &gt; Save Script</strong></li>
+      </ol>
+
+      <h3>Working with Dialogue</h3>
+      <ol>
+        <li>Open a script that has an associated <code>.dlg</code> file</li>
+        <li>Click <strong>Script &gt; Dialogue Editor</strong> (or press <code>Ctrl+D</code>)</li>
+        <li>The dialogue tree appears in the left pane</li>
+        <li>Click nodes to view/edit NPC text and player options</li>
+        <li>Use the <strong>AI</strong> tab to generate dialogue with Ollama</li>
+      </ol>
+
+      <h2 id="main-interface">Main Interface</h2>
+
+      <h3>Window Layout</h3>
+      <pre><code class="language-bash">+-------------------------------------------------------------------+
+| Menu Bar: File Edit Script Module Plugins ...                     |
++----------+-------------------------------------------+------------+
+| Toolbar  |  Script Editor (TSynEdit)                 | Compiler   |
+| [New]    |                                           | Log        |
+| [Open]   |  0. IF global flag 1001 is set            |            |
+| [Save]   |     THEN goto line 5                      | Status:    |
+| [Compile]|  1. dialog 500                            | OK         |
+|          |  2. return and SKIP default               |            |
+|          |                                           |            |
++----------+-------------------------------------------+------------+
+| Status Bar                                                         |
++-------------------------------------------------------------------+</code></pre>
+
+      <h3>Menu Structure</h3>
+
+      <p><strong>File</strong></p>
+      <ul>
+        <li>New Script (<code>Ctrl+N</code>)</li>
+        <li>Open Script (<code>Ctrl+O</code>)</li>
+        <li>Save Script (<code>Ctrl+S</code>)</li>
+        <li>Save Script As...</li>
+        <li>Exit</li>
+      </ul>
+
+      <p><strong>Script</strong></p>
+      <ul>
+        <li>Action... (insert script action)</li>
+        <li>Condition... (insert condition)</li>
+        <li>Compile (<code>F9</code>)</li>
+        <li>Undo Compile</li>
+        <li>Dialogue Editor (<code>Ctrl+D</code>)</li>
+        <li>Set Script ID...</li>
+      </ul>
+
+      <p><strong>Module</strong></p>
+      <ul>
+        <li>Select Module...</li>
+        <li>Edit Global Flags</li>
+        <li>Edit Global Variables</li>
+        <li>Edit PC Flags</li>
+        <li>Edit PC Variables</li>
+        <li>Edit Internal Names</li>
+        <li>Edit Factions</li>
+        <li>Quests...</li>
+      </ul>
+
+      <p><strong>Plugins</strong></p>
+      <ul>
+        <li>[Dynamic list of loaded plugins]</li>
+      </ul>
+
+      <p><strong>Help</strong></p>
+      <ul>
+        <li>About ScriptEd</li>
+      </ul>
+
+      <h3>Toolbar Buttons</h3>
+      <table>
+        <thead>
+          <tr><th>Button</th><th>Function</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>New</code></td><td>New script</td></tr>
+          <tr><td><code>Open</code></td><td>Open existing script</td></tr>
+          <tr><td><code>Save</code></td><td>Save current script</td></tr>
+          <tr><td><code>Compile</code></td><td>Compile script to binary</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Status Bar</h3>
+      <p>The status bar shows:</p>
+      <ul>
+        <li><strong>Current script filename</strong></li>
+        <li><strong>Line/column position</strong> of the cursor</li>
+        <li><strong>Compile status</strong> (Ready, Compiling..., OK, ERROR)</li>
+        <li><strong>Plugin count</strong> and opcode counts in About box</li>
+      </ul>
+
+      <h2 id="script-editor">Script Editor</h2>
+
+      <h3>Text Format</h3>
+      <p>ScriptEd displays scripts in a human-readable text format. Each line is numbered and prefixed:</p>
+      <pre><code class="language-pascal">description "a goblin patrol guard"
+
+MAX_LINES_ALLOCATED 10
+
+0. give gold to Triggerer
+1. if Attachee is not hostile to Triggerer
+    0.1. say "[grunt] Who goes there?"
+    0.2. start dialogue node 1
+1.3. else
+    1.3.1. say "Die, scoundrel!"
+    1.3.2. attack Triggerer</code></pre>
+
+      <h3>Round-Tripping</h3>
+      <p>The text format is <strong>fully round-trippable</strong>: every line can be parsed back to the exact same binary <code>.scr</code>. This is the core of ScriptEd's value proposition - users edit text, hit Compile, and get a binary file the game can load.</p>
+
+      <h3>Syntax Highlighting</h3>
+      <ul>
+        <li><strong>Keywords</strong>: <code>IF</code>, <code>THEN</code>, <code>ELSE</code>, <code>GOTO</code>, <code>RETURN</code>, <code>DIALOG</code>, etc.</li>
+        <li><strong>Opcodes</strong>: <code>give gold</code>, <code>say</code>, <code>attack</code>, <code>set global flag</code>, etc.</li>
+        <li><strong>Numbers</strong>: Line references, quantities, IDs</li>
+        <li><strong>Comments</strong>: Lines starting with <code>//</code></li>
+      </ul>
+
+      <h3>Code Completion</h3>
+      <p>As you type, ScriptEd suggests completions based on:</p>
+      <ol>
+        <li><strong>Focus strings</strong> (NPC names, item names, etc.)</li>
+        <li><strong>Action opcodes</strong> (from <code>ActionOpcodes</code> table)</li>
+        <li><strong>Condition opcodes</strong> (from <code>ConditionOpcodes</code> table)</li>
+      </ol>
+      <p>Type an opcode name and press <code>Ctrl+Space</code> to invoke completion manually.</p>
+
+      <h3>Editor Commands</h3>
+      <table>
+        <thead>
+          <tr><th>Key</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Ctrl+N</code></td><td>New script</td></tr>
+          <tr><td><code>Ctrl+O</code></td><td>Open script</td></tr>
+          <tr><td><code>Ctrl+S</code></td><td>Save script</td></tr>
+          <tr><td><code>F9</code></td><td>Compile</td></tr>
+          <tr><td><code>Ctrl+Z</code></td><td>Undo (text buffer)</td></tr>
+          <tr><td><code>Ctrl+Space</code></td><td>Code completion</td></tr>
+          <tr><td><code>Ctrl+Click</code></td><td>Jump to referenced line (GOTO targets)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Working with Script Lines</h3>
+
+      <h4>Adding Actions</h4>
+      <p>Use <strong>Script &gt; Action</strong> to insert a new action line. A wizard guides you through:</p>
+      <ol>
+        <li>Select the action type (e.g., <code>give gold</code>, <code>say</code>, <code>dialog</code>)</li>
+        <li>Enter parameters (e.g., quantity, message ID)</li>
+        <li>The action is inserted at the current cursor position</li>
+      </ol>
+
+      <h4>Adding Conditions</h4>
+      <p>Use <strong>Script &gt; Condition</strong> to insert a condition. The wizard helps you build <code>IF..THEN..ELSE</code> structures:</p>
+      <ol>
+        <li>Select condition type</li>
+        <li>Set parameters</li>
+        <li>Choose THEN action</li>
+        <li>Optionally add ELSE action</li>
+      </ol>
+
+      <h4>Using the Action/Code Editor</h4>
+      <p>For complex <code>{Test}</code> and <code>{Result}</code> fields (in dialogue conditions/actions), click the <strong>Edit</strong> button to open the Dialogue Code Editor. This provides:</p>
+      <ul>
+        <li>A searchable reference of all 2-letter Arcanum dialogue codes</li>
+        <li>Insert or Replace mode</li>
+        <li>Inline help for syntax</li>
+      </ul>
+
+      <h2 id="dialogue-editor">Dialogue Editor</h2>
+
+      <h3>Opening the Dialogue Editor</h3>
+      <ul>
+        <li>Select a script with an associated <code>.dlg</code> file</li>
+        <li>Click <strong>Script &gt; Dialogue Editor</strong> (<code>Ctrl+D</code>)</li>
+        <li>The dialogue tree loads automatically</li>
+      </ul>
+
+      <h3>Dialogue Tree (Left Pane)</h3>
+      <p>The tree displays all dialogue nodes:</p>
+      <pre><code class="language-bash">┣ [Node: 1] - line 10, 3 options
+┃ ┣ NPC Text: "Hello, traveler. What brings you here?"
+┃ ┣ Player option: "I'm looking for work." => 2
+┃ ┣ Player option: "None of your business." => 3
+┗ Player option: "Goodbye." => -1 (exit)
+┣ [Node: 2] - line 20, 2 options
+┃ ...</code></pre>
+      <ul>
+        <li><strong>Blue text</strong>: Node name</li>
+        <li><strong>Green text</strong>: Line number and option count</li>
+        <li><strong>Black text</strong>: NPC dialogue</li>
+        <li><strong>Player options</strong>: Show text and target node link</li>
+      </ul>
+
+      <h3>Editing Node Data (Right Pane)</h3>
+      <p>Select a node to edit its properties:</p>
+
+      <h4>NPC Text</h4>
+      <ul>
+        <li><strong>Text field</strong>: The NPC's dialogue line</li>
+        <li><strong>Gender test</strong>: Male/Female/Both - determines which text is used</li>
+        <li><strong>VO number</strong>: Voice-over file number (if applicable)</li>
+      </ul>
+
+      <h4>Player Options</h4>
+      <p>Each option has:</p>
+      <ul>
+        <li><strong>Text</strong>: What the player sees/selects</li>
+        <li><strong>Conditions</strong> (<code>{Test}</code>): Requirements to show this option</li>
+        <li><strong>Actions</strong> (<code>{Result}</code>): Side effects when selected</li>
+        <li><strong>IQ test</strong>: Minimum intelligence required</li>
+        <li><strong>Link to node</strong>: Which dialogue node to jump to</li>
+        <li><strong>Gender</strong>: Male/Female/Both</li>
+      </ul>
+
+      <h3>Dialogue Editor Buttons</h3>
+      <table>
+        <thead>
+          <tr><th>Button</th><th>Function</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>New Node</strong></td><td>Create a blank dialogue node</td></tr>
+          <tr><td><strong>Delete Node</strong></td><td>Remove selected node</td></tr>
+          <tr><td><strong>Move Up/Down</strong></td><td>Reorder nodes</td></tr>
+          <tr><td><strong>Link to Dialogue</strong></td><td>Create a link to another dialogue using a global variable</td></tr>
+          <tr><td><strong>Generate Speech</strong></td><td>Generate voice-over WAV file using SAPI5</td></tr>
+          <tr><td><strong>Remove Blank Nodes</strong></td><td>Delete nodes with no text and no options</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Node Actions</h3>
+      <p>The <strong>Node actions</strong> field lets you attach script side effects to a dialogue node (similar to NPC text actions). Use the same 2-letter code syntax as player options.</p>
+
+      <h3>AI Generation Tab</h3>
+      <p>See <a href="#ai-dialogue-generator">AI Dialogue Generator</a> for details.</p>
+
+      <h2 id="mes-editors">MES Editors</h2>
+      <p>ScriptEd ships with several editors for MES (message) files.</p>
+
+      <h3>Generic MES Editor</h3>
+      <p>Access via <strong>Script &gt; Game Text</strong> submenu.</p>
+      <ul>
+        <li>Displays all entries in the selected MES file</li>
+        <li>Edit text directly in the list</li>
+        <li>Save changes back to the file</li>
+      </ul>
+
+      <h3>Quest Editor</h3>
+      <p><strong>Access:</strong> <strong>Script &gt; Quests &gt; Quest Entries...</strong></p>
+      <p>Displays quests from <code>Quests.mes</code> and <code>QuestEntries.mes</code>:</p>
+      <ul>
+        <li><strong>Smart log</strong>: Detailed quest description</li>
+        <li><strong>Dumb log</strong>: Short quest name</li>
+        <li><strong>Quest ID</strong>: Integer identifier</li>
+        <li><strong>XP reward</strong>: Experience points on completion</li>
+      </ul>
+      <blockquote>
+        <strong>Note:</strong> Quests must exist in the master <code>gamequest</code> list. Missing entries are shown as <code>&lt;missing&gt;</code> in the editor.
+      </blockquote>
+
+      <h3>Journal Editor</h3>
+      <p><strong>Access:</strong> <strong>Script &gt; Edit journal entries...</strong></p>
+      <p>Manages <code>Journal.mes</code> - the in-game journal text.</p>
+
+      <h3>MES File Header Editor</h3>
+      <p>For MES files with custom header blocks (e.g., <code>AttachmentPointDesc.mes</code>).</p>
+
+      <h2 id="ai-dialogue-generator">AI Dialogue Generator</h2>
+
+      <h3>Overview</h3>
+      <p>The Dialogue Generator uses <a href="https://ollama.com">Ollama</a> to create dialogue content with AI. Three modes are available:</p>
+
+      <h3>NPC Response</h3>
+      <p>Generates an in-character NPC reply.</p>
+      <ol>
+        <li>Enter a <strong>Node Description</strong> (who is speaking, context)</li>
+        <li>Enter the <strong>Player Text</strong> (what the PC just said)</li>
+        <li>Click <strong>Generate</strong></li>
+        <li>Review the AI-generated response</li>
+        <li>Click <strong>Copy to Clipboard</strong> or <strong>Insert into Dialogue</strong></li>
+      </ol>
+
+      <h3>Player Options</h3>
+      <p>Generates 3 concise player dialogue options from context.</p>
+      <ol>
+        <li>Enter <strong>Context</strong> (what's happening in the scene)</li>
+        <li>Click <strong>Generate</strong></li>
+        <li>Review the 3 options</li>
+        <li>Click <strong>Copy All to Clipboard</strong> or <strong>Insert into Dialogue</strong></li>
+      </ol>
+      <p>The <strong>"Create Nodes & Options"</strong> button goes further: it takes the AI-generated options (which include <code>=&gt; NODE:&lt;name&gt;</code> suffixes) and automatically creates new dialogue nodes wired to the currently selected node.</p>
+
+      <h3>Journal Entry</h3>
+      <p>Generates quest journal text.</p>
+      <ol>
+        <li>Enter a <strong>Topic</strong> (what the journal entry is about)</li>
+        <li>Choose <strong>Smart</strong> (detailed) or <strong>Dumb</strong> (simple) tone</li>
+        <li>Click <strong>Generate</strong></li>
+        <li>Copy or insert the result</li>
+      </ol>
+
+      <h3>Requirements</h3>
+      <ul>
+        <li>Ollama must be running (local) or accessible (cloud)</li>
+        <li>A model must be pulled (e.g., <code>ollama pull mistral:7b</code>)</li>
+        <li>Ollama integration must be enabled in Preferences</li>
+      </ul>
+      <div class="callout callout-warning">
+        <div class="callout-title">⚠️ Performance note</div>
+        Generation speed depends on your hardware. On a Ryzen 5600X + GTX 1070 + 16 GB DDR4, <code>mistral:7b</code> takes 30 s to a minute. Sub-7B models are dramatically faster and recommended for rapid dialogue iteration.
+      </div>
+
+      <h2 id="plugin-system">Plugin System</h2>
+
+      <h3>Overview</h3>
+      <p>ScriptEd supports plugins in three categories:</p>
+      <ul>
+        <li><strong>PLG_*</strong> - General-purpose plugins</li>
+        <li><strong>DEV_*</strong> - Developer/debugging tools</li>
+        <li><strong>DLG_*</strong> - Dialogue editor extensions</li>
+      </ul>
+      <p>Plugins are loaded from the <code>plugins\</code> directory at startup.</p>
+
+      <h3>Plugin API</h3>
+      <p>Plugins must export the following functions:</p>
+      <pre><code class="language-pascal">// Required
+function GetPluginName: PChar; stdcall;
+function GetPluginDescription: PChar; stdcall;
+function GetInterfaceVersion: PChar; stdcall;
+
+// Optional
+function CanAddToMenu: Boolean; stdcall;
+function GetKeyShortCut: ShortString; stdcall;
+procedure RunPlugin(BasePath: PChar); stdcall;
+procedure PluginConfig(BasePath: PChar); stdcall;
+procedure GenerateSpeech(Male, Female, Voice, Output: PChar; Line: Integer); stdcall;
+procedure PluginClose; stdcall;
+procedure PluginUpdate; stdcall;
+procedure DebugIntercept(Msg: PChar); stdcall;
+procedure ImportData(FileName: ShortString); stdcall;</code></pre>
+
+      <h3>Plugin Registration</h3>
+      <p>When a plugin is loaded:</p>
+      <ol>
+        <li><code>GetPluginName</code> and <code>GetPluginDescription</code> are called</li>
+        <li>If <code>CanAddToMenu</code> returns <code>True</code>, the plugin appears in the Plugins menu</li>
+        <li><code>GetInterfaceVersion</code> is checked against the minimum version (1.50)</li>
+        <li><code>GetFilter</code> (if present) extends the File Open dialog filter list</li>
+        <li>The DLL handle is released - it is reloaded on demand when the plugin is executed</li>
+      </ol>
+      <div class="callout callout-warning">
+        <div class="callout-title">⚠️ Important</div>
+        All exported functions <strong>must</strong> use the <code>stdcall</code> calling convention. Failure to do so will result in crashes.
+      </div>
+
+      <h3>Executing Plugins</h3>
+      <ul>
+        <li>Click the plugin name in the <strong>Plugins</strong> menu</li>
+        <li>If the plugin is not already loaded, it is loaded and <code>RunPlugin</code> is called</li>
+        <li>If the plugin provides <code>GenerateSpeech</code>, the dialogue editor's "Generate Speech" button becomes active</li>
+      </ul>
+
+      <h3>Plugin Error Handling</h3>
+      <p>ScriptEd reports plugin errors consistently:</p>
+      <ul>
+        <li><strong>Load failures</strong>: Error dialog with the filename</li>
+        <li><strong>Missing exports</strong>: Warning dialog identifying the missing function</li>
+        <li><strong>Already running</strong>: Warning dialog</li>
+        <li><strong>Version mismatch</strong>: Detailed explanation of expected vs. actual version</li>
+      </ul>
+      <p>Debug-only diagnostic messages are written to the console/log, not shown as dialogs.</p>
+
+      <h2 id="compilation-workflow">Compilation Workflow</h2>
+
+      <h3>Compiling a Script</h3>
+      <ol>
+        <li>Open or create a script in the editor</li>
+        <li>Press <strong>F9</strong> or click <strong>Script &gt; Compile</strong></li>
+        <li>ScriptEd parses the text into an internal binary representation</li>
+        <li>The binary is written to the <code>.scr</code> file</li>
+        <li>The editor refreshes to show the compiled result</li>
+      </ol>
+
+      <h3>Compiler Log</h3>
+      <p>The bottom pane shows compilation progress:</p>
+      <pre><code class="language-bash">Script updated - 42 lines in script.
+Operation took 0.01250 seconds to complete</code></pre>
+      <p>Errors are shown in red:</p>
+      <pre><code class="language-bash">Error: Line 15: Unknown opcode 'foobar'</code></pre>
+
+      <h3>Line Number Remapping</h3>
+      <p>When you insert or delete lines, GOTO targets can become invalid. ScriptEd can automatically remap line numbers:</p>
+      <ul>
+        <li>Enabled by default (<strong>Edit &gt; Preferences &gt; Remap Line Numbers</strong>)</li>
+        <li>Tracks all GOTO references</li>
+        <li>Adjusts targets when line count changes</li>
+      </ul>
+
+      <h3>Saving</h3>
+      <ul>
+        <li><strong>Ctrl+S</strong>: Save to the current filename</li>
+        <li>The title bar shows <code>*</code> when the script has unsaved changes</li>
+        <li>On exit, you are prompted to save if the script is changed</li>
+      </ul>
+
+      <h2 id="preferences--configuration">Preferences & Configuration</h2>
+
+      <h3>Accessing Preferences</h3>
+      <p>Click <strong>Edit &gt; Preferences</strong> to open the Preferences window.</p>
+
+      <h3>General Settings</h3>
+      <table>
+        <thead>
+          <tr><th>Setting</th><th>Type</th><th>Default</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Auto Remap Line Numbers</code></td>
+            <td>Boolean</td>
+            <td><code>True</code></td>
+            <td>Automatically adjust GOTO targets after edits</td>
+          </tr>
+          <tr>
+            <td><code>Compile on Enter</code></td>
+            <td>Boolean</td>
+            <td><code>False</code></td>
+            <td>Compile when pressing Enter in editor</td>
+          </tr>
+          <tr>
+            <td><code>Verbose Debug</code></td>
+            <td>Boolean</td>
+            <td><code>False</code></td>
+            <td>Enable detailed debug logging</td>
+          </tr>
+          <tr>
+            <td><code>Auto-replace gender strings</code></td>
+            <td>Boolean</td>
+            <td><code>False</code></td>
+            <td>Sync "sir"/"madam" etc. based on PC gender</td>
+          </tr>
+          <tr>
+            <td><code>Auto-increment VO numbers</code></td>
+            <td>Boolean</td>
+            <td><code>True</code></td>
+            <td>Add VO numbers to new dialogue nodes</td>
+          </tr>
+          <tr>
+            <td><code>Line number step</code></td>
+            <td>Integer</td>
+            <td><code>20</code></td>
+            <td>Step size when adding new dialogue nodes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Ollama Settings</h3>
+      <table>
+        <thead>
+          <tr><th>Setting</th><th>Type</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Enabled</code></td>
+            <td>Boolean</td>
+            <td>Master switch for AI features</td>
+          </tr>
+          <tr>
+            <td><code>Provider</code></td>
+            <td>Enum</td>
+            <td><code>Local</code> or <code>OllamaCloud</code></td>
+          </tr>
+          <tr>
+            <td><code>URL</code></td>
+            <td>String</td>
+            <td>API endpoint (default: <code>http://localhost:11434</code>)</td>
+          </tr>
+          <tr>
+            <td><code>API Key</code></td>
+            <td>String</td>
+            <td>Bearer token for OllamaCloud</td>
+          </tr>
+          <tr>
+            <td><code>Model</code></td>
+            <td>String</td>
+            <td>Model name (e.g., <code>mistral:7b</code>)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Storage</h3>
+      <p>Settings are stored in <code>ScriptEd.ini</code> in the application directory using the JEDI <code>JvAppIniFileStorage</code> component.</p>
+      <p>Window positions, MRU lists, and form placements are persisted across runs.</p>
+
+      <h2 id="troubleshooting">Troubleshooting</h2>
+
+      <h3>Plugin not loading</h3>
+      <p><strong>Symptoms:</strong> Plugin does not appear in the Plugins menu, or an error dialog appears on startup.</p>
+      <p><strong>Solutions:</strong></p>
+      <ul>
+        <li>Ensure the plugin DLL is in the <code>plugins\</code> folder</li>
+        <li>Verify the plugin exports <code>GetPluginName</code> and <code>GetPluginDescription</code></li>
+        <li>Check that the interface version is &gt;= 1.50</li>
+        <li>Look for error dialogs that identify the specific missing export</li>
+      </ul>
+
+      <h3>Script fails to compile</h3>
+      <p><strong>Symptoms:</strong> Compiler log shows errors, script does not update.</p>
+      <p><strong>Solutions:</strong></p>
+      <ul>
+        <li>Check for typos in opcode names (use the code completion)</li>
+        <li>Ensure all required parameters are present</li>
+        <li>Verify that referenced line numbers exist</li>
+        <li>Use <strong>Script &gt; Undo Compile</strong> to restore the last working version</li>
+        <li>Check that the <code>.mes</code> files in <code>data\</code> are accessible</li>
+      </ul>
+
+      <h3>Dialogue editor crash</h3>
+      <p><strong>Symptoms:</strong> Access violation when closing the dialogue editor.</p>
+      <p><strong>Solutions:</strong></p>
+      <ul>
+        <li>Ensure you have a valid script loaded with a <code>.dlg</code> file</li>
+        <li>Do not delete all nodes - leave at least one node</li>
+        <li>If the crash persists, save your work and restart ScriptEd</li>
+      </ul>
+
+      <h3>Ollama connection failed</h3>
+      <p><strong>Symptoms:</strong> "Ollama not running" message, or connection error.</p>
+      <p><strong>Solutions:</strong></p>
+      <ul>
+        <li>Verify Ollama is installed and running (<code>ollama serve</code>)</li>
+        <li>Check the URL in Preferences (default: <code>http://localhost:11434</code>)</li>
+        <li>For OllamaCloud, verify your API key</li>
+        <li>Ensure your firewall allows the connection</li>
+        <li>Pull a model first: <code>ollama pull mistral:7b</code></li>
+      </ul>
+
+      <h3>"Failed to get handle" error</h3>
+      <p><strong>Symptoms:</strong> Error dialog when trying to load a plugin.</p>
+      <p><strong>Solutions:</strong></p>
+      <ul>
+        <li>The plugin DLL may be corrupted or for a different architecture</li>
+        <li>Check that dependent DLLs (if any) are in the same folder or PATH</li>
+        <li>Try running as Administrator</li>
+        <li>Check the debug log for the specific Windows error code</li>
+      </ul>
+
+      <h3>General troubleshooting steps</h3>
+      <ol>
+        <li><strong>Check the compiler log</strong> for detailed error messages</li>
+        <li><strong>Verify file paths</strong> - Arcanum must be installed and the path set correctly</li>
+        <li><strong>Delete <code>ScriptEd.ini</code></strong> to reset preferences to defaults</li>
+        <li><strong>Run as Administrator</strong> if you get permission errors</li>
+        <li><strong>Check the exception log</strong> (<code>exceptionlog.txt</code>) for crash details</li>
+        <li><strong>Update JCL/JVCL</strong> if you see component-related errors</li>
+      </ol>
+
+      <h2 id="reference">Reference</h2>
+
+      <h3>File Extensions</h3>
+      <table>
+        <thead>
+          <tr><th>Extension</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>.scr</code></td><td>Compiled script file (binary)</td></tr>
+          <tr><td><code>.dlg</code></td><td>Dialogue tree file (binary)</td></tr>
+          <tr><td><code>.mes</code></td><td>Message string table (text, indexed by integer)</td></tr>
+          <tr><td><code>.dat</code></td><td>DAT archive (contains game files)</td></tr>
+          <tr><td><code>.dws</code></td><td>DelphiWebScript II helper script</td></tr>
+          <tr><td><code>.ini</code></td><td>ScriptEd configuration file</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Directory Structure</h3>
+      <pre><code class="language-bash">ScriptEd_v1_50/
+├── ScriptEd.exe           &lt;- main executable
+├── ScriptEd.ini           &lt;- user settings
+├── plugins/
+│   ├── PLG_*.dll          &lt;- general plugins
+│   ├── DEV_*.dll          &lt;- developer tools
+│   └── DLG_*.dll          &lt;- dialogue editor plugins
+├── data/
+│   ├── action.mes         &lt;- action opcode descriptions
+│   ├── condition.mes      &lt;- condition opcode descriptions
+│   ├── focus.mes          &lt;- NPC/item names
+│   ├── value.mes          &lt;- value type names
+│   ├── AttachmentPoint.mes
+│   ├── Stats.mes
+│   └── ScriptCallType.mes
+├── helperscripts/
+│   ├── HelperScripts.dws  &lt;- user helper scripts
+│   └── ...
+├── src/                   &lt;- source code
+│   ├── ScriptEd.dpr
+│   ├── ScriptEdWindow.pas
+│   ├── ArcanumSCRLib.pas
+│   └── ...
+├── changelog.md
+└── readme.md</code></pre>
+
+      <h3>Common Keyboard Shortcuts</h3>
+      <table>
+        <thead>
+          <tr><th>Shortcut</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Ctrl+N</code></td><td>New script</td></tr>
+          <tr><td><code>Ctrl+O</code></td><td>Open script</td></tr>
+          <tr><td><code>Ctrl+S</code></td><td>Save script</td></tr>
+          <tr><td><code>F9</code></td><td>Compile</td></tr>
+          <tr><td><code>Ctrl+D</code></td><td>Open dialogue editor</td></tr>
+          <tr><td><code>Ctrl+Space</code></td><td>Code completion</td></tr>
+          <tr><td><code>Ctrl+Z</code></td><td>Undo text changes</td></tr>
+          <tr><td><code>Ctrl+Click</code></td><td>Jump to line reference</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Opcode Categories</h3>
+
+      <h4>Common Actions</h4>
+      <table>
+        <thead>
+          <tr><th>Opcode</th><th>Description</th><th>Parameters</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>dialog</code></td><td>Start dialogue</td><td>dialogue ID</td></tr>
+          <tr><td><code>say</code></td><td>NPC speaks</td><td>message ID</td></tr>
+          <tr><td><code>give gold</code></td><td>Give gold to triggerer</td><td>amount</td></tr>
+          <tr><td><code>give item</code></td><td>Give item to triggerer</td><td>item prototype ID, quantity</td></tr>
+          <tr><td><code>set global flag</code></td><td>Set a global flag</td><td>flag ID, value</td></tr>
+          <tr><td><code>goto line</code></td><td>Jump to script line</td><td>line number</td></tr>
+          <tr><td><code>return</code></td><td>End script, skip default</td><td>-</td></tr>
+          <tr><td><code>attack</code></td><td>Attack target</td><td>target object</td></tr>
+          <tr><td><code>float line</code></td><td>Show float message</td><td>message ID, above object</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Common Conditions</h4>
+      <table>
+        <thead>
+          <tr><th>Opcode</th><th>Description</th><th>Parameters</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>global flag is set</code></td><td>Check global flag</td><td>flag ID</td></tr>
+          <tr><td><code>npc has met pc before</code></td><td>Check if NPC knows PC</td><td>-</td></tr>
+          <tr><td><code>npc is hostile to</code></td><td>Check hostility</td><td>target object</td></tr>
+          <tr><td><code>pc has item</code></td><td>Check inventory</td><td>item prototype ID, quantity</td></tr>
+          <tr><td><code>random</code></td><td>Random chance</td><td>percentage (0-100)</td></tr>
+          <tr><td><code>quest state</code></td><td>Check quest status</td><td>quest ID, state</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Error Codes</h3>
+      <table>
+        <thead>
+          <tr><th>Message</th><th>Meaning</th><th>Solution</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Failed to get handle</code></td>
+            <td>Plugin DLL could not be loaded</td>
+            <td>Check plugin path, architecture, dependencies</td>
+          </tr>
+          <tr>
+            <td><code>Plugin already running</code></td>
+            <td>Plugin instance is active</td>
+            <td>Close the plugin first, or restart ScriptEd</td>
+          </tr>
+          <tr>
+            <td><code>Incompatible interface version</code></td>
+            <td>Plugin is too old</td>
+            <td>Update the plugin or contact the author</td>
+          </tr>
+          <tr>
+            <td><code>Did not find needed procedures</code></td>
+            <td>Plugin is missing required exports</td>
+            <td>Reinstall or update the plugin</td>
+          </tr>
+          <tr>
+            <td><code>Blank string for version</code></td>
+            <td>Plugin returned invalid version</td>
+            <td>Plugin is corrupt - remove it</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-info">
+        <div class="callout-title">ℹ️ Getting Help</div>
+        <ul>
+          <li><strong>GitHub Issues</strong>: Report bugs at <a href="https://github.com/TimoP80/ScriptEd_v1_50/issues">https://github.com/TimoP80/ScriptEd_v1_50/issues</a></li>
+          <li><strong>Forum</strong>: Thread references in the changelog (e.g., "forum #41") point to the Modding/Arcanum community forum</li>
+          <li><strong>Contributing</strong>: See <code>GPL.txt</code> for license information</li>
+        </ul>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.overlay');
+
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('open');
+      });
+    }
+
+    if (overlay) {
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+      });
+    }
+
+    // Close sidebar when clicking a nav item on mobile
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          sidebar.classList.remove('open');
+          overlay.classList.remove('open');
+        }
+      });
+    });
+
+    // Active section highlighting
+    const sections = document.querySelectorAll('h2[id], h3[id]');
+    const navItems = document.querySelectorAll('.nav-item');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href') === `#${id}`) {
+              item.classList.add('active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>

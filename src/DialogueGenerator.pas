@@ -10,6 +10,8 @@ type
   public
     class function GenerateNPCResponse(API: TOllamaAPIBase; const Model,
       NodeDescription, PlayerText: string; Temperature: Double = 0.7; MaxTokens: Integer = 100): string; static;
+    class function GenerateNPCResponseFromContext(API: TOllamaAPIBase; const Model,
+      ExistingNPC: string; ExistingPlayer: string; NewPlayerText: string; Temperature: Double = 0.7; MaxTokens: Integer = 100): string; static;
     class function GeneratePlayerOptions(API: TOllamaAPIBase; const Model,
       Context: string; Temperature: Double = 0.8; MaxTokens: Integer = 60): TStringList; static;
     class function GeneratePlayerOptionsWithLinks(API: TOllamaAPIBase; const Model,
@@ -124,6 +126,19 @@ var
   Prompt: string;
 begin
   Prompt := 'Rewrite the following text to sound less intelligent, more simple and crude:' + #13#10 + Text;
+  Result := API.GenerateText(Model, Prompt, Temperature, MaxTokens);
+end;
+
+class function TDialogueGenerator.GenerateNPCResponseFromContext(API: TOllamaAPIBase;
+  const Model, ExistingNPC, ExistingPlayer, NewPlayerText: string; Temperature: Double; MaxTokens: Integer): string;
+var
+  Prompt: string;
+begin
+  Prompt := 'Continue this dialogue in the same style and tone as an RPG game.' + #13#10 +
+            'NPC says: "' + ExistingNPC + '"' + #13#10 +
+            'Player replies: "' + ExistingPlayer + '"' + #13#10 +
+            'Player says now: "' + NewPlayerText + '"' + #13#10 +
+            'Write the NPC reply now (1-2 sentences, stay in character):';
   Result := API.GenerateText(Model, Prompt, Temperature, MaxTokens);
 end;
 

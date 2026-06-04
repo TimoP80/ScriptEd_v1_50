@@ -54,6 +54,22 @@ object Form12: TForm12
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object ConditionsHelpBtn: TButton
+    Left = 76
+    Top = 140
+    Width = 24
+    Height = 19
+    Hint = 'Syntax help for the {Test} field (Conditions)'
+    Caption = '?'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 18
+    OnClick = ConditionsHelpBtnClick
+  end
   object Label4: TLabel
     Left = 16
     Top = 176
@@ -79,6 +95,22 @@ object Form12: TForm12
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+  end
+  object ActionsHelpBtn: TButton
+    Left = 76
+    Top = 204
+    Width = 24
+    Height = 19
+    Hint = 'Syntax help for the {Result} field (Actions)'
+    Caption = '?'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 19
+    OnClick = ActionsHelpBtnClick
   end
   object Label6: TLabel
     Left = 16

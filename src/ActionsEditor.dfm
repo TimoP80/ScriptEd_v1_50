@@ -195,5 +195,6 @@ object Form28: TForm28
     Hint = 'Insert syntax: code num1 [num2]. Multiple codes are joined with commas in the test/result field.'
     Caption = 'Syntax help'
     TabOrder = 8
+    OnClick = HelpButtonClick
   end
 end

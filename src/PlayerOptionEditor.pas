@@ -81,6 +81,8 @@ type
     procedure Button8Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure ConditionsHelpBtnClick(Sender: TObject);
+    procedure ActionsHelpBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -459,6 +461,73 @@ begin
   EditDialogueField(S, demResult);
   actionsline.Text := S;
   actiondata := S;
+end;
+
+procedure TForm12.ConditionsHelpBtnClick(Sender: TObject);
+const
+  HelpText =
+    'Syntax for the {Test} field (Conditions)' + #13#10 +
+    '=========================================' + #13#10 + #13#10 +
+    'A blank field means the option is always shown.' + #13#10 +
+    'Otherwise the field is a list of one or more codes, each' + #13#10 +
+    'followed by 1 or 2 numbers, separated by commas. All codes' + #13#10 +
+    'must pass (their restrictions are AND-ed together) for the' + #13#10 +
+    'option to be visible.' + #13#10 +
+    #13#10 +
+    'Format:' + #13#10 +
+    '  code              - no numbers' + #13#10 +
+    '  code num1         - one number' + #13#10 +
+    '  code num1 num2    - two numbers' + #13#10 +
+    #13#10 +
+    'Examples:' + #13#10 +
+    '  qu 1001 2              (quest 1001 must be active)' + #13#10 +
+    '  ps 5, gf 2000 1        (persuasion >= 5 AND flag 2000 set)' + #13#10 +
+    #13#10 +
+    'Common codes:' + #13#10 +
+    '  ps  persuasion  ch  charisma  pe  perception' + #13#10 +
+    '  al  alignment   le  PC level  in  item held' + #13#10 +
+    '  ni  item not held  qu  quest state  ra  race' + #13#10 +
+    '  ru  rumor in log  gf/gv  global flag/variable' + #13#10 +
+    '  lf/lc  local flag/counter  pf/pv  PC flag/variable' + #13#10 +
+    #13#10 +
+    'Click the "Edit" button to open the full reference list' + #13#10 +
+    'and insert codes by picking them from a list.';
+begin
+  ShowMessage(HelpText);
+end;
+
+procedure TForm12.ActionsHelpBtnClick(Sender: TObject);
+const
+  HelpText =
+    'Syntax for the {Result} field (Actions)' + #13#10 +
+    '=========================================' + #13#10 + #13#10 +
+    'A blank field means no side effects.' + #13#10 +
+    'Otherwise the field is a list of one or more codes, each' + #13#10 +
+    'followed by 1 or 2 numbers, separated by commas. All codes' + #13#10 +
+    'are triggered in order when the line is spoken (or, for a' + #13#10 +
+    'PC line, when the option is picked).' + #13#10 +
+    #13#10 +
+    'Format:' + #13#10 +
+    '  code              - no numbers' + #13#10 +
+    '  code num1         - one number' + #13#10 +
+    '  code num1 num2    - two numbers' + #13#10 +
+    #13#10 +
+    'Examples:' + #13#10 +
+    '  $$ 50                  (give PC 50 gold)' + #13#10 +
+    '  qu 1001 4, rp 1003     (complete quest, gain reputation)' + #13#10 +
+    '  jo 0 9999, tr 7 2      (NPC joins party, train skill 7 to 2)' + #13#10 +
+    #13#10 +
+    'Common codes:' + #13#10 +
+    '  $$  gold     al  alignment  qu  quest state  ru  rumor' + #13#10 +
+    '  gf/gv  global flag/variable  pf/pv  PC flag/variable' + #13#10 +
+    '  lf/lc  local flag/counter  in  transfer item' + #13#10 +
+    '  jo  NPC joins  uw  unwait  wa  wait  nk  kill NPC' + #13#10 +
+    '  mm  mark map   xp  XP      fp  fate point  re  reaction' + #13#10 +
+    #13#10 +
+    'Click the "Edit" button to open the full reference list' + #13#10 +
+    'and insert codes by picking them from a list.';
+begin
+  ShowMessage(HelpText);
 end;
 
 procedure TForm12.extcommentsKeyUp(Sender: TObject; var Key: Word;

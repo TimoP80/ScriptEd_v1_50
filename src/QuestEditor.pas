@@ -57,49 +57,61 @@ implementation
 procedure UpdateItem(ind: Integer);
 var
   wordwrapped: String;
+  smartindex: Integer;
 begin
-  if length(gamequestlog.entries[ind].messagestr) >= 63 then
+  if (ind < 0) or (ind >= gamequest.entrycnt) then
+    exit;
+  smartindex := GetMesIndexByID(gamequest.entries[ind].index, gamequestlog);
+  if smartindex = -1 then
+    exit;
+  if length(gamequestlog.entries[smartindex].messagestr) >= 63 then
   begin
-    wordwrapped := gamequestlog.entries[ind].messagestr;
+    wordwrapped := gamequestlog.entries[smartindex].messagestr;
     wordwrapped := StringReplace(wordwrapped, '''', '\sq', [rfReplaceAll]);
 
     wordwrapped := wraptext(wordwrapped, '<br>', [' ', '-', '.', ','], 63);
 
     wordwrapped := StringReplace(wordwrapped, '\sq', '''', [rfReplaceAll]);
 
-    Form8.questlist.Items[ind] := IntToStr(gamequestlog.entries[ind].index) +
+    Form8.questlist.Items[ind] := IntToStr(gamequest.entries[ind].index) +
       ' - ' + wordwrapped;
   end
   else
-    Form8.questlist.Items[ind] := IntToStr(gamequestlog.entries[ind].index) +
-      ' - ' + gamequestlog.entries[ind].messagestr;
+    Form8.questlist.Items[ind] := IntToStr(gamequest.entries[ind].index) +
+      ' - ' + gamequestlog.entries[smartindex].messagestr;
 
 end;
 
 procedure UpdateQuestsList;
 var
   wordwrapped: String;
-  t: Integer;
+  t, smartindex: Integer;
 begin
   Form8.questlist.Clear;
-  for t := 0 to gamequestlog.entrycnt - 1 do
+  for t := 0 to gamequest.entrycnt - 1 do
   begin
-
-    if length(gamequestlog.entries[t].messagestr) >= 63 then
+    smartindex := GetMesIndexByID(gamequest.entries[t].index, gamequestlog);
+    if smartindex = -1 then
     begin
-      wordwrapped := gamequestlog.entries[t].messagestr;
+      Form8.questlist.Items.add(IntToStr(gamequest.entries[t].index) + ' - <missing>');
+      continue;
+    end;
+
+    if length(gamequestlog.entries[smartindex].messagestr) >= 63 then
+    begin
+      wordwrapped := gamequestlog.entries[smartindex].messagestr;
       wordwrapped := StringReplace(wordwrapped, '''', '\sq', [rfReplaceAll]);
 
       wordwrapped := wraptext(wordwrapped, '<br>', [' ', '-', '.', ','], 63);
 
       wordwrapped := StringReplace(wordwrapped, '\sq', '''', [rfReplaceAll]);
 
-      Form8.questlist.Items.add(IntToStr(gamequestlog.entries[t].index) + ' - '
+      Form8.questlist.Items.add(IntToStr(gamequest.entries[t].index) + ' - '
         + wordwrapped);
     end
     else
-      Form8.questlist.Items.add(IntToStr(gamequestlog.entries[t].index) + ' - '
-        + gamequestlog.entries[t].messagestr);
+      Form8.questlist.Items.add(IntToStr(gamequest.entries[t].index) + ' - '
+        + gamequestlog.entries[smartindex].messagestr);
 
   end;
 
@@ -138,7 +150,7 @@ var
   id: Integer;
   smartlogindex, dumblogindex: Integer;
 begin
-  if questlist.ItemIndex <> -1 then
+  if (questlist.ItemIndex <> -1) and (questlist.ItemIndex < gamequest.entrycnt) then
   begin
     id := questlist.ItemIndex;
     smartlogindex := GetMesIndexByID(gamequest.entries[id].index, gamequestlog);
@@ -164,10 +176,14 @@ end;
 
 procedure TForm8.questlogsmartKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
+var
+  smartindex: Integer;
 begin
-  if questlist.ItemIndex <> -1 then
+  if (questlist.ItemIndex <> -1) and (questlist.ItemIndex < gamequest.entrycnt) then
   begin
-    gamequestlog.entries[questlist.ItemIndex].messagestr := questlogsmart.Text;
+    smartindex := GetMesIndexByID(gamequest.entries[questlist.ItemIndex].index, gamequestlog);
+    if smartindex <> -1 then
+      gamequestlog.entries[smartindex].messagestr := questlogsmart.Text;
     UpdateItem(questlist.ItemIndex);
   end;
 
@@ -175,11 +191,14 @@ end;
 
 procedure TForm8.questlogdumbKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
+var
+  dumbindex: Integer;
 begin
-  if questlist.ItemIndex <> -1 then
+  if (questlist.ItemIndex <> -1) and (questlist.ItemIndex < gamequest.entrycnt) then
   begin
-    GameQuestLogDumb.entries[questlist.ItemIndex].messagestr :=
-      questlogdumb.Text;
+    dumbindex := GetMesIndexByID(gamequest.entries[questlist.ItemIndex].index, GameQuestLogDumb);
+    if dumbindex <> -1 then
+      GameQuestLogDumb.entries[dumbindex].messagestr := questlogdumb.Text;
     UpdateItem(questlist.ItemIndex);
   end;
 end;
@@ -196,6 +215,8 @@ begin
   if questxpr.Text = '' then
     exit;
   ind := questlist.ItemIndex;
+  if (ind = -1) or (ind >= gamequest.entrycnt) then
+    exit;
   questdata := gamequest.entries[ind].messagestr;
 
   Data := extractwordpos(1, questdata, [' '], wordpos);
@@ -220,6 +241,8 @@ begin
     exit;
 
   ind := questlist.ItemIndex;
+  if (ind = -1) or (ind >= gamequest.entrycnt) then
+    exit;
   questdata := gamequest.entries[ind].messagestr;
   Data := extractwordpos(2, questdata, [' '], wordpos);
   Delete(questdata, wordpos, length(Data));
@@ -236,7 +259,7 @@ var
   questdatasmartindex, questdatadumbindex, questxp, questalign: Integer;
   questdata: String;
 begin
-  if questlist.ItemIndex <> -1 then
+  if (questlist.ItemIndex <> -1) and (questlist.ItemIndex < gamequest.entrycnt) then
   begin
     Data := questlist.ItemIndex;
     questlogsmart.Enabled := True;
@@ -291,8 +314,10 @@ begin
 
     end;
 
-    if smartmissing = False then
-      questlogsmart.Text := gamequestlog.entries[Data].messagestr
+    if (smartmissing = False) and (questdatasmartindex >= 0) and
+       (questdatasmartindex < gamequestlog.entrycnt) then
+      questlogsmart.Text := gamequestlog.entries[questdatasmartindex]
+        .messagestr
     else
     begin
       MessageDlg(format('WARNING!' + #13 + #10 + '' + #13 + #10 +

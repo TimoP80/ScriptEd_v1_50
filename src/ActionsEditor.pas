@@ -39,6 +39,7 @@ type
     procedure InsertButtonClick(Sender: TObject);
     procedure ReplaceButtonClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
+    procedure HelpButtonClick(Sender: TObject);
   private
     FOpcodes: TDialogueOpCodeSet;
     FMode: TDialogueEditorMode;
@@ -306,6 +307,51 @@ procedure TForm28.CancelButtonClick(Sender: TObject);
 begin
   NewValue := InitialValue;
   ModalResult := mrCancel;
+end;
+
+procedure TForm28.HelpButtonClick(Sender: TObject);
+const
+  HelpText =
+    'Syntax for {Test} and {Result} fields' + #13#10 +
+    '======================================' + #13#10 + #13#10 +
+    'Each field is a list of one or more codes separated by commas.' + #13#10 +
+    'Each code is followed by 1 or 2 numbers, depending on the code:' + #13#10 +
+    #13#10 +
+    '  code              - no numbers' + #13#10 +
+    '  code num1         - one number (num1)' + #13#10 +
+    '  code num1 num2    - two numbers (num1, num2)' + #13#10 +
+    #13#10 +
+    'Example single code:' + #13#10 +
+    '  qu 1001 2' + #13#10 +
+    #13#10 +
+    'Example multiple codes (restrictions are AND-ed):' + #13#10 +
+    '  qu 1001 2, gf 2000 1, ps 5' + #13#10 +
+    #13#10 +
+    'Test codes' + #13#10 +
+    '-----------' + #13#10 +
+    'A {Test} field on a PC dialog line lists the conditions that' + #13#10 +
+    'must all be true for the PC to see this option.' + #13#10 +
+    'A blank {Test} field means the option is always shown.' + #13#10 +
+    #13#10 +
+    'Result codes' + #13#10 +
+    '------------' + #13#10 +
+    'A {Result} field on a PC or NPC line lists the side effects' + #13#10 +
+    'that fire in order when the line is spoken (or, for PC lines,' + #13#10 +
+    'when the PC picks the option).' + #13#10 +
+    #13#10 +
+    'Number ranges' + #13#10 +
+    '-------------' + #13#10 +
+    'Global flags/vars: 1000-3199 (flags) / 1000-1999 (vars)' + #13#10 +
+    'PC flags/vars:     1000-3199 (flags) / 1000-1999 (vars)' + #13#10 +
+    'Quests/rumors:     1000 or greater' + #13#10 +
+    'Reputations:       1000 or greater' + #13#10 +
+    'Local flag/counter indexes: 0-31 / 0-3' + #13#10 +
+    'Races: 1 human, 2 dwarf, 3 elf, 4 half-elf, 5 gnome,' + #13#10 +
+    '       6 halfling, 7 half-orc, 8 half-ogre' + #13#10 +
+    'Quest states: 0 unknown, 1 mentioned, 2 active,' + #13#10 +
+    '              3 achieved, 4 completed, 5 other, 6 botched';
+begin
+  ShowMessage(HelpText);
 end;
 
 end.
