@@ -1,3 +1,5 @@
+<img width="1820" height="1024" alt="ScriptEd_Splash" src="https://github.com/user-attachments/assets/fd764d4e-ee2d-4fe9-8852-a4a63f0cd047" />
+
 # ScriptEd v1.50
 
 A complete script and dialogue editor for **Arcanum: Of Steamworks and Magick Obscura** (2001, Troika Games). ScriptEd lets modders edit, compile, and manage the game's proprietary `.scr` (script) and `.dlg` (dialogue) files using a friendly text-based workflow, and it ships with a modern AI-assisted dialogue generator powered by [Ollama](https://ollama.com/).
