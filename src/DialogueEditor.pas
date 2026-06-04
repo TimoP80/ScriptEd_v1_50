@@ -397,7 +397,15 @@ var
   item: TListItem;
   t: integer;
 begin
+  // Guard against invalid state - no dialogue loaded, no node selected,
+  // or the selected index is out of range. The ListView is cleared in
+  // every case so the user does not see stale data from a previous node.
   Form3.ListView1.Clear;
+  if (CurDLG = nil) or (CurDLG.nodecount <= 0) or
+     (nodeselected < 0) or (nodeselected >= CurDLG.nodecount) then
+    Exit;
+  if CurDLG.nodes[nodeselected] = nil then
+    Exit;
   for t := 0 to CurDLG.nodes[nodeselected].PlayerOptioncnt - 1 do
   begin
     item := Form3.ListView1.Items.Add;
@@ -445,65 +453,91 @@ begin
       TListView(Form3.Components[t]).Clear;
 
   end;
+  // Reset the selected-node pointer so any subsequent code that uses
+  // nodeselected (UpdatePlayerOptions, etc.) does not accidentally
+  // operate on a stale index.
+  nodeselected := -1;
 
 end;
 
 procedure TForm3.TreeView1Click(Sender: TObject);
 var
   voicename: string;
+  rootNode: TTreeNode;
+  idx: integer;
 begin
-
-  if TreeView1.selected <> nil then
+  // Nothing selected - clear the form and reset state.
+  if TreeView1.selected = nil then
   begin
-    // A node is selected
-
-    if TreeView1.selected.Level = 0 then
-    begin
-      nodeselected := TreeView1.selected.index;
-      fltflag.Checked := CurDLG.nodes[nodeselected].isfloatmessage;
-      fltgrpstart.Checked := CurDLG.nodes[nodeselected].floatgroupstartmarker;
-      linenumstart.Text := IntToStr(CurDLG.nodes[nodeselected].start_index);
-      nodedesc.Text := CurDLG.nodes[nodeselected].nodedesc;
-      nodename.Text := CurDLG.nodes[nodeselected].nodename;
-      npctextmale.Text := CurDLG.nodes[nodeselected].npctextmale;
-      npctextfemale.Text := CurDLG.nodes[nodeselected].npctextfemale;
-      if CurDLG.nodes[nodeselected].npctextmale <> CurDLG.nodes[nodeselected].npctextfemale
-      then
-        nogenderspecific.Checked := False
-      else
-        nogenderspecific.Checked := True;
-      nodeactions.Text := CurDLG.nodes[nodeselected].nodeactions;
-      vofield.Text := CurDLG.nodes[nodeselected].voicefield;
-      PlaySpeech.Visible := True;
-      if vofield.Text <> '' then
-      begin
-        voicename := arcanumpath + '\Modules\' + modulefolder + '\Sound\Speech\'
-          + format('%0.5d', [script_id]) + '\v' + vofield.Text + '_m.mp3';
-        if fileexists(voicename) then
-        begin
-          consoledebug(voicename + ' found.');
-          PlaySpeech.Enabled := True;
-        end
-        else
-        begin
-          consoledebug(voicename + ' not found.');
-          PlaySpeech.Enabled := False;
-        end;
-        useVO.Checked := True
-      end
-      else
-        useVO.Checked := False;
-      UpdatePlayerOptions;
-    end;
-
-  end
-  else
-  begin
-    // Nothing is selected
-
     DialogueEditorClearForm;
+    Exit;
   end;
 
+  // If the user clicked a child node (NPC text or a player option),
+  // walk up to the root dialogue node. The form always reflects the
+  // root node's data - the children are just for display.
+  rootNode := TreeView1.selected;
+  while (rootNode <> nil) and (rootNode.Level > 0) do
+    rootNode := rootNode.Parent;
+
+  if (rootNode = nil) or (rootNode.Level <> 0) then
+  begin
+    DialogueEditorClearForm;
+    Exit;
+  end;
+
+  // If the user clicked a child, change the selection visually to the
+  // root so the highlight matches the data shown in the form.
+  if TreeView1.selected <> rootNode then
+  begin
+    TreeView1.Selected := rootNode;
+    Exit; // TreeView1.Selected assignment will re-trigger TreeView1Click
+  end;
+
+  // Validate the node index is in range for the current dialogue.
+  idx := rootNode.Index;
+  if (CurDLG = nil) or (idx < 0) or (idx >= CurDLG.nodecount) or
+     (CurDLG.nodes[idx] = nil) then
+  begin
+    DialogueEditorClearForm;
+    Exit;
+  end;
+
+  nodeselected := idx;
+  fltflag.Checked := CurDLG.nodes[nodeselected].isfloatmessage;
+  fltgrpstart.Checked := CurDLG.nodes[nodeselected].floatgroupstartmarker;
+  linenumstart.Text := IntToStr(CurDLG.nodes[nodeselected].start_index);
+  nodedesc.Text := CurDLG.nodes[nodeselected].nodedesc;
+  nodename.Text := CurDLG.nodes[nodeselected].nodename;
+  npctextmale.Text := CurDLG.nodes[nodeselected].npctextmale;
+  npctextfemale.Text := CurDLG.nodes[nodeselected].npctextfemale;
+  if CurDLG.nodes[nodeselected].npctextmale <> CurDLG.nodes[nodeselected].npctextfemale
+  then
+    nogenderspecific.Checked := False
+  else
+    nogenderspecific.Checked := True;
+  nodeactions.Text := CurDLG.nodes[nodeselected].nodeactions;
+  vofield.Text := CurDLG.nodes[nodeselected].voicefield;
+  PlaySpeech.Visible := True;
+  if vofield.Text <> '' then
+  begin
+    voicename := arcanumpath + '\Modules\' + modulefolder + '\Sound\Speech\'
+      + format('%0.5d', [script_id]) + '\v' + vofield.Text + '_m.mp3';
+    if fileexists(voicename) then
+    begin
+      consoledebug(voicename + ' found.');
+      PlaySpeech.Enabled := True;
+    end
+    else
+    begin
+      consoledebug(voicename + ' not found.');
+      PlaySpeech.Enabled := False;
+    end;
+    useVO.Checked := True
+  end
+  else
+    useVO.Checked := False;
+  UpdatePlayerOptions;
 end;
 
 procedure TForm3.npctextmaleKeyUp(Sender: TObject; var Key: word;
@@ -651,13 +685,41 @@ begin
 end;
 
 procedure TForm3.Button3Click(Sender: TObject);
+var
+  rootNode: TTreeNode;
+  idx: integer;
 begin
-  if TreeView1.selected <> nil then
-  begin
-    deletenode(TreeView1.selected.index);
-    UpdateDialogue;
-  end;
+  if TreeView1.selected = nil then
+    Exit;
 
+  // Walk up to the root dialogue node - if a child was selected (NPC
+  // text or a player option), deleting the child's index would target
+  // the wrong node entirely.
+  rootNode := TreeView1.selected;
+  while (rootNode <> nil) and (rootNode.Level > 0) do
+    rootNode := rootNode.Parent;
+
+  if (rootNode = nil) or (rootNode.Level <> 0) then
+    Exit;
+
+  idx := rootNode.Index;
+  if (idx < 0) or (idx >= CurDLG.nodecount) then
+    Exit;
+
+  if MessageDlg(Format('Delete node "%s" (line %d) and all its player options?',
+    [CurDLG.nodes[idx].nodename, CurDLG.nodes[idx].start_index]),
+    mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
+    Exit;
+
+  // Free player options and dispose the node before deleting from the array
+  if CurDLG.nodes[idx].PlayerOptioncnt > 0 then
+  begin
+    SetLength(CurDLG.nodes[idx].playeroptions, 0);
+    CurDLG.nodes[idx].PlayerOptioncnt := 0;
+  end;
+  Dispose(CurDLG.nodes[idx]);
+  DeleteNode(idx);
+  UpdateDialogue;
 end;
 
 procedure TForm3.TreeView1KeyUp(Sender: TObject; var Key: word;
