@@ -129,12 +129,24 @@ object Form3: TForm3
     Top = 666
     Width = 129
     Height = 25
-    Hint = 
+    Hint =
       'Edit the dialogue header to provide more information about the d' +
       'ialogue file'
     Caption = 'Edit dialogue header'
     TabOrder = 8
     OnClick = Button11Click
+  end
+  object RemoveBlankNodesBtn: TButton
+    Left = 780
+    Top = 666
+    Width = 145
+    Height = 25
+    Hint =
+      'Remove nodes that have no NPC text and no player options (blank' +
+      ' lines in the dialogue file, e.g. {N}{}{}{}{}{}{})'
+    Caption = 'Remove blank nodes'
+    TabOrder = 30
+    OnClick = RemoveBlankNodesBtnClick
   end
   object fltflag: TCheckBox
     Left = 855

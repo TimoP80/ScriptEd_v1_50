@@ -25,6 +25,29 @@ For the most recent build-level changes only, see `BuildChangeLog.txt` next to t
   TMS-specific `SplashMessage()` implementation.
 - Added JCL source paths to `ScriptEd.dproj` `DCC_UnitSearchPath` so the
   compiler can find `JclFileUtils` and friends without manual IDE configuration.
+- **"Remove blank nodes" button** in the Dialogue Editor. Strips out any
+  nodes that have no NPC text and no player options — these typically come
+  from `dlg` files that contain padding lines like `{N}{}{}{}{}{}{}`
+  between real dialogue nodes. (forum #41)
+
+### Fixed
+- **Quest Editor** now correctly displays quests that exist in the master
+  quest list (`gamequest`) but are missing from the smart/dumb quest logs
+  (`gamequestlog` / `GameQuestLogDumb`). Previously the listbox index was
+  used as a direct array index into the quest logs, which would show wrong
+  data for any quest whose ID didn't match its position in the log. All
+  lookups now use `GetMesIndexByID(gamequest.entries[ItemIndex].index,
+  logfile)` to translate the quest ID to the correct log array index.
+  (forum #44)
+- **Blank lines in `dlg` files** (lines like `{N}{}{}{}{}{}{}` with no NPC
+  text) are no longer treated as dialogue nodes during loading. They were
+  previously being promoted to float-message nodes, which corrupted the
+  node list. (forum #41)
+- **Verbose Debug toggle** in Preferences now actually takes effect. The
+  checkbox was toggling a global in `ScriptEdConfig.pas` but the script
+  compiler (`ArcanumSCRLib.pas`) reads a separate global of the same name
+  (different casing). The two are now kept in sync whenever the config is
+  loaded or saved. (forum #37)
 
 ## [1.50-stable] - Build 8
 

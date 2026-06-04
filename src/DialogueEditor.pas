@@ -64,6 +64,7 @@ type
     Button13: TButton;
     Button14: TButton;
     Button15: TButton;
+    RemoveBlankNodesBtn: TButton;
     TreeView1: THTMLTreeview;
     OllamaGenerate: TButton;
     procedure TreeView1Click(Sender: TObject);
@@ -118,6 +119,7 @@ type
     procedure Button14Click(Sender: TObject);
     procedure Button15Click(Sender: TObject);
     procedure Button16Click(Sender: TObject);
+    procedure RemoveBlankNodesBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -1362,6 +1364,67 @@ begin
       CurDLG.nodes[Y].voicefield := IntToStr(Y + 1);
     end;
   end;
+end;
+
+procedure TForm3.RemoveBlankNodesBtnClick(Sender: TObject);
+var
+  Y, removed, cnt: integer;
+  blnode: pdialoguenode;
+  newnodes: array of pdialoguenode;
+begin
+  if CurDLG.nodecount = 0 then
+  begin
+    MessageDlg('No nodes loaded.', mtInformation, [mbOK], 0);
+    Exit;
+  end;
+
+  // First pass: count blank nodes WITHOUT modifying anything
+  removed := 0;
+  for Y := 0 to CurDLG.nodecount - 1 do
+  begin
+    blnode := CurDLG.nodes[Y];
+    if (blnode.npctextmale = '') and (blnode.npctextfemale = '') and
+       (blnode.nodeactions = '') and (blnode.PlayerOptioncnt = 0) then
+      Inc(removed);
+  end;
+
+  if removed = 0 then
+  begin
+    MessageDlg('No blank nodes found.', mtInformation, [mbOK], 0);
+    Exit;
+  end;
+
+  if MessageDlg(Format('Remove %d blank node(s) from the dialogue? ' +
+    'These are nodes with no NPC text and no player options ' +
+    '(e.g. {N}{}{}{}{}{}{} in the .dlg file).', [removed]),
+    mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
+    Exit;
+
+  // Second pass: build the new node list, disposing the blank ones
+  SetLength(newnodes, CurDLG.nodecount);
+  cnt := 0;
+  for Y := 0 to CurDLG.nodecount - 1 do
+  begin
+    blnode := CurDLG.nodes[Y];
+    if (blnode.npctextmale = '') and (blnode.npctextfemale = '') and
+       (blnode.nodeactions = '') and (blnode.PlayerOptioncnt = 0) then
+    begin
+      Dispose(blnode);
+      Continue;
+    end;
+    newnodes[cnt] := blnode;
+    Inc(cnt);
+  end;
+
+  SetLength(CurDLG.nodes, cnt);
+  for Y := 0 to cnt - 1 do
+    CurDLG.nodes[Y] := newnodes[Y];
+  CurDLG.nodecount := cnt;
+  SetLength(newnodes, 0);
+
+  consoledebug(Format('Removed %d blank node(s) from dialogue.', [removed]));
+  // Refresh the tree view
+  UpdateDialogue;
 end;
 
 procedure TForm3.TreeView1MouseDown(Sender: TObject; Button: TMouseButton;

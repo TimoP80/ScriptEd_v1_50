@@ -1,5 +1,22 @@
 ScriptEd 1.50-beta Build 9
 
+- Fixed Quest Editor to properly handle quests that exist in the master list (gamequest)
+  but not in the smart/dumb quest logs (gamequestlog, GameQuestLogDumb). Previously,
+  selecting such a quest would show wrong or blank data because the code used the listbox
+  index as a direct array index into the quest logs. All lookups now use the proper
+  GetMesIndexByID(gamequest.entries[ItemIndex].index, logfile) helper to translate the
+  quest ID to the correct log array index. (forum #44)
+
+- Fixed Dialogue Editor to skip blank lines during loading. Lines like
+  {N}{}{}{}{}{}{} (no NPC text in any field) are no longer interpreted as
+  dialogue nodes. The Dialogue Editor now also has a "Remove blank nodes"
+  button that can strip pre-existing blank nodes from a loaded dialogue. (forum #41)
+
+- Fixed Verbose Debug toggle in Preferences not taking effect. The checkbox was
+  flipping a global in ScriptEdConfig.pas but the script compiler (ArcanumSCRLib.pas)
+  reads a different global of the same name. The two are now kept in sync whenever
+  the config is loaded or saved. (forum #37)
+
 - Added "Create Nodes & Options" button to the Dialogue Generator (Player Options tab).
   Generates 3 player options with implicit node links (=> NODE:<name>) and creates the
   corresponding dialogue nodes in the currently selected node, wiring up linktonode
