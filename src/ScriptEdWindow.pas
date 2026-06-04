@@ -1779,8 +1779,18 @@ begin
 end;
 
 procedure TMainForm.DialogueEditor1Click(Sender: TObject);
-
 begin
+  if currentscript = nil then
+  begin
+    ConsoleDebug('DialogueEditor1Click: currentscript is nil');
+    Exit;
+  end;
+  if form3 = nil then
+  begin
+    ConsoleDebug('DialogueEditor1Click: form3 is nil');
+    Exit;
+  end;
+  if not assigned(currentscript) then Exit;
   voicedir := arcanumpath + '\Modules\' + modulefolder + '\Sound\Speech\' +
     copy(extractfilename(currentscript.filename), 1, 5);
   if DirectoryExists(arcanumpath + '\Modules\' + modulefolder + '\Sound\Speech\'
