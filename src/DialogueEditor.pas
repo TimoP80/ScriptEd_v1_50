@@ -1369,7 +1369,6 @@ end;
 procedure TForm3.RemoveBlankNodesBtnClick(Sender: TObject);
 var
   Y, removed, cnt: integer;
-  blnode: ^DialogueNode;
   newnodes: array of ^DialogueNode;
 begin
   if CurDLG.nodecount = 0 then
@@ -1382,9 +1381,10 @@ begin
   removed := 0;
   for Y := 0 to CurDLG.nodecount - 1 do
   begin
-    blnode := CurDLG.nodes[Y];
-    if (blnode.npctextmale = '') and (blnode.npctextfemale = '') and
-       (blnode.nodeactions = '') and (blnode.PlayerOptioncnt = 0) then
+    if (CurDLG.nodes[Y].npctextmale = '') and
+       (CurDLG.nodes[Y].npctextfemale = '') and
+       (CurDLG.nodes[Y].nodeactions = '') and
+       (CurDLG.nodes[Y].PlayerOptioncnt = 0) then
       Inc(removed);
   end;
 
@@ -1405,14 +1405,15 @@ begin
   cnt := 0;
   for Y := 0 to CurDLG.nodecount - 1 do
   begin
-    blnode := CurDLG.nodes[Y];
-    if (blnode.npctextmale = '') and (blnode.npctextfemale = '') and
-       (blnode.nodeactions = '') and (blnode.PlayerOptioncnt = 0) then
+    if (CurDLG.nodes[Y].npctextmale = '') and
+       (CurDLG.nodes[Y].npctextfemale = '') and
+       (CurDLG.nodes[Y].nodeactions = '') and
+       (CurDLG.nodes[Y].PlayerOptioncnt = 0) then
     begin
-      Dispose(blnode);
+      Dispose(CurDLG.nodes[Y]);
       Continue;
     end;
-    newnodes[cnt] := blnode;
+    newnodes[cnt] := CurDLG.nodes[Y];
     Inc(cnt);
   end;
 
