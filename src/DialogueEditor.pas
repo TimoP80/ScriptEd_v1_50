@@ -1369,7 +1369,7 @@ end;
 procedure TForm3.RemoveBlankNodesBtnClick(Sender: TObject);
 var
   Y, removed, cnt: integer;
-  newnodes: array of ^DialogueNode;
+  blanklist: array of integer;
 begin
   if CurDLG.nodecount = 0 then
   begin
@@ -1377,7 +1377,7 @@ begin
     Exit;
   end;
 
-  // First pass: count blank nodes WITHOUT modifying anything
+  // First pass: collect blank node indices WITHOUT modifying anything
   removed := 0;
   for Y := 0 to CurDLG.nodecount - 1 do
   begin
@@ -1385,7 +1385,11 @@ begin
        (CurDLG.nodes[Y].npctextfemale = '') and
        (CurDLG.nodes[Y].nodeactions = '') and
        (CurDLG.nodes[Y].PlayerOptioncnt = 0) then
+    begin
+      SetLength(blanklist, removed + 1);
+      blanklist[removed] := Y;
       Inc(removed);
+    end;
   end;
 
   if removed = 0 then
@@ -1398,30 +1402,20 @@ begin
     'These are nodes with no NPC text and no player options ' +
     '(e.g. {N}{}{}{}{}{}{} in the .dlg file).', [removed]),
     mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
-    Exit;
-
-  // Second pass: build the new node list, disposing the blank ones
-  SetLength(newnodes, CurDLG.nodecount);
-  cnt := 0;
-  for Y := 0 to CurDLG.nodecount - 1 do
   begin
-    if (CurDLG.nodes[Y].npctextmale = '') and
-       (CurDLG.nodes[Y].npctextfemale = '') and
-       (CurDLG.nodes[Y].nodeactions = '') and
-       (CurDLG.nodes[Y].PlayerOptioncnt = 0) then
-    begin
-      Dispose(CurDLG.nodes[Y]);
-      Continue;
-    end;
-    newnodes[cnt] := CurDLG.nodes[Y];
-    Inc(cnt);
+    SetLength(blanklist, 0);
+    Exit;
   end;
 
-  SetLength(CurDLG.nodes, cnt);
-  for Y := 0 to cnt - 1 do
-    CurDLG.nodes[Y] := newnodes[Y];
-  CurDLG.nodecount := cnt;
-  SetLength(newnodes, 0);
+  // Second pass: dispose and delete blank nodes in REVERSE order so the
+  // indices of remaining nodes don't shift while we iterate. The existing
+  // DeleteNode procedure handles shifting the rest of the array down.
+  for Y := removed - 1 downto 0 do
+  begin
+    Dispose(CurDLG.nodes[blanklist[Y]]);
+    DeleteNode(blanklist[Y]);
+  end;
+  SetLength(blanklist, 0);
 
   consoledebug(Format('Removed %d blank node(s) from dialogue.', [removed]));
   // Refresh the tree view
