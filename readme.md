@@ -93,87 +93,36 @@ MAX_LINES_ALLOCATED 10
 
 The text format is **fully round-trippable**: every line can be parsed back to the exact same binary `.scr`. This is what makes ScriptEd a viable modding tool - users edit text, hit **Compile**, and get a binary file that the game can load.
 
-### Script compilation pipeline
+Example text view of a script:
+```
+description "Lord Davidian Dialog"
+MAX_LINES_ALLOCATED 10
 
-When the user clicks **Compile** (`MainForm.Compile1Click`):
+0. IF global flag 83 is set
+    THEN dialog 401
+    ELSE goto line 1
 
-1. **Save & dump the text buffer** to `temp.txt`.
-2. `ArcanumSCRLib.ParseTextScript` reads the text, walks it line-by-line, and emits the in-memory `currentscript: ScriptFile` record.
-3. `ArcanumSCRLib.SaveScript` writes that record to `temp.scr` (the binary format).
-4. If `AutoRemapLineNumbers` is on, the compiler then re-maps any `goto line X` opcodes in the original script that may have been displaced by line additions/deletions.
-5. The text editor is refreshed to reflect any renumbering.
+1. IF global flag 8 is set
+    THEN goto line 3
+    ELSE float line 201 above Attachee
 
-The opcodes are defined as named constants in `ArcanumSCRLib.pas` (e.g. `SA_GOTO`, `SA_SAY`, `SC_HOSTILE_TO`). `ParseScriptLine` knows the parameter types of each opcode and resolves them at compile time:
+2. return and SKIP default
 
-- `PARAM_TYPE_OBJ` -> opens `SelectFocus` (focus string selector)
-- `PARAM_TYPE_NUM` -> opens the appropriate selector window (global flag, global var, quest, rumor, value, etc.)
+3. IF npc Attachee has met pc Player before
+    THEN dialog 121
+    ELSE dialog 1
 
-This is what makes typing an action like `set global flag (num) to true` in the editor automatically invoke a pop-up that lets you click on the right global flag rather than typing its raw index.
+4. return and SKIP default
 
-### The dialogue editor (DialogueEditor form / Form3)
+5. fade: pass 1200 seconds, play 0 sound, and play 0 movie, with 8 seconds during fade
 
-Dialogues are stored in `.dlg` files. The dialogue editor shows the dialogue as a tree of nodes. Each node has:
+6. dialog 281
 
-- An NPC line (male + optional female text)
-- A list of player options
-- For each player option, a `linktonode` pointer
+7. return and SKIP default
 
-The dialogue tree is the actual conversation flow. When the player says an option, the engine jumps to the linked node, displays its NPC text, and shows the next set of options. Terminal nodes have no options, and "leaf" options can `goto line X` of a `.scr` script to actually do something (give gold, start combat, etc.).
+8. end game and play slides
 
-The dialogue editor lets you:
-- Add/remove/reorder nodes
-- Edit NPC text and player options
-- Automatically number voice-overs for use with the SAPI5 plugin
-- Link to another dialogue (for inter-NPC conversations that require global-variable indirection)
-- Clear the entire dialogue (with a confirmation prompt)
-
-The node view is an HTML-formatted tree component that also shows the *current* NPC text and player options as you edit them (display only - the editing still happens in the regular editors).
-
-### Helper scripts (DelphiWebScript II)
-
-`HelperScripts.dws` is a script the user can extend. It runs through the embedded **DelphiWebScript II** (dwsCompiler) engine. Helper scripts can call into the host application through a curated API (`dws2Unit1Functions...`):
-
-- `SelectGlobalFlag()`, `SelectGlobalVar()`, `SelectPCFlag()`, `SelectPCVar()`, `SelectQuest()`, `SelectRumor()`, `SelectInternalName()`, `ChooseScript()`, `ChooseFocus()`, `ChooseValue()` - all open selector windows and return the chosen ID
-- `AddScriptCommand(...)` - inserts a script line into the editor at the current cursor
-- `InsertScriptLine(...)` - inserts an arbitrary line of text
-- `EditorAddLine(...)` - adds a new line at the end
-- `CompileScript()` - triggers a compile
-- `DebugMessage(...)` - writes to the compiler log
-- `ShowScriptInfo(...)` - pops up a script info window
-- `AddHelperScript(...)` - registers a new helper script from a string
-- `InitializeHelperScriptMenu(...)` - lets the helper script populate the **Helper Scripts** submenu dynamically
-
-Helper scripts are how custom installers / "wizards" are written for ScriptEd.
-
-### Plugins
-
-ScriptEd has a plugin system (`pluginapi.pas`). At startup, it scans three directories:
-
-- `plugins\PLG_*.dll` - standard user-facing plugins (loaded into the Plugins menu)
-- `plugins\DEV_*.dll` - developer tools
-- `plugins\DLG_*.dll` - dialogue editor plugins
-
-The shipped `plugins\DialogueTester` is a simple example: it opens a window where you can pick a `.scr` + `.dlg` pair and step through the dialogue to preview it.
-
-Plugins can mark themselves as a `isspeechgenerator=True` to be auto-loaded as the active SAPI5 voice provider for the dialogue editor's "Generate Speech" button.
-
-### DAT file I/O
-
-`arcdatlib.pas` implements the **DAT file format** that Arcanum uses to pack its game data. A DAT is a flat directory followed by zlib-compressed file blobs with a 32-bit hash table index. ScriptEd can:
-
-- Open an Arcanum `.dat` (Arcanum3.dat, Arcanum4.dat) and list its contents
-- Open a module `.dat` (in `Arcanum\Modules\<module>\`)
-- Open/extract individual `.scr`, `.dlg`, `.mes` files from a DAT
-- Patch a file by name (if the DAT allows it, e.g. for the Arcanum4 patching scheme)
-- **Build** a DAT from a folder of files, either as a single `.dat` or split into `.patch0`, `.patch1`, ... files for Steam Workshop / GOG patching
-- Compress and decompress module data with the same algorithm Troika originally used
-
-There is also a "use the original `DbMaker.exe`" option in Preferences for users who want bit-exact output that matches what Troika's tool produced.
-
-### MES file I/O
-
-`MESFileIO.pas` and `mesparser.pas` handle Arcanum message files. A `.mes` file is essentially a list of `{ index, text }` pairs:
-
+9. return and SKIP default
 ```
 {100}{Hello, traveler.}
 {101}{I will not suffer a thief here.}
