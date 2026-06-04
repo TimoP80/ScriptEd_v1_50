@@ -14,6 +14,15 @@ For the most recent build-level changes only, see `BuildChangeLog.txt` next to t
   dialogue editor first.
 - New `TDialogueGenerator.GeneratePlayerOptionsWithLinks` method that returns
   options tagged with target-node names.
+- **Dialogue Code Editor** (`ActionsEditor.pas`) - a new modal editor for the
+  `{Test}` and `{Result}` fields on PC and NPC dialog lines. Shows the full
+  reference list of 2-letter Arcanum dialogue codes (e.g. `ps`, `qu`, `gv`,
+  `lc`, `wa`, ...) with descriptions and parameter counts, lets the user
+  compose multi-code expressions, and inserts the result back into the field.
+  *Insert* appends to the current contents, *Replace* overwrites with just
+  the selected code. Wired into the Player Option Editor's
+  **Conditions** and **Actions** fields and into the Dialogue Editor's
+  **Node actions** field.
 
 ### Changed
 - Replaced the third-party `TAdvSmoothSplashScreen` (TMS Component Pack) with a

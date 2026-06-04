@@ -29,6 +29,16 @@ ScriptEd 1.50-beta Build 9
 - ConsoleDebug() status messages now routed to the native splash screen via ArcanumSCRLib.SplashStatusProc
   callback, replacing TMS TSplashListItem-based SplashMessage() implementation.
 
+- Added a Dialogue Code Editor (ActionsEditor.pas/.dfm, uses DialogueOpCodes.pas) for composing
+  the {Test} and {Result} fields on PC and NPC dialog lines. Provides a reference list of all
+  2-letter Arcanum dialogue codes (ps, qu, gv, lc, wa, etc.) with descriptions and parameter
+  counts, plus Insert (append) / Replace (overwrite) actions. Wired into:
+    * Player Option Editor "Conditions" field (Test codes)
+    * Player Option Editor "Actions" field (Result codes)
+    * Dialogue Editor "Node actions" field (Result codes)
+  The original TForm28 placeholder form was upgraded to host the new editor; the public unit
+  name is unchanged for backward compatibility.
+
 ScriptEd 1.50-stable Build 8
 
 - Added Dialogue Generator accessible via Script > "Dialogue Generator..." menu or toolbar button.

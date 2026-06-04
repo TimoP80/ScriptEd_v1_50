@@ -246,6 +246,16 @@ object Form3: TForm3
         TabOrder = 2
         OnKeyUp = nodeactionsKeyUp
       end
+      object nodeactionseditbtn: TButton
+        Left = 568
+        Top = 304
+        Width = 57
+        Height = 21
+        Hint = 'Open the dialogue code editor for the node actions field'
+        Caption = 'Edit'
+        TabOrder = 16
+        OnClick = nodeactionseditbtnClick
+      end
       object nogenderspecific: TCheckBox
         Left = 136
         Top = 192

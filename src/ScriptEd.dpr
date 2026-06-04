@@ -42,6 +42,7 @@ uses
   SelectCondition in 'SelectCondition.pas' {Form26},
   SelectCondAndStatement in 'SelectCondAndStatement.pas' {Form27},
   AddMessagesFromLIst in 'AddMessagesFromLIst.pas' {MessageList},
+  DialogueOpCodes in 'DialogueOpCodes.pas',
   ActionsEditor in 'ActionsEditor.pas' {Form28},
   InterNPCDialogue in 'InterNPCDialogue.pas' {Form29},
   OllamaLib in 'OllamaLib.pas',

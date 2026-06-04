@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
  ScriptEdConfig, DLGParser, DLGFileIO, OllamaGenericDialog, Dialogs, StdCtrls, Mask, ArcanumSCRLib, JvExMask,
   JvSpin, JvPageList, JvExControls,
-  JvExStdCtrls, JvHtControls;
+  JvExStdCtrls, JvHtControls, ActionsEditor;
 
 type
   TForm12 = class(TForm)
@@ -79,6 +79,8 @@ type
     procedure Button7Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button8Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -433,6 +435,30 @@ procedure TForm12.JvHTListBox1Click(Sender: TObject);
 begin
   scriptlinelist.ItemIndex := JvHTListBox1.ItemIndex;
   scriptlinelistClick(nil);
+end;
+
+procedure TForm12.Button1Click(Sender: TObject);
+var
+  S: string;
+begin
+  // Open the dialogue code editor in Test mode for the {Test} field
+  // (rendered as the "Conditions" entry on PC dialog lines).
+  S := conditionsline.Text;
+  EditDialogueField(S, demTest);
+  conditionsline.Text := S;
+  conditiondata := S;
+end;
+
+procedure TForm12.Button2Click(Sender: TObject);
+var
+  S: string;
+begin
+  // Open the dialogue code editor in Result mode for the {Result}
+  // field (rendered as the "Actions" entry on PC and NPC lines).
+  S := actionsline.Text;
+  EditDialogueField(S, demResult);
+  actionsline.Text := S;
+  actiondata := S;
 end;
 
 procedure TForm12.extcommentsKeyUp(Sender: TObject; var Key: Word;

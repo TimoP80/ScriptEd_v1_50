@@ -65,6 +65,7 @@ type
     Button14: TButton;
     Button15: TButton;
     RemoveBlankNodesBtn: TButton;
+    nodeactionseditbtn: TButton;
     TreeView1: THTMLTreeview;
     OllamaGenerate: TButton;
     procedure TreeView1Click(Sender: TObject);
@@ -120,6 +121,7 @@ type
     procedure Button15Click(Sender: TObject);
     procedure Button16Click(Sender: TObject);
     procedure RemoveBlankNodesBtnClick(Sender: TObject);
+    procedure nodeactionseditbtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -153,7 +155,8 @@ implementation
 
 uses Math, ScriptEdWindow, RemapLineNumbers, PlayerOptionEditor,
   DialogueHeaderEditor, addmessagesfromlist,
-  SpeechGenInterface, InterNPCDialogue, SelectCondition, OllamaGenericDialog;
+  SpeechGenInterface, InterNPCDialogue, SelectCondition, OllamaGenericDialog,
+  ActionsEditor;
 
 {$R *.dfm}
 
@@ -629,6 +632,23 @@ procedure TForm3.nodeactionsKeyUp(Sender: TObject; var Key: word;
   Shift: TShiftState);
 begin
   CurDLG.nodes[nodeselected].nodeactions := nodeactions.Text;
+end;
+
+procedure TForm3.nodeactionseditbtnClick(Sender: TObject);
+var
+  S: string;
+begin
+  // The node's "actions" field on an NPC line is a {Result} field.
+  if (nodeselected < 0) or (nodeselected >= curdlg.nodecount) then
+  begin
+    MessageDlg('Select a node first before editing its actions.',
+      mtWarning, [mbOK], 0);
+    Exit;
+  end;
+  S := CurDLG.nodes[nodeselected].nodeactions;
+  EditDialogueField(S, demResult);
+  CurDLG.nodes[nodeselected].nodeactions := S;
+  nodeactions.Text := S;
 end;
 
 procedure TForm3.vofieldKeyUp(Sender: TObject; var Key: word;

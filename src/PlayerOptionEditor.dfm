@@ -143,9 +143,11 @@ object Form12: TForm12
     Top = 136
     Width = 57
     Height = 25
+    Hint = 'Open the dialogue code editor to compose conditions'
     Caption = 'Edit'
     TabOrder = 1
-    Visible = False
+    Visible = True
+    OnClick = Button1Click
   end
   object iqdata1: TJvSpinEdit
     Left = 273
@@ -172,9 +174,11 @@ object Form12: TForm12
     Top = 200
     Width = 57
     Height = 25
+    Hint = 'Open the dialogue code editor to compose actions'
     Caption = 'Edit'
     TabOrder = 4
-    Visible = False
+    Visible = True
+    OnClick = Button2Click
   end
   object LinkPages: TJvPageList
     Left = 192
