@@ -5,7 +5,6 @@
     ClientHeight = 480
     ClientWidth = 640
     Color = clBlack
-    DoubleBuffered = True
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -14,9 +13,7 @@
     FormStyle = fsStayOnTop
     OldCreateOrder = False
     Position = poScreenCenter
-    Visible = True
     OnCreate = FormCreate
-    OnDestroy = FormDestroy
     PixelsPerInch = 96
     TextHeight = 13
     object Image1: TImage
