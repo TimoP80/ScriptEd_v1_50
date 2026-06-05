@@ -593,6 +593,7 @@ object Form3: TForm3
     TabOrder = 17
     WordWrap = True
     OnClick = TreeView1Click
+    OnMouseUp = TreeView1MouseUp
     Version = '1.5.1.0'
   end
   object PopupMenu1: TPopupMenu
