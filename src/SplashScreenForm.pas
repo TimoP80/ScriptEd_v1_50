@@ -48,15 +48,15 @@ begin
   Image1.Stretch := True;
 
   baseDir := ExtractFilePath(ParamStr(0));
-  imgPath := baseDir + 'SplashIMG.png';
+  imgPath := baseDir + 'ScriptEd_SplashImage.png';
   if not FileExists(imgPath) then
   begin
     // Try one level up (e.g. when EXE is in src\, the image might be in \)
-    imgPath := baseDir + '..\SplashIMG.png';
+    imgPath := baseDir + '..\ScriptEd_SplashImage.png';
     if not FileExists(imgPath) then
     begin
       // Try a sibling 'src' directory (e.g. when EXE is in project root)
-      imgPath := baseDir + 'src\SplashIMG.png';
+      imgPath := baseDir + 'src\ScriptEd_SplashImage.png';
       if not FileExists(imgPath) then
         imgPath := '';
     end;

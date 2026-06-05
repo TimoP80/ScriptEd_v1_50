@@ -11,7 +11,7 @@ version_major = 1;
 
 version_minor = 50;
 
-version_release = 8;
+version_release = 9;
 
 {$DEFINE BETARELEASE}
 

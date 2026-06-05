@@ -1899,7 +1899,6 @@ begin
   for i := 0 to input.Count - 1 do
   begin
     Application.ProcessMessages;
-    ConsoleDebug('reading line: ' + input[i]);
     if pos('description', input[i]) <> 0 then
     begin
       thestring := input[i];
@@ -1909,9 +1908,6 @@ begin
       begin
         if charcnt > 39 then
         begin
-          ConsoleDebug
-            ('WARNING! Script description was truncated because it was too long!');
-          ConsoleDebug('Length was ' + IntToStr(charcnt));
           break;
         end;
         CurrentScript.Description[charcnt] := thestring[strwalkpos];
@@ -1976,7 +1972,6 @@ begin
         (pos('else', LowerCase(input[i])) = 0) and
         (pos('if', LowerCase(input[i])) = 0) then
       begin
-        ConsoleDebug('Parsing separate line ' + input[i]);
         // line := line + input[i] + #13#10;
         // Actually, here we should TRY to parse the line in
 
@@ -2636,3 +2631,4 @@ begin
 end;
 
 end.
+

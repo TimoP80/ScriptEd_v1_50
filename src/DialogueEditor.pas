@@ -99,7 +99,7 @@ type
     procedure mvupbtnClick(Sender: TObject);
     procedure useVOClick(Sender: TObject);
     procedure Button8Click(Sender: TObject);
-    procedure TreeView1MouseDown(Sender: TObject; Button: TMouseButton;
+    procedure TreeView1MouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: integer);
     procedure clonebuttonClick(Sender: TObject);
     procedure copybtnClick(Sender: TObject);
@@ -1504,15 +1504,19 @@ begin
   UpdateDialogue;
 end;
 
-procedure TForm3.TreeView1MouseDown(Sender: TObject; Button: TMouseButton;
+procedure TForm3.TreeView1MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
+var
+  node: TTreeNode;
 begin
-  if TreeView1.GetNodeAt(X, Y) = nil then
+  node := TreeView1.GetNodeAt(X, Y);
+  if node = nil then
   begin
     DialogueEditorClearForm;
-    TreeView1.selected := nil;
-  end;
-
+    TreeView1.Selected := nil;
+  end
+  else
+    TreeView1.Selected := node;
 end;
 
 procedure TForm3.clonebuttonClick(Sender: TObject);
