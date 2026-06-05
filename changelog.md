@@ -6,13 +6,38 @@ For the most recent build-level changes only, see `BuildChangeLog.txt` next to t
 
 ## [1.50-beta] - Build 10
 
+### Added
+- **Command-line build script** `Build-ScriptEd.bat` for compiling ScriptEd without
+  opening the IDE. Uses `dcc32.exe` directly (no MSBuild required), supports
+  `-Debug`, `-Rebuild`, `-Clean`, and `-Quiet` flags. Auto-detects RAD Studio
+  10.3 Rio at `C:\Program Files (x86)\Embarcadero\Studio\20.0`.
+
+### Changed
+- Moved `TDialogueGenerator` class and `TFormDialogueGen` form implementation
+  from `DialogueGenerator.pas` / `DialogueGeneratorForm.pas` into
+  `DialogueGenerator_New.pas` to support a manually rebuilt DFM.
+- `DialogueGenerator.pas` and `DialogueGeneratorForm.pas` now act as lightweight
+  forwarding stubs so existing `uses` clauses resolve without changes.
+- Event handler declarations (`OnCreate`, button `OnClick` handlers) moved from
+  `private` to `published` visibility in `TFormDialogueGen` so the VCL streaming
+  system can resolve method pointers via RTTI during DFM deserialization.
+
 ### Fixed
-- Plugin error handling in `pluginapi.pas` is now consistent:
-  - User-facing failures use `messagedlg` / `MessageDlg` with appropriate severity (`mtError` for load failures, `mtWarning` for already-running and version issues).
-  - Diagnostic/developer-only messages remain in `ConsoleDebug`.
-  - Replaced bare `ShowMessage('FAILED TO GET HANDLE ...')` failures with parameterized error dialogs.
-  - Changed the "plugin already running" path from `ConsoleDebug` to a visible warning dialog.
-  - Added missing user-facing error dialogs when required exported functions (`ImportData`, `GenerateSpeech`, `RunPlugin`, `PluginConfig`) are not found by a plugin.
+- **Dialogue Generator** `PropValueError` on open. Removed three categories of
+  DFM defects from `DialogueGenerator_New.dfm`:
+  - `ExplicitWidth = 0` / `ExplicitHeight = 0` on all three `TTabSheet`
+    controls — zero-valued explicit dimensions cause the VCL reader to raise
+    `Invalid property value`.
+  - Explicit `Font.Charset`, `Font.Color`, `Font.Height`, `Font.Name`
+    sub-properties on `CheckBoxContinue` — nested font sub-properties under a
+    `TCheckBox` trigger `PropValueError` on cross-version DFM reads.
+  - Redundant `State = cbChecked` + `Checked = True` on `CheckBoxSmart` —
+    conflicting value assignments for the same underlying checkbox state.
+- **Dialogue Editor** node-click selection. `TreeView1MouseDown` was replaced
+  with `OnMouseUp` and an explicit `TreeView1.Selected := node` assignment so
+  that clicking a node visually selects it immediately rather than requiring
+  arrow-key navigation. The old `OnMouseDown` timing fired before the
+  `THTMLTreeView` internal selection logic had committed the new node.
 
 ## [1.50-beta] - Build 9
 
@@ -50,6 +75,12 @@ For the most recent build-level changes only, see `BuildChangeLog.txt` next to t
   between real dialogue nodes. (forum #41)
 
 ### Fixed
+- Plugin error handling in `pluginapi.pas` is now consistent:
+  - User-facing failures use `messagedlg` / `MessageDlg` with appropriate severity (`mtError` for load failures, `mtWarning` for already-running and version issues).
+  - Diagnostic/developer-only messages remain in `ConsoleDebug`.
+  - Replaced bare `ShowMessage('FAILED TO GET HANDLE ...')` failures with parameterized error dialogs.
+  - Changed the "plugin already running" path from `ConsoleDebug` to a visible warning dialog.
+  - Added missing user-facing error dialogs when required exported functions (`ImportData`, `GenerateSpeech`, `RunPlugin`, `PluginConfig`) are not found by a plugin.
 - **Quest Editor** now correctly displays quests that exist in the master
   quest list (`gamequest`) but are missing from the smart/dumb quest logs
   (`gamequestlog` / `GameQuestLogDumb`). Previously the listbox index was
